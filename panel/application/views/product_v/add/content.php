@@ -10,9 +10,12 @@
 				<div class="widget p-lg">
 					<div class="widget-body">
 						<form action="<?php echo base_url("product/save") ?>" method="post">
-							<div class="form-group">
+							<div class="form-group <?php echo isset($form_error)? "has-error":""  ?>">
 								<label for="title">Ürün Başlığı</label>
 								<input type="text" class="form-control" id="title" name="title">
+								<?php if(isset($form_error)): ?>
+								<small>Hata</small>
+								<?php endif; ?>
 							</div>
 							<div class="form-group">
 								<label for="exampleInputPassword1">Açıklama</label>
