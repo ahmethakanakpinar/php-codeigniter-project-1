@@ -46,7 +46,7 @@ class Product extends CI_Controller {
 				array(
 					"title"			=> $this->input->post("title"),
 					"description"	=> $this->input->post("description"),
-					"url"			=> "test-1",
+					"url"			=> CharConvert($this->input->post("title")),
 					"isActive"		=>  0,
 					"createdAt"		=> date("Y-m-d H:i:s")
 				)
