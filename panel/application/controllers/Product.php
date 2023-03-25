@@ -53,11 +53,11 @@ class Product extends CI_Controller {
 			);
 			if($insert)
 			{
-				echo "başarılı";
+				redirect(base_url("product"));
 			}
 			else
 			{
-				echo "hata";
+				redirect(base_url("product"));
 			}
 		}
 		else
