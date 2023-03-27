@@ -37,7 +37,7 @@
                                     </td>
                                     <td>
                                         <a class="btn btn-danger btn-outline btn-sm" href="#"><i class="fa fa-trash" aria-hidden="true"></i> Sil</a>
-                                        <a class="btn btn-info btn-outline btn-sm" href="#"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Düzenle</a>
+                                        <a class="btn btn-info btn-outline btn-sm" href="<?php echo base_url("product/update_form/$item->id") ?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Düzenle</a>
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>
