@@ -14,9 +14,10 @@
                         <p>Burada herhangi bir veri bulunamamaktadır. Eklemek için <a href="<?php echo base_url("product/new_form") ?>">Tıklayınız</a></p>
                         </div>
                     <?php else: ?>
-                        <table class="table">
+                        <table class="table table-hover table-striped">
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th>#id</th>
                                     <th>url</th>
                                     <th>Başlık</th>
@@ -25,9 +26,10 @@
                                     <th>İşlem</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="sortable" data-url="<?php echo base_url("product/rankSetter") ?>">
                                 <?php foreach($items as $item): ?>
-                                <tr>
+                                <tr id = "ord-<?php echo $item->id ?>">
+                                    <td><i class="fa fa-reorder" aria-hidden="true"></i></td>
                                     <td><?php echo $item->id ?></td>
                                     <td><?php echo $item->url ?></td>
                                     <td><?php echo $item->title ?></td>
