@@ -36,8 +36,8 @@
                                         <input id="switch-2-2" type="checkbox" data-switchery data-color="#10c469" <?php echo ($item->isActive) ? "checked": "" ?> />
                                     </td>
                                     <td>
-                                        <a class="btn btn-danger btn-outline btn-sm" href="#"><i class="fa fa-trash" aria-hidden="true"></i> Sil</a>
-                                        <a class="btn btn-info btn-outline btn-sm" href="<?php echo base_url("product/update_form/$item->id") ?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Düzenle</a>
+                                        <a class="btn btn-danger btn-outline btn-sm" href="<?php echo base_url("product/delete/$item->id")?>"><i class="fa fa-trash" aria-hidden="true"></i> Sil</a>
+                                        <a class="btn btn-info btn-outline btn-sm" href="<?php echo base_url("product/update_form/$item->id")?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Düzenle</a>
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>
