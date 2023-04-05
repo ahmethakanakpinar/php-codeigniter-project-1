@@ -76,7 +76,7 @@ class Product extends CI_Controller {
 		$item = $this->product_model->get(
 			array(
 				"id" => $id
-				)
+			)
 		);	
 		$viewData = new stdClass();
 		$viewData->viewFolder = $this->viewFolder;
@@ -180,5 +180,18 @@ class Product extends CI_Controller {
 				)
 			);
 		}
+	}
+	public function image_form($id)
+	{
+		$item = $this->product_model->get(
+			array(
+				"id" => $id
+			)
+		);
+		$viewData = new stdClass();
+		$viewData->viewFolder = $this->viewFolder;
+		$viewData->subViewFolder = "image";
+		$viewData->item = $item;
+		$this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
 	}
 }
