@@ -19,7 +19,7 @@
                     <td class="w100 text-center"><img width="30" class="img-responsive" src="<?php echo base_url("uploads/{$viewFolder}/$image->img_url") ?>" alt="<?php echo $image->img_url ?>"></td>
                     <td><?php echo $image->img_url ?></td>
                     <td class="w100 text-center"><input data-url="<?php echo base_url("product/isActiveSetterImage/$image->id")?>" class="isActive" type="checkbox" data-switchery data-color="#10c469" <?php echo ($image->isActive) ? "checked": "" ?> /></td>
-                    <td class="w100 text-center"><input class="isActive" type="checkbox" data-switchery data-color="#ff5b5b" <?php echo (false) ? "checked": "" ?> /></td>
+                    <td class="w100 text-center"><input data-url="<?php echo base_url("product/isCoverSetter/$image->id/$image->product_id")?>" class="isCover" type="checkbox" data-switchery data-color="#ff5b5b" <?php echo ($image->isCover) ? "checked": "" ?> /></td>
                     <td class="w100 text-center"><button class="btn btn-danger btn-outline btn-block btn-sm remove-btn"><i class="fa fa-trash" aria-hidden="true"></i> Sil</button></td>
                 </tr>
             <?php endforeach; ?>
