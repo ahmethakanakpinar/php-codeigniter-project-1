@@ -35,7 +35,7 @@
                                     <td><?php echo $item->title ?></td>
                                     <td><?php echo $item->description ?></td>
                                     <td>
-                                        <input  data-url="<?php echo base_url("product/isActiveSetter/$item->id"); ?>" class="isActive" type="checkbox" data-switchery data-color="#10c469" <?php echo ($item->isActive) ? "checked": "" ?> />
+                                        <input data-url="<?php echo base_url("product/isActiveSetter/$item->id"); ?>" class="isActive" type="checkbox" data-switchery data-color="#10c469" <?php echo ($item->isActive) ? "checked": "" ?> />
                                     </td>
                                     <td>
                                         <button  class="btn btn-danger btn-outline btn-sm remove-btn" data-url="<?php echo base_url("product/delete/$item->id")?>"><i class="fa fa-trash" aria-hidden="true"></i> Sil</button>
