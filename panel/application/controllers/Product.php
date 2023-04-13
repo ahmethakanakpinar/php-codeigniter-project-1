@@ -229,4 +229,18 @@ class Product extends CI_Controller {
 			echo "İşlem Başarısız";
 		}
 	}
+	public function reflesh_image_list($id)
+	{
+		$viewData = new stdClass();
+		$viewData->viewFolder = $this->viewFolder;
+		$viewData->subViewFolder = "image";
+		$item_images = $this->product_image_model->get_all(
+			array(
+				"product_id" => $id
+			)
+		);
+		$viewData->item_images = $item_images;
+		$render_html = $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/render_elements/image_list_v", $viewData, true);
+		echo $render_html;
+	}
 }
