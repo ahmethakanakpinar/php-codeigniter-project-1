@@ -1,4 +1,10 @@
 $(document).ready(function(){
+    iziToast.error({
+        title: 'hey',
+        message: "Selamlar",
+        position: "topCenter"
+    })
+
     $(".sortable").sortable();
     $(".content-container, .image_list_container").on('click', '.remove-btn', function()
     {
