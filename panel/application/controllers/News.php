@@ -45,6 +45,20 @@ class News extends CI_Controller{
             )
         );
     }
+    public function update_form($id)
+    {
+        $item = $this->news_model->get(
+            array(
+                "id" => $id
+            )
+        );
+        $viewData = new stdClass();
+        $viewData->viewTitle = $this->viewTitle;
+        $viewData->viewFolder = $this->viewFolder;
+        $viewData->subViewFolder = "update";
+        $viewData->item = $item;
+        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index",$viewData);
+    }
     
 
 }
