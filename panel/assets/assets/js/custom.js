@@ -1,6 +1,6 @@
 $(document).ready(function(){
     $(".sortable").sortable();
-    $(".remove-btn").click(function ()
+    $(".content-container, .image_list_container").on('click', '.remove-btn', function()
     {
         var $data_url = $(this).data("url");
         swal({
@@ -51,10 +51,11 @@ $(document).ready(function(){
                         jackColor: jackColor
                     });
                 });
+                $(".sortable").sortable();
             });
         }
     })
-    $(".sortable").on("sortupdate", function(event, ui){
+    $(".content-container, .image_list_container").on("sortupdate", ".sortable", function(event, ui){
         var $data = $(this).sortable("serialize");
         var $data_url = $(this).data("url");
         $.post($data_url, {data : $data}, function(response){})
@@ -79,6 +80,7 @@ $(document).ready(function(){
                     jackColor: jackColor
                 });
             });
+            $(".sortable").sortable();
         });
 
     })

@@ -14,7 +14,7 @@
                         <p>Burada herhangi bir veri bulunamamaktadır. Eklemek için <a href="<?php echo base_url("product/new_form") ?>">Tıklayınız</a></p>
                         </div>
                     <?php else: ?>
-                        <table class="table table-hover table-striped content-container">
+                        <table class="table table-hover table-striped table-bordered content-container">
                             <thead>
                                 <tr>
                                     <th></th>
