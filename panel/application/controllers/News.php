@@ -32,16 +32,49 @@ class News extends CI_Controller{
     }
     public function save()
     {
-        $insert = $this->news_model->add(
+        $this->load->library("form_validation");
+
+        //kurallar
+        $news_tpye = $this->input->post("news_type");
+        if($news_tpye == "image")
+        {
+            if($_FILES["img_url"]["name"] == "")
+            {
+                $alert = array(
+					"title" => "İşlem Başarısız",
+					"text" => "Lütfen bir görsel Seçiniz!",
+					"type" => "error"
+				);
+                $this->session->set_flashdata("alert", $alert);
+			    redirect(base_url("{$this->viewTitle}/new_form"));
+                die();
+            }
+        }
+        else if($news_type == "movie")
+        {
+
+        }
+        die();
+        $this->form_validation->set_rules("title","Başlık","required|trim");
+        $this->form_validation->set_message(
             array(
-                "title" => $this->input->post("title"),
-                "description" => $this->input->post("description"),
-                "news_type" => "",
-                "img_url" => "",
-                "video_url" => "",
-                "rank" => "",
+                "required" => "{field} alanı doldurulmalıdır!"
             )
         );
+        $validate = $this->form_validation->run();
+        if($validate)
+        {
+            $insert = $this->news_model->add(
+                array(
+                    "title" => $this->input->post("title"),
+                    "description" => $this->input->post("description"),
+                    "news_type" => "",
+                    "img_url" => "",
+                    "video_url" => "",
+                    "rank" => "",
+                )
+            );
+        }
     }
     public function update_form($id)
     {
