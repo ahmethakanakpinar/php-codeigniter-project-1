@@ -35,8 +35,8 @@ class News extends CI_Controller{
         $this->load->library("form_validation");
 
         //kurallar
-        $news_tpye = $this->input->post("news_type");
-        if($news_tpye == "image")
+        $news_type = $this->input->post("news_type");
+        if($news_type == "image")
         {
             if($_FILES["img_url"]["name"] == "")
             {
@@ -47,14 +47,14 @@ class News extends CI_Controller{
 				);
                 $this->session->set_flashdata("alert", $alert);
 			    redirect(base_url("{$this->viewTitle}/new_form"));
-                die();
             }
+          
         }
+      
         else if($news_type == "movie")
         {
-
+            $this->form_validation->set_rules("video_url","Video Url","required|trim");
         }
-        die();
         $this->form_validation->set_rules("title","Başlık","required|trim");
         $this->form_validation->set_message(
             array(
@@ -74,6 +74,37 @@ class News extends CI_Controller{
                     "rank" => "",
                 )
             );
+
+            //
+            if($insert)
+            {
+                $alert = array(
+                    "title" => "İşlem Başarılı",
+                    "text" => "Kayıt başarılı bir şekilde eklendi",
+                    "type"  => "success"
+                );
+
+            } 
+            else 
+            {
+                $alert = array(
+                    "title" => "İşlem Başarısız",
+                    "text" => "Kayıt Ekleme sırasında bir problem oluştu",
+                    "type"  => "error"
+                );
+            }
+            $this->session->set_flashdata("alert", $alert);
+            redirect(base_url("product"));
+        }
+        else
+        {
+            $viewData = new stdClass();
+            $viewData->viewTitle = $this->viewTitle;
+            $viewData->viewFolder = $this->viewFolder;
+            $viewData->subViewFolder = "add";
+            $viewData->form_error = true;
+            $viewData->news_type = $news_type;
+            $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
         }
     }
     public function update_form($id)
