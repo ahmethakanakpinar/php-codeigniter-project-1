@@ -40,8 +40,6 @@ class News extends CI_Controller{
                 "img_url" => "",
                 "video_url" => "",
                 "rank" => "",
-                
-
             )
         );
     }
