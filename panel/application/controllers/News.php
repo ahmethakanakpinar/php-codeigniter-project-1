@@ -33,7 +33,7 @@ class News extends CI_Controller{
     public function save()
     {
         $this->load->library("form_validation");
-
+        
         //kurallar
         $news_type = $this->input->post("news_type");
         if($news_type == "image")
@@ -64,16 +64,56 @@ class News extends CI_Controller{
         $validate = $this->form_validation->run();
         if($validate)
         {
-            $insert = $this->news_model->add(
-                array(
-                    "title" => $this->input->post("title"),
-                    "description" => $this->input->post("description"),
-                    "news_type" => "",
-                    "img_url" => "",
-                    "video_url" => "",
-                    "rank" => "",
-                )
-            );
+            if($news_type == "image")
+            {
+                $file_name = CharConvert(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)). "." .pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
+                $config["allowed_types"] = "jpg|jpeg|png";
+                $config["upload_path"] = "uploads/$this->viewFolder/";
+                $config["file_name"] = $file_name;
+                $this->load->library("upload",$config);
+                $upload = $this->upload->do_upload("img_url");
+                if($upload)
+                {
+                    $uploaded_file = $this->upload->data("file_name");
+                
+                    $data = array(
+                        "url"           => CharConvert($this->input->post("title")),
+                        "title"         => $this->input->post("title"),
+                        "description"   => $this->input->post("description"),
+                        "news_type"     => $news_type,
+                        "img_url"       => $uploaded_file,
+                        "video_url"     => "#",
+                        "rank"          => 0,
+                        "isActive"      => 0,
+                        "createdAt"     => date("Y-m-d H:i:s")
+                    );
+                }
+                else
+                {
+                    $alert = array(
+                        "title" => "İşlem Başarısız",
+                        "text" => "Görsel Yükleme de problem yaşandı!",
+                        "type" => "error"
+                    );
+                    $this->session->set_flashdata("alert", $alert);
+                    redirect(base_url("{$this->viewTitle}/new_form"));
+                }
+            }
+            else if($news_type == "movie")
+            {
+                $data = array(
+                    "url"           => CharConvert($this->input->post("title")),
+                    "title"         => $this->input->post("title"),
+                    "description"   => $this->input->post("description"),
+                    "news_type"     => $news_type,
+                    "img_url"       => "#",
+                    "video_url"     => $this->input->post("video_url"),
+                    "rank"          => 0,
+                    "isActive"      => 0,
+                    "createdAt"     => date("Y-m-d H:i:s")
+                );
+            }
+            $insert = $this->news_model->add($data);
 
             //
             if($insert)
@@ -94,7 +134,7 @@ class News extends CI_Controller{
                 );
             }
             $this->session->set_flashdata("alert", $alert);
-            redirect(base_url("product"));
+            redirect(base_url("{$this->viewTitle}"));
         }
         else
         {
