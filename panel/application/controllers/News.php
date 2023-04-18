@@ -223,15 +223,125 @@ class News extends CI_Controller{
             $alert = array(
 				"title" => "İşlem Başarısız",
 				"text" => "Kayıt silme işlemi sırasında bir problem oluştu!",
-				"type" => "success"
+				"type" => "error"
 			);
         }
        
         $this->session->set_flashdata("alert", $alert);
 		redirect(base_url("$this->viewTitle"));
     }
+    public function update($id)
+    {
+        $this->load->library("form_validation");
+        
+        //kurallar
+        $news_type = $this->input->post("news_type");
+        if($news_type == "movie")
+        {
+            $this->form_validation->set_rules("video_url","Video Url","required|trim");
+        }
+        $this->form_validation->set_rules("title","Başlık","required|trim");
+        $this->form_validation->set_message(
+            array(
+                "required" => "{field} alanı doldurulmalıdır!"
+            )
+        );
+        $validate = $this->form_validation->run();
+        if($validate)
+        {
+            if($news_type == "image")
+            {
+                if($_FILES["img_url"]["name"] != "")
+                {
+                    $file_name = CharConvert(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)). "." .pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
+                    $config["allowed_types"] = "jpg|jpeg|png";
+                    $config["upload_path"] = "uploads/$this->viewFolder/";
+                    $config["file_name"] = $file_name;
+                    $this->load->library("upload",$config);
+                    $upload = $this->upload->do_upload("img_url");
+                    if($upload)
+                    {
+                        $uploaded_file = $this->upload->data("file_name");
+                    
+                        $data = array(
+                            "url"           => CharConvert($this->input->post("title")),
+                            "title"         => $this->input->post("title"),
+                            "description"   => $this->input->post("description"),
+                            "news_type"     => $news_type,
+                            "img_url"       => $uploaded_file,
+                            "video_url"     => "#",
+                        );
+                    }
+                    else
+                    {
+                        $alert = array(
+                            "title" => "İşlem Başarısız",
+                            "text" => "Görsel Yükleme de problem yaşandı!",
+                            "type" => "error"
+                        );
+                        $this->session->set_flashdata("alert", $alert);
+                        redirect(base_url("{$this->viewTitle}/update_form/$id"));
+                    }
+                }
+                else
+                {
+                    $data = array(
+                        "url"           => CharConvert($this->input->post("title")),
+                        "title"         => $this->input->post("title"),
+                        "description"   => $this->input->post("description"),
+                    );
+                }
+            }
+            else if($news_type == "movie")
+            {
+                $data = array(
+                    "url"           => CharConvert($this->input->post("title")),
+                    "title"         => $this->input->post("title"),
+                    "description"   => $this->input->post("description"),
+                    "news_type"     => $news_type,
+                    "img_url"       => "#",
+                    "video_url"     => $this->input->post("video_url"),
+                );
+            }
+            $insert = $this->news_model->update(array("id" => $id), $data);
 
+            //
+            if($insert)
+            {
+                $alert = array(
+                    "title" => "İşlem Başarılı",
+                    "text" => "Kayıt başarılı bir şekilde güncellendi",
+                    "type"  => "success"
+                );
 
+            } 
+            else 
+            {
+                $alert = array(
+                    "title" => "İşlem Başarısız",
+                    "text" => "Kayıt Güncelleme sırasında bir problem oluştu",
+                    "type"  => "error"
+                );
+            }
+            $this->session->set_flashdata("alert", $alert);
+            redirect(base_url("{$this->viewTitle}"));
+        }
+        else
+        {
+            $viewData = new stdClass();
+            $viewData->viewTitle = $this->viewTitle;
+            $viewData->viewFolder = $this->viewFolder;
+            $viewData->subViewFolder = "update";
+            $viewData->item = $this->news_model->get(
+                array(
+                    "id" => $id
+                )
+            );
+            $viewData->form_error = true;
+            $viewData->news_type = $news_type;
+            $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+        }
+    }
 }
 
 ?>

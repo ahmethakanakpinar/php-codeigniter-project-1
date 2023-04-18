@@ -9,7 +9,7 @@
 			<div class="col-md-12">
 				<div class="widget p-lg">
 					<div class="widget-body">
-						<form action="<?php echo base_url("{$viewTitle}/update") ?>" method="post" enctype = "multipart/form-data">
+						<form action="<?php echo base_url("{$viewTitle}/update/$item->id") ?>" method="post" enctype = "multipart/form-data">
 							<div class="form-group <?php echo isset($form_error) ? "has-error":""  ?>">
 								<label for="title">Haber Başlığı</label>
 								<input type="text" class="form-control" id="title" name="title" value = "<?php echo $item->title ?>">
