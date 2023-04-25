@@ -42,6 +42,7 @@ class References extends CI_Controller{
             );
             $this->session->set_flashdata("alert", $alert);
             redirect(base_url("{$this->viewTitle}/new_form"));
+            die();
         }
         $this->form_validation->set_rules("title","Başlık","required|trim");
         $this->form_validation->set_message(
@@ -89,8 +90,6 @@ class References extends CI_Controller{
                         "type"  => "error"
                     );
                 }
-                $this->session->set_flashdata("alert", $alert);
-                redirect(base_url("{$this->viewTitle}"));
             }
             else
             {
@@ -101,7 +100,10 @@ class References extends CI_Controller{
                 );
                 $this->session->set_flashdata("alert", $alert);
                 redirect(base_url("{$this->viewTitle}/new_form"));
+                die();
             }
+            $this->session->set_flashdata("alert", $alert);
+            redirect(base_url("{$this->viewTitle}"));
         }
         else
         {
