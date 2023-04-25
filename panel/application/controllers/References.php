@@ -130,20 +130,9 @@ class References extends CI_Controller{
         $viewData->subViewFolder = "update";
         $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
     }
-    public function update()
+    public function update($id)
     {
         $this->load->library("form_validation");
-        if($_FILES["img_url"]["name"] == "")
-        {
-            $alert = array(
-                "title" => "İşlem Başarısız",
-                "text" => "Lütfen bir görsel Seçiniz!",
-                "type" => "error"
-            );
-            $this->session->set_flashdata("alert", $alert);
-            redirect(base_url("{$this->viewTitle}/new_form"));
-            die();
-        }
         $this->form_validation->set_rules("title","Başlık","required|trim");
         $this->form_validation->set_message(
             array(
@@ -153,54 +142,66 @@ class References extends CI_Controller{
         $validate = $this->form_validation->run();
         if($validate)
         {
-            $file_name = CharConvert(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)). "." .pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
-            $config["allowed_types"] = "jpg|jpeg|png";
-            $config["upload_path"] = "uploads/$this->viewFolder/";
-            $config["file_name"] = $file_name;
-            $this->load->library("upload",$config);
-            $upload = $this->upload->do_upload("img_url");
-            if($upload)
+            if($_FILES["img_url"]["name"] != "")
             {
-                $uploaded_file = $this->upload->data("file_name");
-                $insert = $this->reference_model->add(
-                    array(
-                        "url"           => CharConvert($this->input->post("title")),
-                        "title"         => $this->input->post("title"),
-                        "description"   => $this->input->post("description"),
-                        "img_url"       => $uploaded_file,
-                        "rank"          =>0,
-                        "isActive"      =>0,
-                        "createdAt"     =>date("Y-m-d H:i:s")
-        
-                    )
-                );
-                if($insert)
+                $file_name = CharConvert(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)). "." .pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
+                $config["allowed_types"] = "jpg|jpeg|png";
+                $config["upload_path"] = "uploads/$this->viewFolder/";
+                $config["file_name"] = $file_name;
+                $this->load->library("upload",$config);
+                $upload = $this->upload->do_upload("img_url");
+                if($upload)
                 {
-                    $alert = array(
-                        "title" => "İşlem Başarılı",
-                        "text" => "Kayıt başarılı bir şekilde eklendi",
-                        "type"  => "success"
+                    $uploaded_file = $this->upload->data("file_name");
+                    $insert = $this->reference_model->update(
+                        array("id" => $id),
+                        array(
+                            "url"           => CharConvert($this->input->post("title")),
+                            "title"         => $this->input->post("title"),
+                            "description"   => $this->input->post("description"),
+                            "img_url"       => $uploaded_file
+                        )
                     );
                 }
-                else 
+                else
                 {
                     $alert = array(
                         "title" => "İşlem Başarısız",
-                        "text" => "Kayıt Ekleme sırasında bir problem oluştu",
-                        "type"  => "error"
+                        "text" => "Görsel Yükleme de problem yaşandı!",
+                        "type" => "error"
                     );
+                    $this->session->set_flashdata("alert", $alert);
+                    redirect(base_url("{$this->viewTitle}/update_form/$id"));
+                    die();
                 }
             }
             else
             {
+                $insert = $this->reference_model->update(
+                    array("id" => $id),
+                    array(
+                        "url"           => CharConvert($this->input->post("title")),
+                        "title"         => $this->input->post("title"),
+                        "description"   => $this->input->post("description")
+                    )
+                );
+            }
+       
+            if($insert)
+            {
+                $alert = array(
+                    "title" => "İşlem Başarılı",
+                    "text" => "Kayıt başarılı bir şekilde güncellendi",
+                    "type"  => "success"
+                );
+            }
+            else 
+            {
                 $alert = array(
                     "title" => "İşlem Başarısız",
-                    "text" => "Görsel Yükleme de problem yaşandı!",
-                    "type" => "error"
+                    "text" => "Kayıt güncelleme sırasında bir problem oluştu",
+                    "type"  => "error"
                 );
-                $this->session->set_flashdata("alert", $alert);
-                redirect(base_url("{$this->viewTitle}/new_form"));
-                die();
             }
             $this->session->set_flashdata("alert", $alert);
             redirect(base_url("{$this->viewTitle}"));
@@ -216,10 +217,5 @@ class References extends CI_Controller{
         }
       
     }
-
 }
-
-
-
-
 ?>
