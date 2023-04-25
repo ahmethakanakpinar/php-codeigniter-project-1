@@ -16,8 +16,8 @@ class News extends CI_Controller{
         $items = $this->news_model->get_all(
             array(), "rank ASC"
         );
-        $viewData->viewFolder = $this->viewFolder;
         $viewData->viewTitle = $this->viewTitle;
+        $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "list";
         $viewData->items = $items;
         $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
