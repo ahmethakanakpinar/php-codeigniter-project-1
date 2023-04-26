@@ -22,10 +22,14 @@
 								<textarea name="description" class="m-0" data-plugin="summernote" data-options="{height: 250}"><?php echo $item->description ?></textarea>
 							</div>
 								<div class="row">
+									<div class="col-md-4">
+										<label for="datetimepicker1">Eğitim Tarihi</label>
+										<input type="hidden" name="event_date" value="<?php echo $item->event_date ?>"  id="datetimepicker1" data-plugin="datetimepicker" data-options="{ inline: true, viewMode: 'days', format : 'YYYY-MM-DD HH:mm:ss'}"></input>
+									</div><!-- END column -->
 									<div class="col-md-2 image_upload_container">
 										<img src="<?php echo base_url("uploads/{$viewFolder}/{$item->img_url}") ?>" alt="<?php $item->img_url ?>">
 									</div>
-									<div class="col-md-10">
+									<div class="col-md-6">
 										<div class="form-group image_upload_container">
 											<label for="exampleInputFile">Görsel Seçiniz</label>
 											<input type="file" id="exampleInputFile" class="form-control" name="img_url" value="<?php $item->img_url ?>">

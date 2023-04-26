@@ -64,6 +64,7 @@ class Courses extends CI_Controller{
                 $uploaded_file = $this->upload->data("file_name");
                 $insert = $this->course_model->add(
                     array(
+                        "url"           => CharConvert($this->input->post("title")),
                         "title"         => $this->input->post("title"),
                         "description"   => $this->input->post("description"),
                         "img_url"       => $uploaded_file,
@@ -115,7 +116,118 @@ class Courses extends CI_Controller{
         }
 
     }
-
+    public function update_form($id)
+    {
+        $item = $this->course_model->get(
+            array(
+                "id" => $id
+            )
+        );
+        
+        $viewData = new stdClass();
+        $viewData->viewTitle = $this->viewTitle;
+        $viewData->viewFolder = $this->viewFolder;
+        $viewData->subViewFolder = "update";
+        $viewData->item = $item;
+        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+    }
+    public function update($id)
+    {
+        $this->load->library("form_validation");
+        $this->form_validation->set_rules("title","Başlık","required|trim");
+        $this->form_validation->set_rules("event_date","Eğitim Tarihi","required|trim");
+        $this->form_validation->set_message(
+            array(
+                "required"  => "{field} alanı doldurulmalıdır!"
+            )
+        );
+        $validate = $this->form_validation->run();
+        if($validate)
+        {
+            if($_FILES["img_url"]["name"] != "")
+            {
+                $file_name = CharConvert(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)). "." .pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
+                $config["file_name"] = $file_name;
+                $config["allowed_types"] = "jpg|jpeg|png";
+                $config["upload_path"] = "uploads/{$this->viewFolder}/";
+                $this->load->library("upload", $config);
+                $upload = $this->upload->do_upload("img_url");
+                if($upload)
+                {
+                    $uploaded_file = $this->upload->data("file_name");
+                    $insert = $this->course_model->update(
+                        array(
+                            "id" => $id
+                        ),
+                        array(
+                            "url"           => CharConvert($this->input->post("title")),
+                            "title"         => $this->input->post("title"),
+                            "description"   => $this->input->post("description"),
+                            "img_url"       => $uploaded_file,
+                            "event_date"    => $this->input->post("event_date")
+                        )
+                    );
+                }
+                else
+                {
+                    $alert = array(
+                        "title" => "İşlem Başarısız",
+                        "text" => "Görsel Yükleme de problem yaşandı!",
+                        "type" => "error"
+                    );
+                    $this->session->set_flashdata("alert", $alert);
+                    redirect(base_url("{$this->viewTitle}/update_form/$id"));
+                    die();
+                }
+            }
+            else
+            {   
+                $insert = $this->course_model->update(
+                    array(
+                        "id" => $id
+                    ),
+                    array(
+                        "url"           => CharConvert($this->input->post("title")),
+                        "title"         => $this->input->post("title"),
+                        "description"   => $this->input->post("description"),
+                        "event_date"    => $this->input->post("event_date")
+                    )
+                );
+            }
+            if($insert)
+            {
+                $alert = array(
+                    "title" => "İşlem Başarılı",
+                    "text" => "Kayıt başarılı bir şekilde güncellendi",
+                    "type"  => "success"
+                );
+            }
+            else
+            {
+                $alert = array(
+                    "title" => "İşlem Başarısız",
+                    "text" => "Kayıt güncelleme sırasında bir problem oluştu",
+                    "type"  => "error"
+                );
+            }
+            $this->session->set_flashdata("alert", $alert);
+            redirect(base_url("{$this->viewTitle}"));
+        }
+        else
+        {
+            $viewData = new stdClass();
+            $viewData->item = $this->course_model->get(
+                array(
+                    "id" => $id
+                )
+            );
+            $viewData->viewTitle = $this->viewTitle;
+            $viewData->viewFolder = $this->viewFolder;
+            $viewData->subViewFolder = "update";
+            $viewData->form_error = true;
+            $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+        }
+    }
 
 }
 
