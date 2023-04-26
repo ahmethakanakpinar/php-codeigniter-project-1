@@ -209,9 +209,14 @@ class References extends CI_Controller{
         else
         {
             $viewData = new stdClass();
+            $viewData->item = $this->reference_model->get(
+                array(
+                    "id" => $id
+                )
+            );
             $viewData->viewTitle = $this->viewTitle;
             $viewData->viewFolder = $this->viewFolder;
-            $viewData->subViewFolder = "add";
+            $viewData->subViewFolder = "update";
             $viewData->form_error = true;
             $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
         }

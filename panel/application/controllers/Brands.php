@@ -131,6 +131,96 @@ class Brands extends CI_Controller{
         $viewData->subViewFolder = "update";
         $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
     }
+    public function update($id)
+    {
+        $this->load->library("form_validation");
+        $this->form_validation->set_rules("title", "Başlık", "required|trim");
+        $this->form_validation->set_message(
+            array(
+                "required" => "{field} alanı Doldurulmalıdır!"
+            )
+        );
+        $validate = $this->form_validation->run();
+        if($validate)
+        {
+            if($_FILES["img_url"]["name"] != "")
+            {
+                $file_name = CharConvert(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)). "." .pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
+                $config["file_name"] = $file_name;
+                $config["allowed_types"] = "jpg|jpeg|png";
+                $config["upload_path"] = "uploads/{$this->viewFolder}/";
+                $this->load->library("upload",$config);
+                $upload = $this->upload->do_upload("img_url");
+                if($upload)
+                {
+                    $uploaded_file = $this->upload->data("file_name");
+                    $insert = $this->brand_model->update(
+                        array(
+                            "id" => $id
+                        ),
+                        array(
+                            "title"     => $this->input->post("title"),
+                            "img_url"   => $uploaded_file
+                        )
+                    );
+                }
+                else
+                {
+                    $alert = array(
+                        "title" => "İşlem Başarısız",
+                        "text" => "Görsel Yükleme de problem yaşandı!",
+                        "type" => "error"
+                    );
+                    $this->session->set_flashdata("alert", $alert);
+                    redirect(base_url("{$this->viewTitle}/update_form/$id"));
+                    die();
+                }
+            }
+            else
+            {
+                $insert = $this->brand_model->update(
+                    array(
+                        "id" => $id
+                    ),
+                    array(
+                        "title"     => $this->input->post("title"),
+                    )
+                );
+            }
+            if($insert)
+            {
+                $alert = array(
+                    "title" => "İşlem Başarılı",
+                    "text" => "Kayıt başarılı bir şekilde güncellendi",
+                    "type"  => "success"
+                );
+            }
+            else
+            {
+                $alert = array(
+                    "title" => "İşlem Başarısız",
+                    "text" => "Kayıt güncelleme sırasında bir problem oluştu",
+                    "type"  => "error"
+                );
+            }
+            $this->session->set_flashdata("alert", $alert);
+            redirect(base_url("{$this->viewTitle}"));
+        }
+        else
+        {
+            $viewData = new stdClass();
+            $viewData->item = $this->brand_model->get(
+                array(
+                    "id" => $id
+                )
+            );
+            $viewData->viewTitle = $this->viewTitle;
+            $viewData->viewFolder = $this->viewFolder;
+            $viewData->subViewFolder = "update";
+            $viewData->form_error = true;
+            $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+        }
+    }
 
 }
 
