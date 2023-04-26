@@ -21,7 +21,7 @@ class Courses extends CI_Controller{
         $viewData->items = $items;
         $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
     }
-
+    
 
 }
 

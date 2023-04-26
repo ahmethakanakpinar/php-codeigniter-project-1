@@ -19,8 +19,8 @@
                                 <tr>
                                     <th></th>
                                     <th>#id</th>
-                                    <th>url</th>
                                     <th>Başlık</th>
+                                    <th>Tarih</th>
                                     <th>Görsel</th>
                                     <th>Durumu</th>
                                     <th>İşlem</th>
@@ -31,8 +31,8 @@
                                 <tr id = "ord-<?php echo $item->id ?>">
                                     <td><i class="fa fa-reorder" aria-hidden="true"></i></td>
                                     <td><?php echo $item->id ?></td>
-                                    <td><?php echo $item->url ?></td>
                                     <td><?php echo $item->title ?></td>
+                                    <td><?php echo $item->event_date ?></td>
                                     <td class="text-center">
                                             <img width="75" class="img-fluid img-rounded" src="<?php echo "uploads/{$viewFolder}/{$item->img_url}" ?>" alt="<?php $item->img_url ?>">
                                     </td>
