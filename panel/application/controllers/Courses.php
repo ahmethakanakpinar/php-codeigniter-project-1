@@ -228,6 +228,67 @@ class Courses extends CI_Controller{
             $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
         }
     }
+    public function isActiveSetter($id)
+    {
+        if($id)
+        {
+            $isActive = ($this->input->post("data") === "true") ? 1 : 0;
+            $this->course_model->update(
+                array("id"=>$id),
+                array(
+                    "isActive" => $isActive
+                )
+            );
+        }
+    }
+    public function rankSetter()
+    {
+        $data = $this->input->post("data");
+		parse_str($data,$order);
+		$items = $order["ord"];
+		foreach($items as $rank => $id)
+		{
+			$this->course_model->update(
+				array(
+					"id" => $id,
+					"rank !=" => $rank
+				),
+				array(
+					"rank" => $rank
+				)
+			);
+		}
+    }
+    public function delete($id)
+    {
+        $item = $this->course_model->get(
+            array(
+                "id" => $id
+            )
+        );
+        $delete = $this->course_model->delete(
+            array("id" => $id)
+        );
+        if($delete)
+        {
+            $alert = array(
+				"title" => "İşlem Başarılı",
+				"text" => "Kayıt başarılı bir şekilde silindi",
+				"type" => "success"
+			);
+            unlink("uploads/{$this->viewFolder}/$item->img_url");  //dosyayı belirli bir yoldan silmek için kullanılır.
+        }
+        else
+        {
+            $alert = array(
+				"title" => "İşlem Başarısız",
+				"text" => "Kayıt silme işlemi sırasında bir problem oluştu!",
+				"type" => "error"
+			);
+        }
+        $this->session->set_flashdata("alert", $alert);
+		redirect(base_url("$this->viewTitle"));
+    }
 
 }
 
