@@ -32,14 +32,14 @@
                                     <td><i class="fa fa-reorder" aria-hidden="true"></i></td>
                                     <td><?php echo $item->id ?></td>
                                     <td><?php echo $item->title ?></td>
-                                    <td><?php echo $item->event_date ?></td>
+                                    <td class="text-center"><?php echo get_readable_date($item->event_date); ?></td>
                                     <td class="text-center">
                                             <img width="75" class="img-fluid img-rounded" src="<?php echo "uploads/{$viewFolder}/{$item->img_url}" ?>" alt="<?php $item->img_url ?>">
                                     </td>
-                                    <td>
+                                    <td class="text-center w-100">
                                         <input data-url="<?php echo base_url("$viewTitle/isActiveSetter/$item->id"); ?>" class="isActive" type="checkbox" data-switchery data-color="#10c469" <?php echo ($item->isActive) ? "checked": "" ?> />
                                     </td>
-                                    <td>
+                                    <td class="text-center w-200">
                                         <button  class="btn btn-danger btn-outline btn-sm remove-btn" data-url="<?php echo base_url("$viewTitle/delete/$item->id")?>"><i class="fa fa-trash" aria-hidden="true"></i> Sil</button>
                                         <a class="btn btn-info btn-outline btn-sm" href="<?php echo base_url("$viewTitle/update_form/$item->id")?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Düzenle</a>
                                     </td>
