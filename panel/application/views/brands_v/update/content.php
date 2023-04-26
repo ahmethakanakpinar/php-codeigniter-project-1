@@ -17,10 +17,6 @@
 								<small>Hata</small>
 								<?php endif; ?>
 							</div>
-							<div class="form-group">
-								<label for="exampleInputPassword1">Açıklama</label>
-								<textarea name="description" class="m-0" data-plugin="summernote" data-options="{height: 250}"><?php echo $item->description ?></textarea>
-							</div>
 								<div class="row">
 									<div class="col-md-2 image_upload_container">
 										<img src="<?php echo base_url("uploads/{$viewFolder}/{$item->img_url}") ?>" alt="<?php $item->img_url ?>">

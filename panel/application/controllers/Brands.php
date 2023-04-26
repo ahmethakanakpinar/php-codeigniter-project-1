@@ -117,6 +117,20 @@ class Brands extends CI_Controller{
        
         
     }
+    public function update_form($id)
+    {
+        $viewData = new stdClass();
+        $item = $this->brand_model->get(
+            array(
+                "id" => $id
+            )
+        );
+        $viewData->item = $item;
+        $viewData->viewTitle = $this->viewTitle;
+        $viewData->viewFolder = $this->viewFolder;
+        $viewData->subViewFolder = "update";
+        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+    }
 
 }
 
