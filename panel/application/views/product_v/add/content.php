@@ -3,7 +3,6 @@
 			<div class="col-md-12">
 				<h4 class="m-b-lg">
                     Ürün Ekle
-                    <a class="btn btn-primary btn-outline pull-right btn-xs" href="#"><i class="fa fa-plus" aria-hidden="true"></i> Ekle</a>
                 </h4>
 			</div><!-- END column -->
 			<div class="col-md-12">

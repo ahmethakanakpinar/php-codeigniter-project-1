@@ -3,7 +3,6 @@
 			<div class="col-md-12">
 				<h4 class="m-b-lg">
                     Ürün Ekle
-                    <a class="btn btn-primary btn-outline pull-right btn-xs" href="#"><i class="fa fa-plus" aria-hidden="true"></i> Ekle</a>
                 </h4>
 			</div><!-- END column -->
 			<div class="col-md-12">
@@ -11,14 +10,14 @@
 					<div class="widget-body">
 						<form action="<?php echo base_url("$viewTitle/save") ?>" method="post">
 							<div class="form-group <?php echo isset($form_error)? "has-error":""  ?>">
-								<label for="title">Ürün Başlığı</label>
+								<label for="title">Galeri Başlığı</label>
 								<input type="text" class="form-control" id="title" name="title">
 								<?php if(isset($form_error)): ?>
 								<small>Hata</small>
 								<?php endif; ?>
 							</div>
 							<div class="form-group ">
-								<label for="control-demo-6" class="">Haberin Türü</label>
+								<label for="control-demo-6" class="">Galeri Türü</label>
 								<div id="control-demo-6" class="">
 									<select class="form-control" name="gallery_type">
 										<option value="image" <?php echo (isset($gallery_type) && ($gallery_type == "image")) ? "selected" : "";  ?>>Resim</option>
