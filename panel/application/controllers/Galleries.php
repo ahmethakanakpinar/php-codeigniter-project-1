@@ -5,6 +5,7 @@ class Galleries extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
+		$this->viewTitle = "galleries";
 		$this->viewFolder = "galleries_v";
 		$this->load->model("gallery_model");
 		$this->load->model("image_model");
@@ -22,6 +23,7 @@ class Galleries extends CI_Controller {
 		);
 
 		// View'e gönderilecek olan değişkenlerin set edilmesi
+        $viewData->viewTitle = $this->viewTitle;
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "list";
 		$viewData->items = $items;
@@ -30,15 +32,17 @@ class Galleries extends CI_Controller {
 	public function new_form()
 	{
 		$viewData = new stdClass();
+		$viewData->viewTitle = $this->viewTitle;
 		$viewData->viewFolder = $this->viewFolder;
 		$viewData->subViewFolder = "add";
 		$this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
 	}
 	public function save()
 	{
+		
 		$this->load->library("form_validation");
 		//kuralların yazıldığı alan
-		$this->form_validation->set_rules("title","Başlık","required|trim");
+		$this->form_validation->set_rules("title","Galeri Başlığı","required|trim");
 		$this->form_validation->set_message(
 			array(
 				"required" => "{field} alanını doldurulmalıdır."
@@ -48,12 +52,42 @@ class Galleries extends CI_Controller {
 		$validate = $this->form_validation->run();
 		if($validate)
 		{
+	
+			$gallery_type = $this->input->post("gallery_type");
+			$path = "uploads/{$this->viewFolder}";
+			if($gallery_type == "image")
+			{
+				$folder_name = CharConvert($this->input->post("title"));
+				$path = "{$path}/images/$folder_name";
+			}
+			else if($gallery_type == "file")
+			{
+				$folder_name = CharConvert($this->input->post("title"));
+				$path = "{$path}/files/$folder_name";
+			}
+			
+			if($gallery_type != "movie")
+			{
+				if(!mkdir($path, 0755))
+				{
+					$alert = array(
+						"title" => "İşlem Başarısız",
+						"text" => "Galeri Oluşturma sırasında bir problem oluştu! (Yetki Hatası)",
+						"type" => "error"
+					);
+					$this->session->set_flashdata("alert", $alert);
+					redirect(base_url("{$this->viewTitle}"));
+				}
+			}
+	
+
 			$insert = $this->gallery_model->add(
 				array(
-					"title"			=> $this->input->post("title"),
-					"description"	=> $this->input->post("description"),
 					"url"			=> CharConvert($this->input->post("title")),
-					"isActive"		=> 0,
+					"title"			=> $this->input->post("title"),
+					"gallery_type"  => $this->input->post("gallery_type"),
+					"folder_name"	=> $folder_name,
+ 					"isActive"		=> 0,
 					"rank"			=> 0,
 					"createdAt"		=> date("Y-m-d H:i:s")
 				)
@@ -75,11 +109,12 @@ class Galleries extends CI_Controller {
 				);
 			}
 			$this->session->set_flashdata("alert", $alert);
-			redirect(base_url("product"));
+			redirect(base_url("{$this->viewTitle}"));
 		}
 		else
 		{
 			$viewData = new stdClass();
+			$viewData->viewTitle = $this->viewTitle;
 			$viewData->viewFolder = $this->viewFolder;
 			$viewData->subViewFolder = "add";
 			$viewData->form_error = true;
@@ -94,6 +129,7 @@ class Galleries extends CI_Controller {
 			)
 		);	
 		$viewData = new stdClass();
+		$viewData->viewTitle = $this->viewTitle;
 		$viewData->viewFolder = $this->viewFolder;
 		$viewData->subViewFolder = "update";
 		$viewData->item = $item;
@@ -141,11 +177,12 @@ class Galleries extends CI_Controller {
 				);
 			}
 			$this->session->set_flashdata("alert", $alert);
-			redirect(base_url("product"));
+			redirect(base_url("$this->viewTitle"));
 		}
 		else
 		{
 			$viewData = new stdClass();
+			$viewData->viewTitle = $this->viewTitle;
 			$item = $this->gallery_model->get(
 				array(
 					"id" => $id,
@@ -182,7 +219,7 @@ class Galleries extends CI_Controller {
 			);
 		}
 		$this->session->set_flashdata("alert", $alert);
-		redirect(base_url("product"));
+		redirect(base_url("$this->viewTitle"));
 	}
 	public function imageDelete($id, $parent_id)
 	{
@@ -199,11 +236,11 @@ class Galleries extends CI_Controller {
 		if($delete)
 		{
 			unlink("uploads/{$this->viewFolder}/$fileName->img_url");
-			redirect(base_url("product/image_form/$parent_id"));
+			redirect(base_url("$this->viewTitle/image_form/$parent_id"));
 		}
 		else
 		{
-			redirect(base_url("product"));
+			redirect(base_url("$this->viewTitle"));
 		}
 	}
 	public function isActiveSetter($id)
@@ -245,7 +282,7 @@ class Galleries extends CI_Controller {
 				)
 			);
 			$viewData = new stdClass();
-
+			$viewData->viewTitle = $this->viewTitle;
 			/** View'e gönderilecek Değişkenlerin Set Edilmesi.. */
 			$viewData->viewFolder = $this->viewFolder;
 			$viewData->subViewFolder = "image";
@@ -306,6 +343,7 @@ class Galleries extends CI_Controller {
 			)
 		);
 		$viewData = new stdClass();
+		$viewData->viewTitle = $this->viewTitle;
 		$viewData->viewFolder = $this->viewFolder;
 		$viewData->subViewFolder = "image";
 		$viewData->item = $item;
@@ -348,8 +386,8 @@ class Galleries extends CI_Controller {
 	public function refresh_image_list($id){
 
         $viewData = new stdClass();
-
         /** View'e gönderilecek Değişkenlerin Set Edilmesi.. */
+		$viewData->viewTitle = $this->viewTitle;
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "image";
 
