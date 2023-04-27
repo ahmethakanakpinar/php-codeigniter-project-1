@@ -222,29 +222,56 @@ class Galleries extends CI_Controller {
 	}
 	public function delete($id)
 	{
-		$delete = $this->gallery_model->delete(
+		$gallery = $this->gallery_model->get(
 			array(
 				"id" => $id
 			)
 		);
-		if($delete)
+		if($gallery)
 		{
-			$alert = array(
-				"title" => "İşlem Başarılı",
-				"text" => "Kayıt başarılı bir şekilde silindi",
-				"type" => "success"
+			if($gallery->gallery_type == "image")
+				$path = "uploads/$this->viewFolder/images/$gallery->folder_name";
+			else if($gallery->gallery_type == "file")
+				$path = "uploads/$this->viewFolder/files/$gallery->folder_name";
+			if($gallery->gallery_type != "movie")
+			{
+				if(!rmdir($path))
+				{
+					$alert = array(
+						"title" => "İşlem Başarısız",
+						"text" => "Kayıt silme işlemi sırasında bir problem oluştu!",
+						"type" => "error"
+					);
+					$this->session->set_flashdata("alert", $alert);
+					redirect(base_url("$this->viewTitle"));
+					die();
+				}
+			}
+			$delete = $this->gallery_model->delete(
+				array(
+					"id" => $id
+				)
 			);
+			if($delete)
+			{
+				$alert = array(
+					"title" => "İşlem Başarılı",
+					"text" => "Kayıt başarılı bir şekilde silindi",
+					"type" => "success"
+				);
+			}
+			else
+			{
+				$alert = array(
+					"title" => "İşlem Başarısız",
+					"text" => "Kayıt silme işlemi sırasında bir problem oluştu!",
+					"type" => "error"
+				);
+			}
+			$this->session->set_flashdata("alert", $alert);
+			redirect(base_url("$this->viewTitle"));
 		}
-		else
-		{
-			$alert = array(
-				"title" => "İşlem Başarısız",
-				"text" => "Kayıt silme işlemi sırasında bir problem oluştu!",
-				"type" => "success"
-			);
-		}
-		$this->session->set_flashdata("alert", $alert);
-		redirect(base_url("$this->viewTitle"));
+		
 	}
 	public function imageDelete($id, $parent_id)
 	{
