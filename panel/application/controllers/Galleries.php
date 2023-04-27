@@ -135,11 +135,11 @@ class Galleries extends CI_Controller {
 		$viewData->item = $item;
 		$this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
 	}
-	public function update($id)
+	public function update($id, $gallery_type, $old_folder_name = "")
 	{
 		$this->load->library("form_validation");
 		//kuralların yazıldığı alan
-		$this->form_validation->set_rules("title","Başlık","required|trim");
+		$this->form_validation->set_rules("title","Galeri Başlığı","required|trim");
 		$this->form_validation->set_message(
 			array(
 				"required" => "{field} alanını doldurulmalıdır."
@@ -149,14 +149,39 @@ class Galleries extends CI_Controller {
 		$validate = $this->form_validation->run();
 		if($validate)
 		{
+			
+			if($gallery_type == "image")
+			{
+				$folder_name = CharConvert($this->input->post("title"));
+				$path = "uploads/{$this->viewFolder}/images";
+			}
+			else if($gallery_type == "file")
+			{
+				$folder_name = CharConvert($this->input->post("title"));
+				$path = "uploads/{$this->viewFolder}/files";
+			}
+			if($gallery_type != "movie")
+			{
+				if(!rename("$path/$old_folder_name","$path/$folder_name"))
+				{
+					$alert = array(
+						"title" => "İşlem Başarısız",
+						"text" => "Galeri Güncellemesi sırasında bir problem oluştu!",
+						"type" => "error"
+					);
+					$this->session->set_flashdata("alert", $alert);
+					redirect(base_url("$this->viewTitle"));
+					die();
+				}
+			}
 			$update = $this->gallery_model->update(
 				array(
 					"id" => $id
 				),
 				array(
-					"title"			=> $this->input->post("title"),
-					"description"	=> $this->input->post("description"),
 					"url"			=> CharConvert($this->input->post("title")),
+					"title"			=> $this->input->post("title"),
+					"folder_name"	=> $folder_name,
 				)
 			);
 			if($update)

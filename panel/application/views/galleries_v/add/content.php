@@ -26,7 +26,7 @@
 									</select>
 								</div>
 							</div><!-- .form-group -->
-							<button type="submit" class="btn btn-primary btn-md btn-outline">Submit</button>
+							<button type="submit" class="btn btn-primary btn-md btn-outline">Kaydet</button>
 							<a href="<?php echo base_url("$viewTitle") ?>" class="btn btn-danger btn-md btn-outline">İptal</a>
 						</form>
 					</div><!-- .widget-body -->
