@@ -42,7 +42,7 @@
                                     <td>
                                         <button  class="btn btn-danger btn-outline btn-sm remove-btn" data-url="<?php echo base_url("$viewTitle/delete/$item->id")?>"><i class="fa fa-trash" aria-hidden="true"></i> Sil</button>
                                         <a class="btn btn-info btn-outline btn-sm" href="<?php echo base_url("$viewTitle/update_form/$item->id")?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Düzenle</a>
-                                        <a class="btn btn-dark btn-outline btn-sm" href="<?php echo base_url("$viewTitle/image_form/$item->id")?>"><i class="fa fa-image" aria-hidden="true"></i> Resimler</a>
+                                        <a class="btn btn-dark btn-outline btn-sm" href="<?php echo base_url("$viewTitle/image_form/$item->id")?>"><i class="fa <?php echo ($item->gallery_type == "image") ? "fa-image" : (($item->gallery_type == "file") ? "fa-folder-open-o" : "fa-film"); ?>" aria-hidden="true"></i> Galeriye gözat</a>
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>
