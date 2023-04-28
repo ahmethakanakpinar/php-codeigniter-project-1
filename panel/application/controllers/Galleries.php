@@ -399,11 +399,30 @@ class Galleries extends CI_Controller {
 		$viewData->viewFolder = $this->viewFolder;
 		$viewData->subViewFolder = "image";
 		$viewData->item = $item;
-		$item_images = $this->product_image_model->get_all(
-			array(
-				"product_id" => $id
-			), "rank ASC"
-		);
+		if($item->gallery_type == "image")
+		{
+			$item_images = $this->image_model->get_all(
+				array(
+					"gallery_id" => $id
+				), "rank ASC"
+			);
+		}
+		else if($item->gallery_type == "file")
+		{
+			$item_images = $this->file_model->get_all(
+				array(
+					"gallery_id" => $id
+				), "rank ASC"
+			);
+		}
+		else if($item->gallery_type == "movie")
+		{
+			$item_images = $this->video_model->get_all(
+				array(
+					"gallery_id" => $id
+				), "rank ASC"
+			);
+		}
 		$viewData->item_images = $item_images;
 		$this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
 	}
@@ -435,7 +454,8 @@ class Galleries extends CI_Controller {
 			echo "İşlem Başarısız";
 		}
 	}
-	public function refresh_image_list($id){
+	public function refresh_image_list($id)
+	{
 
         $viewData = new stdClass();
         /** View'e gönderilecek Değişkenlerin Set Edilmesi.. */
