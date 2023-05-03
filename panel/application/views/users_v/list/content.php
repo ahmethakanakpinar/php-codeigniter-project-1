@@ -21,6 +21,7 @@
                                     <th>Kullanıcı Adı</th>
                                     <th>Ad Soyad</th>
                                     <th>E-posta</th>
+                                    <th>Görsel</th>
                                     <th>Durumu</th>
                                     <th>İşlem</th>
                                 </tr>
@@ -32,6 +33,9 @@
                                     <td><?php echo $item->user_name ?></td>
                                     <td><?php echo $item->full_name ?></td>
                                     <td><?php echo $item->email ?></td>
+                                    <td class="text-center w-100">
+                                            <img width="75" class="img-fluid img-rounded" src="<?php echo "uploads/{$viewFolder}/{$item->img_url}" ?>" alt="<?php $item->img_url ?>">
+                                    </td>
                                     <td class="text-center w-100">
                                         <input data-url="<?php echo base_url("$viewTitle/isActiveSetter/$item->id"); ?>" class="isActive" type="checkbox" data-switchery data-color="#10c469" <?php echo ($item->isActive) ? "checked": "" ?> />
                                     </td>
