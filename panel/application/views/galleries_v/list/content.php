@@ -40,9 +40,11 @@
                                         <input data-url="<?php echo base_url("$viewTitle/isActiveSetter/$item->id"); ?>" class="isActive" type="checkbox" data-switchery data-color="#10c469" <?php echo ($item->isActive) ? "checked": "" ?> />
                                     </td>
                                     <td>
+                                        <?php  $choose = ($item->gallery_type == "movie") ? "gallery_video_list" : "image_form"; 
+                                        ?>
                                         <button  class="btn btn-danger btn-outline btn-sm remove-btn" data-url="<?php echo base_url("$viewTitle/delete/$item->id")?>"><i class="fa fa-trash" aria-hidden="true"></i> Sil</button>
                                         <a class="btn btn-info btn-outline btn-sm" href="<?php echo base_url("$viewTitle/update_form/$item->id")?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Düzenle</a>
-                                        <a class="btn btn-dark btn-outline btn-sm" href="<?php echo base_url("$viewTitle/image_form/$item->id")?>"><i class="fa <?php echo ($item->gallery_type == "image") ? "fa-image" : (($item->gallery_type == "file") ? "fa-folder-open-o" : "fa-film"); ?>" aria-hidden="true"></i> Galeriye gözat</a>
+                                        <a class="btn btn-dark btn-outline btn-sm" href="<?php echo base_url("$viewTitle/$choose/$item->id")?>"><i class="fa <?php echo ($item->gallery_type == "image") ? "fa-image" : (($item->gallery_type == "file") ? "fa-folder-open-o" : "fa-film"); ?>" aria-hidden="true"></i> Galeriye gözat</a>
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>
