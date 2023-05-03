@@ -20,7 +20,6 @@ class Users extends CI_Controller{
         $viewData->subViewFolder = "list";
         $viewData->items = $items;
         $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
-
     }
 
 

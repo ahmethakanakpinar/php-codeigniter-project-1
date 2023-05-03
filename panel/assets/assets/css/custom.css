@@ -10,7 +10,15 @@ td
 {
     width: 100px;
 }
+.w-50
+{
+    width: 50px;
+}
 .w-200
 {
     width: 200px;
+}
+.w-300
+{
+    width: 300px;
 }
