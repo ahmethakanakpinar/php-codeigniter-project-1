@@ -17,7 +17,7 @@
 								<?php endif; ?>
 							</div>
 								<div class="form-group image_upload_container">
-									<label for="exampleInputFile">Görsel Seçiniz</label>
+									<label for="exampleInputFile">Fotoğraf Seçiniz</label>
 									<input type="file" id="exampleInputFile" class="form-control" name="img_url">
 								</div><!-- .form-group -->						
 							<button type="submit" class="btn btn-primary btn-md btn-outline">Kaydet</button>
