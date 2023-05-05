@@ -46,7 +46,7 @@
                                     <td class="text-center w-300">
                                         <button class="btn btn-danger btn-outline btn-sm remove-btn" data-url="<?php echo base_url("$viewTitle/delete/$item->id")?>"><i class="fa fa-trash" aria-hidden="true"></i> Sil</button>
                                         <a class="btn btn-info btn-outline btn-sm" href="<?php echo base_url("$viewTitle/update_form/$item->id")?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Düzenle</a>
-                                        <a class="btn btn-purple btn-outline btn-sm" href="<?php echo base_url("$viewTitle/update_form/$item->id")?>"><i class="fa fa-key" aria-hidden="true"></i> Şifre Değiştir</a>
+                                        <a class="btn btn-purple btn-outline btn-sm" href="<?php echo base_url("$viewTitle/password_form/$item->id")?>"><i class="fa fa-key" aria-hidden="true"></i> Şifre Değiştir</a>
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>

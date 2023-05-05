@@ -3,7 +3,6 @@
 			<div class="col-md-12">
 				<h4 class="m-b-lg">
                     <?php echo "<b>$item->user_name</b> Adlı  Kullanıcı Kaydını Düzenliyorsunuz" ?>
-                    <a class="btn btn-primary btn-outline pull-right btn-xs" href="#"><i class="fa fa-plus" aria-hidden="true"></i> Ekle</a>
                 </h4>
 			</div><!-- END column -->
 			<div class="col-md-12">
@@ -43,7 +42,7 @@
 								<div class="form-group image_upload_container col-md-9">
 									<label for="exampleInputFile">Fotoğraf Seçiniz</label>
 									<input type="file" id="exampleInputFile" class="form-control" name="img_url">
-									<small>Fotoğraf Seçmek Zorunlu değildir</small>
+									<small class="text-secondary">Fotoğraf Seçmek Zorunlu değildir</small>
 								</div><!-- .form-group -->						
 							</div>
 							<button type="submit" class="btn btn-primary btn-md btn-outline">Kaydet</button>

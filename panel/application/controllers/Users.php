@@ -39,8 +39,8 @@ class Users extends CI_Controller{
         $this->form_validation->set_rules("password-repeat","Şifre Tekrar", "required|trim|min_length[5]|max_length[20]|matches[password]");
         $this->form_validation->set_message(
             array(
-                "required"      => "{field} Alanı Boş bırakılmamalıdır!",
                 "is_unique"     => "{field} Benzersiz olmalıdır!",
+                "required"      => "{field} Alanı Boş bırakılmamalıdır!",
                 "max_length"    => "{field} {param} Karakterden fazla olmamalıdır!",
                 "min_length"    => "{field} {param} Karakterden az olmamalıdır!",
                 "matches"       => "Şifreler Birbirleri ile uyuşmuyor!",
@@ -68,7 +68,7 @@ class Users extends CI_Controller{
                             "user_name" => $username,
                             "full_name" => $this->input->post("full_name"),
                             "email" => $this->input->post("email"),
-                            "password" => $this->input->post("password"),
+                            "password" => md5($this->input->post("password")),
                             "img_url" => $file_name,
                             "isActive" => 0,
                             "createdAt" => date("Y-m-d H:i:s")
@@ -252,6 +252,125 @@ class Users extends CI_Controller{
             $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
         }
 
+    }
+    public function password_form($id)
+    {
+        $item = $this->user_model->get(
+            array(
+                "id"    => $id
+            )
+        );
+        $viewData = new stdClass();
+        $viewData->viewTitle = $this->viewTitle;
+        $viewData->viewFolder = $this->viewFolder;
+        $viewData->subViewFolder = "password";
+        $viewData->item = $item;
+        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+    }
+    public function password_update($id)
+    {
+       
+        $this->load->library("form_validation");
+        $this->form_validation->set_rules("password","Parola", "required|trim|min_length[5]|max_length[20]");
+        $this->form_validation->set_rules("password-repeat","Şifre Tekrar", "required|trim|min_length[5]|max_length[20]|matches[password]");
+        $this->form_validation->set_message(
+            array(
+                "required"      => "{field} Alanı Boş bırakılmamalıdır!",
+                "max_length"    => "{field} {param} Karakterden fazla olmamalıdır!",
+                "min_length"    => "{field} {param} Karakterden az olmamalıdır!",
+                "matches"       => "Şifreler Birbirleri ile uyuşmuyor!",
+            )
+        );
+        $validate = $this->form_validation->run();
+        if($validate)
+        {
+            $insert = $this->user_model->update(
+                array("id" => $id),
+                array(
+                    "password" => md5($this->input->post("password")),
+                )
+            );
+            if($insert)
+            {
+                $alert = array(
+                    "title" => "İşlem Başarılı",
+                    "text" => "Kullanıcının şifresi başarılı bir şekilde güncellendi",
+                    "type"  => "success"
+                );
+            }
+            else
+            {
+                $alert = array(
+                    "title" => "İşlem Başarısız",
+                    "text" => "Kullanıcının şifresini Güncellerken bir problem oluştu",
+                    "type"  => "error"
+                );
+            }
+            $this->session->set_flashdata("alert", $alert);
+            redirect(base_url("{$this->viewTitle}"));
+        }
+        else
+        {
+            
+            $viewData = new stdClass();
+            $item = $this->user_model->get(
+                array("id" => $id)
+            );
+            $viewData->viewTitle = $this->viewTitle;
+            $viewData->viewFolder = $this->viewFolder;
+            $viewData->subViewFolder = "password";
+            $viewData->form_error = true;
+            $viewData->item = $item;
+            $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+        }
+
+    }
+    public function delete($id)
+    {
+        $user = $this->user_model->get(
+			array(
+				"id" => $id
+			)
+		);
+        $path = "uploads/$this->viewFolder/$user->user_name";
+        
+        $delete = $this->user_model->delete(
+            array("id" => $id)
+        );
+        if($delete)
+        {
+            rmdir($path);
+            $alert = array(
+                "title" => "İşlem Başarılı",
+                "text" => "Kayıt başarılı bir şekilde silindi",
+                "type" => "success"
+            );
+        }
+        else
+        {
+            $alert = array(
+                "title" => "İşlem Başarısız",
+                "text" => "Kayıt silme işlemi sırasında bir problem oluştu!",
+                "type" => "error"
+            );
+        }
+        $this->session->set_flashdata("alert", $alert);
+        redirect(base_url("$this->viewTitle"));
+    }
+    public function isActiveSetter($id)
+    {
+        if($id)
+		{
+			$isActive = ($this->input->post("data") === "true") ? 1 : 0;
+			$this->user_model->update(
+				array(
+					"id" => $id
+				),
+				array(
+					"isActive" => $isActive
+				)
+			);
+		}
     }
 
 }
