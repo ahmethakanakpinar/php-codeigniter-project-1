@@ -26,15 +26,19 @@
                                     <th>İşlem</th>
                                 </tr>
                             </thead>
-                            <tbody class="sortable">
+                            <tbody>
                                 <?php foreach($items as $item): ?>
                                 <tr>
                                     <td class="w-50"><?php echo $item->id ?></td>
-                                    <td><?php echo $item->user_name ?></td>
+                                    <td><?php echo $item->user_name ?> </td>
                                     <td><?php echo $item->full_name ?></td>
                                     <td><?php echo $item->email ?></td>
                                     <td class="text-center w-100">
-                                            <img width="75" class="img-fluid img-rounded" src="<?php echo "uploads/{$viewFolder}/{$item->img_url}" ?>" alt="<?php $item->img_url ?>">
+                                        <?php 
+                                            $img_name = ($item->img_url != "") ? "uploads/{$viewFolder}/{$item->user_name}/{$item->img_url}" : "uploads/{$viewFolder}/default_users/default-user-image.png";
+                                            $img_url = ($item->img_url != "") ? "$item->img_url" : "default-user-image.png"; 
+                                        ?>
+                                            <img width="100" class="img-fluid img-rounded" src="<?php echo $img_name ?>" alt="<?php echo $img_url ?>">
                                     </td>
                                     <td class="text-center w-100">
                                         <input data-url="<?php echo base_url("$viewTitle/isActiveSetter/$item->id"); ?>" class="isActive" type="checkbox" data-switchery data-color="#10c469" <?php echo ($item->isActive) ? "checked": "" ?> />
