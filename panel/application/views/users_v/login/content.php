@@ -10,14 +10,20 @@
 		</div><!-- logo -->
 		<div class="simple-page-form animated flipInY" id="login-form">
 	<h4 class="form-title m-b-xl text-center">Hesabınız ile oturum açın</h4>
-	<form action="#">
+	<form action="<?php echo base_url("userop/do_login"); ?>" method="post">
 		<div class="form-group">
-			<input id="sign-in-email" type="email" class="form-control" placeholder="E-posta">
+			<input id="sign-in-username" type="text" class="form-control" placeholder="Kullanıcı Adı" name="user_username">
 		</div>
+		<?php if(isset($form_error)): ?>
+		<small class="text-danger"><?php echo form_error("user_username"); ?></small>
+		<?php endif; ?>
 
 		<div class="form-group">
-			<input id="sign-in-password" type="password" class="form-control" placeholder="Şifre">
+			<input id="sign-in-password" type="password" class="form-control" placeholder="Şifre" name="user_password">
 		</div>
+		<?php if(isset($form_error)): ?>
+		<small class="text-danger"><?php echo form_error("user_password"); ?></small>
+		<?php endif; ?>
 
 		<div class="form-group m-b-xl">
 			<div class="checkbox checkbox-primary">
