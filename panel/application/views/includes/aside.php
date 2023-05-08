@@ -36,7 +36,7 @@
                                 </li>
                                 <li role="separator" class="divider"></li>
                                 <li>
-                                    <a class="text-color" href="<?php echo base_url("users/login_form"); ?>">
+                                    <a class="text-color" href="<?php echo base_url("userop/login_form"); ?>">
                                         <span class="m-r-xs"><i class="fa fa-power-off"></i></span>
                                         <span>Exit</span>
                                     </a>

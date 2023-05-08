@@ -22,15 +22,15 @@
 		<div class="form-group m-b-xl">
 			<div class="checkbox checkbox-primary">
 				<input type="checkbox" id="keep_me_logged_in"/>
-				<label for="keep_me_logged_in">Hesabınızı Hatırlayın</label>
+				<label for="keep_me_logged_in">Beni Hatırla</label>
 			</div>
 		</div>
-		<input type="submit" class="btn btn-primary" value="Giriş Yap">
+		<button type="submit" class="btn btn-primary" >Giriş Yap</button>
 	</form>
 </div><!-- #login-form -->
 
 <div class="simple-page-footer">
-	<p><a href="password-forget.html">Şifremi Unuttum</a></p>
+	<p><a href="password-forget.html">Şifremi Unuttum ?</a></p>
 </div><!-- .simple-page-footer -->
 
 
