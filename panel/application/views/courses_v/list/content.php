@@ -32,7 +32,17 @@
                                     <td><i class="fa fa-reorder" aria-hidden="true"></i></td>
                                     <td><?php echo $item->id ?></td>
                                     <td><?php echo $item->title ?></td>
-                                    <td class="text-center"><?php echo get_readable_date($item->event_date); ?></td>
+                                    <?php 
+                                        if($item->event_date < date("Y-m-d H:i:s"))
+                                        {
+                                            $danger = "bg-danger";
+                                        }
+                                        else
+                                        {
+                                            $danger = "";
+                                        }
+                                    ?>
+                                    <td class="text-center <?php echo $danger; ?>"><?php echo get_readable_date($item->event_date); ?></td>
                                     <td class="text-center">
                                             <img width="75" class="img-fluid img-rounded" src="<?php echo "uploads/{$viewFolder}/{$item->img_url}" ?>" alt="<?php $item->img_url ?>">
                                     </td>
