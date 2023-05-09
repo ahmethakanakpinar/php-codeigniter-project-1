@@ -11,14 +11,23 @@ class Userop extends CI_Controller
     }
     public function login_form()
     {
+        if(get_active_user())
+		{
+			redirect(base_url());
+		}
         $viewData = new stdClass();
         $viewData->viewTitle = $this->viewTitle;
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "login";
         $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
+        
     }
     public function do_login()
     {
+        if(get_active_user())
+		{
+			redirect(base_url());
+		}
         $this->load->library("form_validation");
         $this->form_validation->set_rules("user_username","Kullanıcı Adı","required|trim");
         $this->form_validation->set_rules("user_password","Şifre","required|trim|min_length[5]");
@@ -34,8 +43,15 @@ class Userop extends CI_Controller
             $user = $this->user_model->get(
                 array(
                     "user_name" => $this->input->post("user_username"),
-                    "password"  => md5($this->input->post("user_password"))
+                    "password"  => md5($this->input->post("user_password")),
+                    "isActive"  => 1
+                ),
+                array(
+                    "email" => $this->input->post("user_username"),
+                    "password"  => md5($this->input->post("user_password")),
+                    "isActive"  => 1
                 )
+
             );
             if($user)
             {
@@ -70,6 +86,11 @@ class Userop extends CI_Controller
             $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
         }
 
+    }
+    public function logout_form()
+    {
+        $this->session->unset_userdata("user");
+        redirect(base_url("login"));
     }
 }
 
