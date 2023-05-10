@@ -69,12 +69,16 @@
                         <span class="menu-text">Dashboard</span>
                     </a>
                 </li>
-
-                <li>
-                    <a href="javascript:void(0)">
+                <li class="has-submenu">
+                    <a href="javascript:void(0)" class="submenu-toggle">
                         <i class="menu-icon zmdi zmdi-settings zmdi-hc-lg"></i>
-                        <span class="menu-text">Settings</span>
+                        <span class="menu-text">Ayarlar</span>
+                        <i class="menu-caret zmdi zmdi-hc-sm zmdi-chevron-right"></i>
                     </a>
+                    <ul class="submenu">
+                        <li><a href="dashboard.2.html"><span class="menu-text">Genel Ayarlar</span></a></li>
+                        <li><a href="<?php echo base_url("email_settings")?>"><span class="menu-text">Mail Ayarları</span></a></li>
+                    </ul>
                 </li>
                 <li>
                     <a href="<?php echo base_url("galleries"); ?>">
