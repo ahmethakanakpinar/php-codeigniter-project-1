@@ -10,45 +10,62 @@
 					<div class="widget-body">
 						<form action="<?php echo base_url("{$viewTitle}/save") ?>" method="post" enctype = "multipart/form-data">
 							<div class="form-group">
-								<label for="user_name">Kullanıcı Adı</label>
-								<input type="text" class="form-control" id="user_name" name="user_name" placeholder="Kullanıcı Adı" value="<?php echo isset($form_error) ? set_value("user_name") : "" ?>">
+								<label for="protocol">Protokol</label>
+								<input type="text" class="form-control" id="protocol" name="protocol" placeholder="Protocol" value="<?php echo isset($form_error) ? set_value("protocol") : "" ?>">
 								<?php if(isset($form_error)): ?>
-								<small class="text-danger"><?php echo form_error("user_name"); ?></small>
+								<small class="text-danger"><?php echo form_error("protocol"); ?></small>
 								<?php endif; ?>
 							</div>
 							<div class="form-group">
-								<label for="full_name">Ad Soyad</label>
-								<input type="text" class="form-control" id="full_name" name="full_name" placeholder="Ad Soyad" value="<?php echo isset($form_error) ? set_value("full_name") : "" ?>">
+								<label for="host">E-posta Sunucu Bilgisi</label>
+								<input type="text" class="form-control" id="host" name="host" placeholder="Host" value="<?php echo isset($form_error) ? set_value("host") : "" ?>">
 								<?php if(isset($form_error)): ?>
-								<small class="text-danger"><?php echo form_error("full_name"); ?></small>
+								<small class="text-danger"><?php echo form_error("host"); ?></small>
 								<?php endif; ?>
 							</div>
 							<div class="form-group">
-								<label for="email">E-posta Adresi</label>
-								<input type="text" class="form-control" id="email" name="email" placeholder="E-posta Adresi" value="<?php echo isset($form_error) ? set_value("email") : "" ?>">
+								<label for="port">Port Numarası</label>
+								<input type="text" class="form-control" id="port" name="port" placeholder="Port" value="<?php echo isset($form_error) ? set_value("port") : "" ?>">
 								<?php if(isset($form_error)): ?>
-								<small class="text-danger"><?php echo form_error("email"); ?></small>
+								<small class="text-danger"><?php echo form_error("port"); ?></small>
 								<?php endif; ?>
 							</div>
 							<div class="form-group">
-								<label for="password">Şifre</label>
-								<input type="password" class="form-control" id="password" name="password" placeholder="Şifre">
+								<label for="user">E-posta Adresi (User)</label>
+								<input type="text" class="form-control" id="user" name="user" placeholder="User" value="<?php echo isset($form_error) ? set_value("user") : "" ?>">
+								<?php if(isset($form_error)): ?>
+								<small class="text-danger"><?php echo form_error("user"); ?></small>
+								<?php endif; ?>
+							</div>
+							<div class="form-group">
+								<label for="password">Eposta Adresine ait Şifre</label>
+								<input type="password" class="form-control" id="password" name="password" placeholder="Password">
 								<?php if(isset($form_error)): ?>
 								<small class="text-danger"><?php echo form_error("password"); ?></small>
 								<?php endif; ?>
 							</div>
 							<div class="form-group">
-								<label for="password-repeat">Şifre Tekrar</label>
-								<input type="password" class="form-control" id="password-repeat" name="password-repeat" placeholder="Şifre Tekrar">
+								<label for="email_from">Kimden Gidecek (from)</label>
+								<input type="text" class="form-control" id="email_from" name="email_from" placeholder="From" value="<?php echo isset($form_error) ? set_value("email_from") : "" ?>">
 								<?php if(isset($form_error)): ?>
-								<small class="text-danger"><?php echo form_error("password-repeat"); ?></small>
+								<small class="text-danger"><?php echo form_error("email_from"); ?></small>
 								<?php endif; ?>
 							</div>
-							<div class="form-group image_upload_container">
-								<label for="exampleInputFile">Fotoğraf Seçiniz</label>
-								<input type="file" id="exampleInputFile" class="form-control" name="img_url">
-								<small class="text-secondary">Fotoğraf Seçmek Zorunlu değildir</small>
-							</div><!-- .form-group -->						
+							<div class="form-group">
+								<label for="email_to">Kime Gidecek (to)</label>
+								<input type="text" class="form-control" id="email_to" name="email_to" placeholder="To" value="<?php echo isset($form_error) ? set_value("email_to") : "" ?>">
+								<?php if(isset($form_error)): ?>
+								<small class="text-danger"><?php echo form_error("email_to"); ?></small>
+								<?php endif; ?>
+							</div>
+							<div class="form-group">
+								<label for="user_name">Başlık Adı</label>
+								<input type="text" class="form-control" id="user_name" name="user_name" placeholder="E-mail Title" value="<?php echo isset($form_error) ? set_value("user_name") : "" ?>">
+								<?php if(isset($form_error)): ?>
+								<small class="text-danger"><?php echo form_error("user_name"); ?></small>
+								<?php endif; ?>
+							</div>
+							
 							<button type="submit" class="btn btn-primary btn-md btn-outline">Kaydet</button>
 							<a href="<?php echo base_url("$viewTitle") ?>" class="btn btn-danger btn-md btn-outline">İptal</a>
 						</form>
