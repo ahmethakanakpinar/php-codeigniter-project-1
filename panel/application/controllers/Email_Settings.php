@@ -113,82 +113,44 @@ class Email_Settings extends CI_Controller{
     }
     public function update($id)
     {
-        $old_user = $this->email_setting_model->get(
-            array("id" => $id)
-        );
         $this->load->library("form_validation");
-        if($old_user->user_name != $this->input->post("user_name"))
-        {
-            $this->form_validation->set_rules("user_name","Kullanıcı Adı", "required|trim|is_unique[users.user_name]|max_length[20]");
-        }
-        if($old_user->email != $this->input->post("email"))
-        {
-            $this->form_validation->set_rules("email","E-mail", "required|trim|is_unique[users.email]|valid_email");
-        }
-        $this->form_validation->set_rules("full_name","Ad Soyad", "required|trim");
+        $this->form_validation->set_rules("protocol","Protokol Numarası", "required|trim");
+        $this->form_validation->set_rules("host","E-posta Sunucusu", "required|trim");
+        $this->form_validation->set_rules("port","Port Numarası", "required|trim");
+        $this->form_validation->set_rules("user_name","Kullanıcı Adı", "required|trim");
+        $this->form_validation->set_rules("user","E-posta (User)", "required|trim|valid_email");
+        $this->form_validation->set_rules("email_from","Kimden Gidecek (from)", "required|trim|valid_email");
+        $this->form_validation->set_rules("email_to","Kime Gidecek (to)", "required|trim|valid_email");
+        $this->form_validation->set_rules("password","Şifre", "required|trim");
         $this->form_validation->set_message(
             array(
                 "required"      => "{field} Alanı Boş bırakılmamalıdır!",
-                "is_unique"     => "{field} Benzersiz olmalıdır!",
-                "max_length"    => "{field} {param} Karakterden fazla olmamalıdır!",
                 "valid_email"   => "Mail adresi kurallara uygun yazılmalıdır!"
             )
         );
         $validate = $this->form_validation->run();
         if($validate)
         {
-            $username = CharConvert($this->input->post("user_name"));
-            $path = "uploads/{$this->viewFolder}";
-            rename("{$path}/{$old_user->user_name}","{$path}/{$username}");
-            if($_FILES["img_url"]["name"] != "")
-            {
-                $file_name = CharConvert(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)). "." .pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
-                $config["file_name"] = $file_name;
-                $config["upload_path"] = "{$path}/{$username}/";
-                $config["allowed_types"] = "jpg|jpeg|png";
-                $this->load->library("upload",$config);
-                $upload = $this->upload->do_upload("img_url");
-                if($upload)
-                {
-                    $insert = $this->email_setting_model->update(
-                        array("id" => $id),
-                        array(
-                            "user_name" => $username,
-                            "full_name" => $this->input->post("full_name"),
-                            "email" => $this->input->post("email"),
-                            "img_url" => $file_name,
-                        )
-                    );
-                }
-                else
-                {
-                    $alert = array(
-                        "title" => "İşlem Başarısız",
-                        "text" => "Görsel güncelleme sırasında problem yaşandı!",
-                        "type" => "error"
-                    );
-                    $this->session->set_flashdata("alert", $alert);
-                    redirect(base_url("{$this->viewTitle}/update_form/$id"));
-                    die();
-                }
-              
-            }
-            else
-            {
-                $insert = $this->email_setting_model->update(
-                    array("id" => $id),
-                    array(
-                        "user_name" => $username,
-                        "full_name" => $this->input->post("full_name"),
-                        "email" => $this->input->post("email"),
-                    )
-                );
-            }
+            $insert = $this->email_setting_model->update(
+                array("id" => $id),
+                array(
+                    "protocol" => $this->input->post("protocol"),
+                    "host" => $this->input->post("host"),
+                    "port" => $this->input->post("port"),
+                    "user_name" => $this->input->post("user_name"),
+                    "user" => $this->input->post("user"),
+                    "email_from" => $this->input->post("email_from"),
+                    "email_to" => $this->input->post("email_to"),
+                    "password" => $this->input->post("password"),
+                    "isActive" => 0,
+                    "createdAt" => date("Y-m-d H:i:s")
+                )
+            );
             if($insert)
             {
                 $alert = array(
                     "title" => "İşlem Başarılı",
-                    "text" => "Kullanıcı başarılı bir şekilde güncellendi",
+                    "text" => "Mail Adresi başarılı bir şekilde güncellendi",
                     "type"  => "success"
                 );
             }
@@ -196,7 +158,7 @@ class Email_Settings extends CI_Controller{
             {
                 $alert = array(
                     "title" => "İşlem Başarısız",
-                    "text" => "Kullanıcı Güncelleme sırasında bir problem oluştu",
+                    "text" => "Mail Adresi Güncelleme sırasında bir problem oluştu",
                     "type"  => "error"
                 );
             }

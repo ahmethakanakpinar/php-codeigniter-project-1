@@ -8,7 +8,7 @@
 			<div class="col-md-12">
 				<div class="widget p-lg">
 					<div class="widget-body">
-						<form action="<?php echo base_url("{$viewTitle}/update") ?>" method="post" enctype = "multipart/form-data">
+						<form action="<?php echo base_url("{$viewTitle}/update/$item->id") ?>" method="post" enctype = "multipart/form-data">
 							<div class="form-group">
 								<label for="protocol">Protokol</label>
 								<input type="text" class="form-control" id="protocol" name="protocol" placeholder="Protocol" value="<?php echo isset($form_error) ? set_value("protocol") : $item->protocol; ?>">
