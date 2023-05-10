@@ -36,80 +36,42 @@ class Email_Settings extends CI_Controller{
     public function save()
     {
         $this->load->library("form_validation");
-        $this->form_validation->set_rules("user_name","Kullanıcı Adı", "required|trim|is_unique[users.user_name]|max_length[20]");
-        $this->form_validation->set_rules("full_name","Ad Soyad", "required|trim");
-        $this->form_validation->set_rules("email","E-mail", "required|trim|is_unique[users.email]|valid_email");
-        $this->form_validation->set_rules("password","Parola", "required|trim|min_length[5]|max_length[20]");
-        $this->form_validation->set_rules("password-repeat","Şifre Tekrar", "required|trim|min_length[5]|max_length[20]|matches[password]");
+        $this->form_validation->set_rules("protocol","Protokol Numarası", "required|trim");
+        $this->form_validation->set_rules("host","E-posta Sunucusu", "required|trim");
+        $this->form_validation->set_rules("port","Port Numarası", "required|trim");
+        $this->form_validation->set_rules("user_name","Kullanıcı Adı", "required|trim");
+        $this->form_validation->set_rules("user","E-posta (User)", "required|trim|valid_email");
+        $this->form_validation->set_rules("email_from","Kimden Gidecek (from)", "required|trim|valid_email");
+        $this->form_validation->set_rules("email_to","Kime Gidecek (to)", "required|trim|valid_email");
+        $this->form_validation->set_rules("password","Şifre", "required|trim");
         $this->form_validation->set_message(
             array(
-                "is_unique"     => "{field} Benzersiz olmalıdır!",
                 "required"      => "{field} Alanı Boş bırakılmamalıdır!",
-                "max_length"    => "{field} {param} Karakterden fazla olmamalıdır!",
-                "min_length"    => "{field} {param} Karakterden az olmamalıdır!",
-                "matches"       => "Şifreler Birbirleri ile uyuşmuyor!",
                 "valid_email"   => "Mail adresi kurallara uygun yazılmalıdır!"
             )
         );
         $validate = $this->form_validation->run();
         if($validate)
         {
-            $username = CharConvert($this->input->post("user_name"));
-            $path = "uploads/{$this->viewFolder}";
-            mkdir("{$path}/{$username}", 0755);
-            if($_FILES["img_url"]["name"] != "")
-            {
-                $file_name = CharConvert(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)). "." .pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
-                $config["file_name"] = $file_name;
-                $config["upload_path"] = "{$path}/{$username}/";
-                $config["allowed_types"] = "jpg|jpeg|png";
-                $this->load->library("upload",$config);
-                $upload = $this->upload->do_upload("img_url");
-                if($upload)
-                {
-                    $insert = $this->email_setting_model->add(
-                        array(
-                            "user_name" => $username,
-                            "full_name" => $this->input->post("full_name"),
-                            "email" => $this->input->post("email"),
-                            "password" => md5($this->input->post("password")),
-                            "img_url" => $file_name,
-                            "isActive" => 0,
-                            "createdAt" => date("Y-m-d H:i:s")
-                        )
-                    );
-                }
-                else
-                {
-                    $alert = array(
-                        "title" => "İşlem Başarısız",
-                        "text" => "Görsel Yükleme de problem yaşandı!",
-                        "type" => "error"
-                    );
-                    $this->session->set_flashdata("alert", $alert);
-                    redirect(base_url("{$this->viewTitle}/new_form"));
-                    die();
-                }
-              
-            }
-            else
-            {
-                $insert = $this->email_setting_model->add(
-                    array(
-                        "user_name" => $username,
-                        "full_name" => $this->input->post("full_name"),
-                        "email" => $this->input->post("email"),
-                        "password" => md5($this->input->post("password")),
-                        "isActive" => 0,
-                        "createdAt" => date("Y-m-d H:i:s")
-                    )
-                );
-            }
+            $insert = $this->email_setting_model->add(
+                array(
+                    "protocol" => $this->input->post("protocol"),
+                    "host" => $this->input->post("host"),
+                    "port" => $this->input->post("port"),
+                    "user_name" => $this->input->post("user_name"),
+                    "user" => $this->input->post("user"),
+                    "email_from" => $this->input->post("email_from"),
+                    "email_to" => $this->input->post("email_to"),
+                    "password" => $this->input->post("password"),
+                    "isActive" => 0,
+                    "createdAt" => date("Y-m-d H:i:s")
+                )
+            );
             if($insert)
             {
                 $alert = array(
                     "title" => "İşlem Başarılı",
-                    "text" => "Kullanıcı başarılı bir şekilde eklendi",
+                    "text" => "Mail Adresi başarılı bir şekilde eklendi",
                     "type"  => "success"
                 );
             }
@@ -117,7 +79,7 @@ class Email_Settings extends CI_Controller{
             {
                 $alert = array(
                     "title" => "İşlem Başarısız",
-                    "text" => "Kullanıcı Ekleme sırasında bir problem oluştu",
+                    "text" => "Mail Adresi Ekleme sırasında bir problem oluştu",
                     "type"  => "error"
                 );
             }
