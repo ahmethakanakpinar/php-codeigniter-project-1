@@ -36,7 +36,7 @@
 </div><!-- #login-form -->
 
 <div class="simple-page-footer">
-	<p><a href="password-forget.html">Şifremi Unuttum ?</a></p>
+	<p><a href="<?php echo base_url("forget-password") ?>">Şifremi Unuttum ?</a></p>
 </div><!-- .simple-page-footer -->
 
 

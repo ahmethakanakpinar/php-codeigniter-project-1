@@ -12,9 +12,9 @@ class Email_Setting_model extends CI_Model
     {
         return $this->db->where($where)->order_by($order)->get($this->tableName)->result();
     }
-    public function get($where = array() , $second_where = array())
+    public function get($where = array())
     {
-        return $this->db->where($where)->or_where($second_where)->get($this->tableName)->row();
+        return $this->db->where($where)->get($this->tableName)->row();
     }
     public function add($data = array())
     {

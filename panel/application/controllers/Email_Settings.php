@@ -181,87 +181,8 @@ class Email_Settings extends CI_Controller{
         }
 
     }
-    public function password_form($id)
-    {
-        $item = $this->email_setting_model->get(
-            array(
-                "id"    => $id
-            )
-        );
-        $viewData = new stdClass();
-        $viewData->viewTitle = $this->viewTitle;
-        $viewData->viewFolder = $this->viewFolder;
-        $viewData->subViewFolder = "password";
-        $viewData->item = $item;
-        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
-    }
-    public function password_update($id)
-    {
-       
-        $this->load->library("form_validation");
-        $this->form_validation->set_rules("password","Parola", "required|trim|min_length[5]|max_length[20]");
-        $this->form_validation->set_rules("password-repeat","Şifre Tekrar", "required|trim|min_length[5]|max_length[20]|matches[password]");
-        $this->form_validation->set_message(
-            array(
-                "required"      => "{field} Alanı Boş bırakılmamalıdır!",
-                "max_length"    => "{field} {param} Karakterden fazla olmamalıdır!",
-                "min_length"    => "{field} {param} Karakterden az olmamalıdır!",
-                "matches"       => "Şifreler Birbirleri ile uyuşmuyor!",
-            )
-        );
-        $validate = $this->form_validation->run();
-        if($validate)
-        {
-            $insert = $this->email_setting_model->update(
-                array("id" => $id),
-                array(
-                    "password" => md5($this->input->post("password")),
-                )
-            );
-            if($insert)
-            {
-                $alert = array(
-                    "title" => "İşlem Başarılı",
-                    "text" => "Kullanıcının şifresi başarılı bir şekilde güncellendi",
-                    "type"  => "success"
-                );
-            }
-            else
-            {
-                $alert = array(
-                    "title" => "İşlem Başarısız",
-                    "text" => "Kullanıcının şifresini Güncellerken bir problem oluştu",
-                    "type"  => "error"
-                );
-            }
-            $this->session->set_flashdata("alert", $alert);
-            redirect(base_url("{$this->viewTitle}"));
-        }
-        else
-        {
-            
-            $viewData = new stdClass();
-            $item = $this->email_setting_model->get(
-                array("id" => $id)
-            );
-            $viewData->viewTitle = $this->viewTitle;
-            $viewData->viewFolder = $this->viewFolder;
-            $viewData->subViewFolder = "password";
-            $viewData->form_error = true;
-            $viewData->item = $item;
-            $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
-        }
-
-    }
     public function delete($id)
-    {
-        $user = $this->email_setting_model->get(
-			array(
-				"id" => $id
-			)
-		);
-        $path = "uploads/$this->viewFolder/$user->user_name";
-        
+    {   
         $delete = $this->email_setting_model->delete(
             array("id" => $id)
         );
