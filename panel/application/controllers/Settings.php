@@ -115,6 +115,8 @@ class Settings extends CI_Controller{
                 redirect(base_url("{$this->viewTitle}/new_form"));
                 die();
             }
+            $settings = $this->setting_model->get();
+            $this->session->set_userdata("settings", $settings);
             $this->session->set_flashdata("alert", $alert);
             redirect(base_url("{$this->viewTitle}"));
 
@@ -219,7 +221,8 @@ class Settings extends CI_Controller{
                         "facebook"      => $this->input->post("facebook"),
                         "twitter"       => $this->input->post("twitter"),
                         "instagram"    => $this->input->post("instagram"),
-                        "linkedin"      => $this->input->post("linkedin")
+                        "linkedin"      => $this->input->post("linkedin"),
+                        "updatedAt"     => date("Y-m-d H:i:s")
                     )
                 );
             }
@@ -239,6 +242,9 @@ class Settings extends CI_Controller{
                     "type"  => "error"
                 );
             }
+            $settings = $this->setting_model->get();
+            $this->session->set_userdata("settings", $settings);
+
             $this->session->set_flashdata("alert", $alert);
             redirect(base_url("{$this->viewTitle}"));
         }

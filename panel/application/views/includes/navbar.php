@@ -1,5 +1,5 @@
+<?php $settings = get_settings(); ?>
 <nav id="app-navbar" class="navbar navbar-inverse navbar-fixed-top primary">
-
     <!-- navbar header -->
     <div class="navbar-header">
         <button type="button" id="menubar-toggle-btn" class="navbar-toggle visible-xs-inline-block navbar-toggle-left hamburger hamburger--collapse js-hamburger">
@@ -17,9 +17,9 @@
             <span class="zmdi zmdi-hc-lg zmdi-search"></span>
         </button>
 
-        <a href="../index.html" class="navbar-brand">
-            <span class="brand-icon"><i class="fa fa-flash"></i></span>
-            <span class="brand-name">Ahmet Hakan</span>
+        <a href="<?php base_url(); ?>" class="navbar-brand">
+            <span class="brand-icon"><img width = "40" src="<?php echo (empty($settings)) ? "" : base_url("uploads/settings_v/{$settings->logo}");?>" alt="<?php echo $settings->logo; ?>" class="img_responsive"></span>
+            <span class="brand-name"><?php echo $settings->company_name;?></span>
         </a>
     </div><!-- .navbar-header -->
 
@@ -35,7 +35,6 @@
                     <h5 class="page-title hidden-menubar-top hidden-float">Dashboard</h5>
                 </li>
             </ul>
-
             <ul class="nav navbar-toolbar navbar-toolbar-right navbar-right">
                 <li class="nav-item dropdown hidden-float">
                     <a href="javascript:void(0)" data-toggle="collapse" data-target="#navbar-search" aria-expanded="false">

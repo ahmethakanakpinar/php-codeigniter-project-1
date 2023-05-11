@@ -48,3 +48,25 @@
         $t->email->message($message);
         return $t->email->send();
     }
+    function get_settings()
+    {
+        $t = &get_instance();
+        $t->load->model("setting_model");
+
+        if($t->session->userdata("settings"))
+        {
+            $settings = $t->session->userdata("settings");;
+        }
+        else
+        {
+            $settings = $t->setting_model->get();
+            if(!$settings)
+            {
+                $settings = new stdClass();
+                $settings->company_name = "Default";
+                $settings->logo = "";
+            }
+            $t->session->set_userdata("settings", $settings);
+        }
+        return $settings;
+    }

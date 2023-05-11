@@ -121,6 +121,7 @@ class Users extends CI_Controller{
                     "type"  => "error"
                 );
             }
+          
             $this->session->set_flashdata("alert", $alert);
             redirect(base_url("{$this->viewTitle}"));
         }
@@ -238,6 +239,8 @@ class Users extends CI_Controller{
                     "type"  => "error"
                 );
             }
+            $user = $this->user_model->get(array("id" => $id));
+            $this->session->set_userdata("user", $user);
             $this->session->set_flashdata("alert", $alert);
             redirect(base_url("{$this->viewTitle}"));
         }
