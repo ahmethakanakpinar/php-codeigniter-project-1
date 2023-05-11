@@ -27,7 +27,7 @@
 											<input type="file" id="exampleInputFile" class="form-control" name="img_url" value="<?php $item->img_url ?>">
 										</div><!-- .form-group -->
 									</div>
-									</div>
+								</div>
 							<button type="submit" class="btn btn-primary btn-md btn-outline">Güncelle</button>
 							<a href="<?php echo base_url("$viewTitle") ?>" class="btn btn-danger btn-md btn-outline">İptal</a>
 						</form>
