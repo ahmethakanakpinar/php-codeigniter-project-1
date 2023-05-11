@@ -6,7 +6,7 @@
                 </h4>
 			</div><!-- END column -->
 			<div class="col-md-12">
-				<form action="<?php echo base_url("{$viewTitle}/save") ?>" method="post" enctype = "multipart/form-data">
+				<form action="<?php echo base_url("{$viewTitle}/update/$item->id") ?>" method="post" enctype = "multipart/form-data">
 					<div class="widget">
 						<div class="m-b-lg nav-tabs-horizontal">
 							<!-- tabs list -->
@@ -131,8 +131,7 @@
 							</div><!-- .tab-content  -->
 						</div><!-- .nav-tabs-horizontal -->
 					</div><!-- .widget -->
-				<button type="submit" class="btn btn-primary btn-md ">Kaydet</button>
-				<a href="<?php echo base_url("$viewTitle") ?>" class="btn btn-danger btn-md">İptal</a>
+				<button type="submit" class="btn btn-primary btn-md" style="margin-bottom : 10px">Kaydet</button>
 				</form>
 			</div><!-- END column -->
 		</div><!-- .row -->

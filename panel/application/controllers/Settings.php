@@ -149,50 +149,45 @@ class Settings extends CI_Controller{
     }
     public function update($id)
     {
-        $old_user = $this->setting_model->get(
-            array("id" => $id)
-        );
         $this->load->library("form_validation");
-        if($old_user->user_name != $this->input->post("user_name"))
-        {
-            $this->form_validation->set_rules("user_name","Kullanıcı Adı", "required|trim|is_unique[users.user_name]|max_length[20]");
-        }
-        if($old_user->email != $this->input->post("email"))
-        {
-            $this->form_validation->set_rules("email","E-mail", "required|trim|is_unique[users.email]|valid_email");
-        }
-        $this->form_validation->set_rules("full_name","Ad Soyad", "required|trim");
+        $this->form_validation->set_rules("company_name","Şirket Adı","required|trim");
+        $this->form_validation->set_rules("phone_1","Şirket Numarası","required|trim");
+        $this->form_validation->set_rules("email","Şirket E-postası","required|trim|valid_email");
         $this->form_validation->set_message(
             array(
-                "required"      => "{field} Alanı Boş bırakılmamalıdır!",
-                "is_unique"     => "{field} Benzersiz olmalıdır!",
-                "max_length"    => "{field} {param} Karakterden fazla olmamalıdır!",
-                "valid_email"   => "Mail adresi kurallara uygun yazılmalıdır!"
+                "required" => "{field} alanı doldurulmalıdır!"
             )
         );
         $validate = $this->form_validation->run();
         if($validate)
         {
-            $username = CharConvert($this->input->post("user_name"));
-            $path = "uploads/{$this->viewFolder}";
-            rename("{$path}/{$old_user->user_name}","{$path}/{$username}");
-            if($_FILES["img_url"]["name"] != "")
+            if($_FILES["logo"]["name"] != "")
             {
-                $file_name = CharConvert(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)). "." .pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
+                $file_name = CharConvert($this->input->post("company_name")). "." .pathinfo($_FILES["logo"]["name"], PATHINFO_EXTENSION);
                 $config["file_name"] = $file_name;
-                $config["upload_path"] = "{$path}/{$username}/";
                 $config["allowed_types"] = "jpg|jpeg|png";
-                $this->load->library("upload",$config);
-                $upload = $this->upload->do_upload("img_url");
+                $config["upload_path"] = "uploads/{$this->viewFolder}/";
+                $this->load->library("upload", $config);
+                $upload = $this->upload->do_upload("logo");
                 if($upload)
                 {
-                    $insert = $this->setting_model->update(
-                        array("id" => $id),
+                    $uploaded_file = $this->upload->data("file_name");
+                    $insert = $this->setting_model->update(array("id" => $id),
                         array(
-                            "user_name" => $username,
-                            "full_name" => $this->input->post("full_name"),
-                            "email" => $this->input->post("email"),
-                            "img_url" => $file_name,
+                            "company_name"  => $this->input->post("company_name"),
+                            "adress"        => $this->input->post("adress"),
+                            "about_us"      => $this->input->post("about_us"),
+                            "mission"       => $this->input->post("mission"),
+                            "vission"       => $this->input->post("vission"),
+                            "phone_1"       => $this->input->post("phone_1"),
+                            "phone_2"       => $this->input->post("phone_2"),
+                            "email"         => $this->input->post("email"),
+                            "facebook"      => $this->input->post("facebook"),
+                            "twitter"       => $this->input->post("twitter"),
+                            "instagram"    => $this->input->post("instagram"),
+                            "linkedin"      => $this->input->post("linkedin"),
+                            "logo"          => $uploaded_file,
+                            "createdAt"     => date("Y-m-d H:i:s")
                         )
                     );
                 }
@@ -200,23 +195,31 @@ class Settings extends CI_Controller{
                 {
                     $alert = array(
                         "title" => "İşlem Başarısız",
-                        "text" => "Görsel güncelleme sırasında problem yaşandı!",
+                        "text" => "Logo güncelleme sırasında problem yaşandı!",
                         "type" => "error"
                     );
                     $this->session->set_flashdata("alert", $alert);
-                    redirect(base_url("{$this->viewTitle}/update_form/$id"));
+                    redirect(base_url("{$this->viewTitle}/update_form"));
                     die();
                 }
               
             }
             else
             {
-                $insert = $this->setting_model->update(
-                    array("id" => $id),
+                $insert = $this->setting_model->update(array("id" => $id),
                     array(
-                        "user_name" => $username,
-                        "full_name" => $this->input->post("full_name"),
-                        "email" => $this->input->post("email"),
+                        "company_name"  => $this->input->post("company_name"),
+                        "adress"        => $this->input->post("adress"),
+                        "about_us"      => $this->input->post("about_us"),
+                        "mission"       => $this->input->post("mission"),
+                        "vission"       => $this->input->post("vission"),
+                        "phone_1"       => $this->input->post("phone_1"),
+                        "phone_2"       => $this->input->post("phone_2"),
+                        "email"         => $this->input->post("email"),
+                        "facebook"      => $this->input->post("facebook"),
+                        "twitter"       => $this->input->post("twitter"),
+                        "instagram"    => $this->input->post("instagram"),
+                        "linkedin"      => $this->input->post("linkedin")
                     )
                 );
             }
@@ -224,7 +227,7 @@ class Settings extends CI_Controller{
             {
                 $alert = array(
                     "title" => "İşlem Başarılı",
-                    "text" => "Kullanıcı başarılı bir şekilde güncellendi",
+                    "text" => "Kayıt başarılı bir şekilde güncellendi",
                     "type"  => "success"
                 );
             }
@@ -232,7 +235,7 @@ class Settings extends CI_Controller{
             {
                 $alert = array(
                     "title" => "İşlem Başarısız",
-                    "text" => "Kullanıcı Güncelleme sırasında bir problem oluştu",
+                    "text" => "Kayıt güncelleme sırasında bir problem oluştu",
                     "type"  => "error"
                 );
             }
@@ -241,19 +244,13 @@ class Settings extends CI_Controller{
         }
         else
         {
-            
             $viewData = new stdClass();
-            $item = $this->setting_model->get(
-                array("id" => $id)
-            );
             $viewData->viewTitle = $this->viewTitle;
             $viewData->viewFolder = $this->viewFolder;
             $viewData->subViewFolder = "update";
             $viewData->form_error = true;
-            $viewData->item = $item;
             $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
         }
-
     }
     public function password_form($id)
     {
