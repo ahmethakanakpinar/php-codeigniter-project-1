@@ -19,10 +19,11 @@
 								</div>
 								<div class="form-group col-md-6 ">
 									<label for="control-demo-6" class="">Kategori</label>
+									<?php $category_id = isset($form_error) ? set_value("category_id") : $item->category_id; ?>
 									<div id="control-demo-6" class="">
 										<select class="form-control" name="category_id">
 											<?php foreach($categories as $category): ?>
-												<option value="<?php echo $category->id ?>" <?php echo ($item->id == $category->id ) ? "selected" : "" ?>><?php echo $category->title ?></option>
+												<option value="<?php echo $category->id ?>" <?php echo ($category_id == $category->id ) ? "selected" : "" ?>><?php echo $category->title ?></option>
 											<?php endforeach; ?>
 										</select>
 									</div>

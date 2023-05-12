@@ -2021,7 +2021,9 @@ input[type="radio"] .styled:checked + label::after {
 .avatar a > img {
   width: 100%;
   height: 100%;
-  display: block; }
+  display: block; 
+  object-fit: cover;
+}
 
 .avatar-circle img {
   border-radius: 100% !important; }

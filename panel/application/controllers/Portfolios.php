@@ -33,11 +33,11 @@ class Portfolios extends CI_Controller {
 	}
 	public function new_form()
 	{
-		$categories = $this->portfolio_category_model->get_all(array("isActive" => 1));
 		$viewData = new stdClass();
 		$viewData->viewTitle = $this->viewTitle;
 		$viewData->viewFolder = $this->viewFolder;
 		$viewData->subViewFolder = "add";
+		$categories = $this->portfolio_category_model->get_all(array("isActive" => 1));
 		$viewData->categories = $categories;
 		$this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
 	}
@@ -90,6 +90,8 @@ class Portfolios extends CI_Controller {
 		else
 		{
 			$viewData = new stdClass();
+			$categories = $this->portfolio_category_model->get_all(array("isActive" => 1));
+			$viewData->categories = $categories;
 			$viewData->viewTitle = $this->viewTitle;
 			$viewData->viewFolder = $this->viewFolder;
 			$viewData->subViewFolder = "add";
@@ -132,9 +134,12 @@ class Portfolios extends CI_Controller {
 					"id" => $id
 				),
 				array(
+					"url"			=> CharConvert($this->input->post("title")),
 					"title"			=> $this->input->post("title"),
 					"description"	=> $this->input->post("description"),
-					"url"			=> CharConvert($this->input->post("title")),
+					"client"		=> $this->input->post("client"),
+					"category_id"	=> $this->input->post("category_id"),
+					"finishedAt"	=> $this->input->post("finishedAt"),
 				)
 			);
 			if($update)
@@ -168,6 +173,8 @@ class Portfolios extends CI_Controller {
 			$viewData->viewTitle = $this->viewTitle;
 			$viewData->viewFolder = $this->viewFolder;
 			$viewData->subViewFolder = "update";
+			$categories = $this->portfolio_category_model->get_all(array("isActive" => 1));
+			$viewData->categories = $categories;
 			$viewData->form_error = true;
 			$viewData->item = $item;
 			$this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index",$viewData);
@@ -244,7 +251,7 @@ class Portfolios extends CI_Controller {
 			$this->portfolio_image_model->update(
 				array(
 					"id" => $id,
-					"product_id" => $parent_id
+					"portfolio_id" => $parent_id
 				),
 				array(
 					"isCover" => $isCover
@@ -253,7 +260,7 @@ class Portfolios extends CI_Controller {
 			$this->portfolio_image_model->update(
 				array(
 					"id !=" => $id,
-					"product_id" => $parent_id
+					"portfolio_id" => $parent_id
 				),
 				array(
 					"isCover" => 0
@@ -268,7 +275,7 @@ class Portfolios extends CI_Controller {
 	
 			$viewData->item_images = $this->portfolio_image_model->get_all(
 				array(
-					"product_id"    => $parent_id
+					"portfolio_id"    => $parent_id
 				), "rank ASC"
 			);
 	
@@ -328,7 +335,7 @@ class Portfolios extends CI_Controller {
 		$viewData->item = $item;
 		$item_images = $this->portfolio_image_model->get_all(
 			array(
-				"product_id" => $id
+				"portfolio_id" => $id
 			), "rank ASC"
 		);
 		$viewData->item_images = $item_images;
@@ -353,7 +360,7 @@ class Portfolios extends CI_Controller {
 					"isActive"	=> 0,
 					"isCover"	=> 0,
 					"createdAt"	=> date("Y-m-d H:i:s"),
-					"product_id"=> $id
+					"portfolio_id"=> $id
 				)
 			);
 		}
@@ -373,7 +380,7 @@ class Portfolios extends CI_Controller {
 
         $viewData->item_images = $this->portfolio_image_model->get_all(
             array(
-                "product_id"    => $id
+                "portfolio_id"    => $id
             )
         );
 

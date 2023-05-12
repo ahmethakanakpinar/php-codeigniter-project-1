@@ -73,3 +73,18 @@
         }
         return $settings;
     }
+    function get_category_title($category_id = 0)
+    {
+        $t = &get_instance();
+        $t->load->model("portfolio_category_model");
+        $category = $t->portfolio_category_model->get(
+            array(
+                "id" => $category_id
+            )
+        );
+        if($category)
+            return $category->title;
+        else
+            return "<b class='text-danger'>Belirtilmedi</b>";        
+
+    }
