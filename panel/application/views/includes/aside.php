@@ -107,6 +107,17 @@
                         <span class="menu-text">Hizmetlerimiz</span>
                     </a>
                 </li>
+                <li class="has-submenu">
+                    <a href="javascript:void(0)" class="submenu-toggle">
+                        <i class="menu-icon zmdi zmdi-settings zmdi-hc-lg"></i>
+                        <span class="menu-text">Portfolyo İşlemleri</span>
+                        <i class="menu-caret zmdi zmdi-hc-sm zmdi-chevron-right"></i>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="<?php echo base_url("portfolio_categories") ?>"><span class="menu-text">Portfolyo Kategori</span></a></li>
+                        <li><a href="<?php echo base_url("portfolios")?>"><span class="menu-text">Portfolyo</span></a></li>
+                    </ul>
+                </li>
                 <li>
                     <a href="<?php echo base_url("news"); ?>">
                         <i class="menu-icon fa fa-newspaper-o"></i>
