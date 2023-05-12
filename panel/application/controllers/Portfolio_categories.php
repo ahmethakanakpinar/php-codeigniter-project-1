@@ -8,7 +8,7 @@ class Portfolio_categories extends CI_Controller{
         parent::__construct();
         $this->viewTitle = "portfolio_categories";
         $this->viewFolder = "portfolio_categories_v";
-        $this->load->model("portfolio_categori_model");
+        $this->load->model("portfolio_category_model");
         if(!get_active_user())
 		{
 			redirect(base_url("login"));
@@ -17,7 +17,7 @@ class Portfolio_categories extends CI_Controller{
     public function index()
     {
         $viewData = new stdClass();
-        $items = $this->portfolio_categori_model->get_all(
+        $items = $this->portfolio_category_model->get_all(
             array()
         );
         $viewData->viewTitle = $this->viewTitle;
@@ -46,7 +46,7 @@ class Portfolio_categories extends CI_Controller{
         $validate = $this->form_validation->run();
         if($validate)
         {
-            $insert = $this->portfolio_categori_model->add(
+            $insert = $this->portfolio_category_model->add(
                 array(
                     "title"     => $this->input->post("title"),
                     "isActive"  => 0,
@@ -88,7 +88,7 @@ class Portfolio_categories extends CI_Controller{
     public function update_form($id)
     {
         $viewData = new stdClass();
-        $item = $this->portfolio_categori_model->get(
+        $item = $this->portfolio_category_model->get(
             array(
                 "id" => $id
             )
@@ -111,7 +111,7 @@ class Portfolio_categories extends CI_Controller{
         $validate = $this->form_validation->run();
         if($validate)
         {
-            $insert = $this->portfolio_categori_model->update(
+            $insert = $this->portfolio_category_model->update(
                 array(
                     "id" => $id
                 ),
@@ -141,7 +141,7 @@ class Portfolio_categories extends CI_Controller{
         else
         {
             $viewData = new stdClass();
-            $viewData->item = $this->portfolio_categori_model->get(
+            $viewData->item = $this->portfolio_category_model->get(
                 array(
                     "id" => $id
                 )
@@ -158,7 +158,7 @@ class Portfolio_categories extends CI_Controller{
         if($id)
         {
             $isActive = ($this->input->post("data") === "true") ? 1 : 0;
-            $this->portfolio_categori_model->update(
+            $this->portfolio_category_model->update(
                 array(
                     "id" => $id
                 ),
@@ -170,7 +170,7 @@ class Portfolio_categories extends CI_Controller{
     }
     public function delete($id)
     {
-        $delete = $this->portfolio_categori_model->delete(
+        $delete = $this->portfolio_category_model->delete(
             array("id" => $id)
         );
         if($delete)

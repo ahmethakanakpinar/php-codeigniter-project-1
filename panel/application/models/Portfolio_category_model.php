@@ -1,5 +1,5 @@
 <?php
-class Portfolio_categori_model extends CI_Model
+class Portfolio_category_model extends CI_Model
 {
     public $tableName = "portfolio_categories";
     public function __construct()

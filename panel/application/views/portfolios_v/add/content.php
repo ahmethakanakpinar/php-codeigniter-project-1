@@ -2,7 +2,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<h4 class="m-b-lg">
-                    Ürün Ekle
+                    Portfolyo Ekle
                 </h4>
 			</div><!-- END column -->
 			<div class="col-md-12">
@@ -12,7 +12,7 @@
 							<div class="row">
 								<div class="form-group col-md-6 <?php echo isset($form_error)? "has-error":""  ?>">
 									<label for="title">Başlık</label>
-									<input type="text" class="form-control" id="title" name="title" placeholder="İşi anlatan başlık bilgisi">
+									<input type="text" class="form-control" id="title" name="title" placeholder="İşi anlatan başlık bilgisi" value="<?php echo isset($form_error) ? set_value("title") : "" ?>">
 									<?php if(isset($form_error)): ?>
 										<small class="text-danger"><?php echo form_error("title"); ?></small>
 									<?php endif; ?>
@@ -20,9 +20,11 @@
 								<div class="form-group col-md-6 ">
 									<label for="control-demo-6" class="">Kategori</label>
 									<div id="control-demo-6" class="">
-										<select class="form-control" name="categories">
-											<option value="image">Resim</option>
-											<option value="movie">Video</option>
+										<select class="form-control" name="category_id">
+											<?php foreach($categories as $category): ?>
+												<option value="<?php echo $category->id ?>"><?php echo $category->title ?></option>
+											<?php endforeach; ?>
+								
 										</select>
 									</div>
 								</div><!-- .form-group -->
@@ -35,7 +37,7 @@
 								<div class="col-md-8">
 									<div class="form-group <?php echo isset($form_error)? "has-error":""  ?>">
 										<label for="client">Müşteri</label>
-										<input type="text" class="form-control" id="client" name="client" placeholder="İşi yaptığınız müşteri">
+										<input type="text" class="form-control" id="client" name="client" placeholder="İşi yaptığınız müşteri" value="<?php echo isset($form_error) ? set_value("client") : "" ?>">
 										<?php if(isset($form_error)): ?>
 											<small class="text-danger"><?php echo form_error("client"); ?></small>
 										<?php endif; ?>
@@ -44,8 +46,8 @@
 								
 							</div>
 							<div class="form-group">
-								<label for="exampleInputPassword1">Açıklama</label>
-								<textarea name="description" class="m-0" data-plugin="summernote" data-options="{height: 250}"></textarea>
+								<label for="description">Açıklama</label>
+								<textarea name="description" class="m-0" data-plugin="summernote" data-options="{height: 250}"><?php echo isset($form_error) ? set_value("description") : "" ?></textarea>
 							</div>
 							<button type="submit" class="btn btn-primary btn-md btn-outline">Submit</button>
 							<a href="<?php echo base_url("{$viewTitle}") ?>" class="btn btn-danger btn-md btn-outline">İptal</a>

@@ -8,6 +8,7 @@ class Portfolios extends CI_Controller {
 		$this->viewTitle = "portfolios";
 		$this->viewFolder = "portfolios_v";
 		$this->load->model("portfolio_model");
+		$this->load->model("portfolio_category_model");
 		$this->load->model("portfolio_image_model");
 		if(!get_active_user())
 		{
@@ -32,10 +33,12 @@ class Portfolios extends CI_Controller {
 	}
 	public function new_form()
 	{
+		$categories = $this->portfolio_category_model->get_all(array("isActive" => 1));
 		$viewData = new stdClass();
 		$viewData->viewTitle = $this->viewTitle;
 		$viewData->viewFolder = $this->viewFolder;
 		$viewData->subViewFolder = "add";
+		$viewData->categories = $categories;
 		$this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
 	}
 	public function save()
@@ -93,6 +96,7 @@ class Portfolios extends CI_Controller {
 	}
 	public function update_form($id)
 	{
+		$categories = $this->portfolio_category_model->get_all(array("isActive" => 1));
 		$item = $this->portfolio_model->get(
 			array(
 				"id" => $id
@@ -103,6 +107,7 @@ class Portfolios extends CI_Controller {
 		$viewData->viewFolder = $this->viewFolder;
 		$viewData->subViewFolder = "update";
 		$viewData->item = $item;
+		$viewData->categories = $categories;
 		$this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
 	}
 	public function update($id)
