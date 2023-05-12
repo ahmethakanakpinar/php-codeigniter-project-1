@@ -1,0 +1,57 @@
+<section class="app-content">
+		<div class="row">
+			<div class="col-md-12">
+				<h4 class="m-b-lg">
+                    Ürün Ekle
+                </h4>
+			</div><!-- END column -->
+			<div class="col-md-12">
+				<div class="widget p-lg">
+					<div class="widget-body">
+						<form action="<?php echo base_url("{$viewTitle}/save") ?>" method="post">
+							<div class="row">
+								<div class="form-group col-md-6 <?php echo isset($form_error)? "has-error":""  ?>">
+									<label for="title">Başlık</label>
+									<input type="text" class="form-control" id="title" name="title" placeholder="İşi anlatan başlık bilgisi">
+									<?php if(isset($form_error)): ?>
+										<small class="text-danger"><?php echo form_error("title"); ?></small>
+									<?php endif; ?>
+								</div>
+								<div class="form-group col-md-6 ">
+									<label for="control-demo-6" class="">Kategori</label>
+									<div id="control-demo-6" class="">
+										<select class="form-control" name="categories">
+											<option value="image">Resim</option>
+											<option value="movie">Video</option>
+										</select>
+									</div>
+								</div><!-- .form-group -->
+							</div>
+							<div class="row">
+								<div class="col-md-4">
+									<label for="datetimepicker1">Eğitim Tarihi</label>
+									<input type="hidden" name="event_date"  id="datetimepicker1" data-plugin="datetimepicker" data-options="{ inline: true, viewMode: 'days', format : 'YYYY-MM-DD HH:mm:ss'}"></input>
+								</div><!-- END column -->
+								<div class="col-md-8">
+									<div class="form-group <?php echo isset($form_error)? "has-error":""  ?>">
+										<label for="client">Müşteri</label>
+										<input type="text" class="form-control" id="client" name="client" placeholder="İşi yaptığınız müşteri">
+										<?php if(isset($form_error)): ?>
+											<small class="text-danger"><?php echo form_error("client"); ?></small>
+										<?php endif; ?>
+									</div>
+								</div>
+								
+							</div>
+							<div class="form-group">
+								<label for="exampleInputPassword1">Açıklama</label>
+								<textarea name="description" class="m-0" data-plugin="summernote" data-options="{height: 250}"></textarea>
+							</div>
+							<button type="submit" class="btn btn-primary btn-md btn-outline">Submit</button>
+							<a href="<?php echo base_url("{$viewTitle}") ?>" class="btn btn-danger btn-md btn-outline">İptal</a>
+						</form>
+					</div><!-- .widget-body -->
+				</div><!-- .widget -->
+			</div><!-- END column -->
+		</div><!-- .row -->
+	</section><!-- #dash-content -->

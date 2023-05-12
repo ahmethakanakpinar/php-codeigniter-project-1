@@ -1,14 +1,14 @@
 <?php
-class Product extends CI_Controller {
+class Portfolios extends CI_Controller {
 
 	public $viewFolder = "";
 	public function __construct()
 	{
 		parent::__construct();
-		$this->viewTitle = "product";
-		$this->viewFolder = "product_v";
-		$this->load->model("product_model");
-		$this->load->model("product_image_model");
+		$this->viewTitle = "portfolios";
+		$this->viewFolder = "portfolios_v";
+		$this->load->model("portfolio_model");
+		$this->load->model("portfolio_image_model");
 		if(!get_active_user())
 		{
 			redirect(base_url("login"));
@@ -19,7 +19,7 @@ class Product extends CI_Controller {
 	{
         $viewData = new stdClass();
 
-		$items = $this->product_model->get_all(
+		$items = $this->portfolio_model->get_all(
 			array(), "rank ASC"
 		);
 
@@ -52,7 +52,7 @@ class Product extends CI_Controller {
 		$validate = $this->form_validation->run();
 		if($validate)
 		{
-			$insert = $this->product_model->add(
+			$insert = $this->portfolio_model->add(
 				array(
 					"title"			=> $this->input->post("title"),
 					"description"	=> $this->input->post("description"),
@@ -93,7 +93,7 @@ class Product extends CI_Controller {
 	}
 	public function update_form($id)
 	{
-		$item = $this->product_model->get(
+		$item = $this->portfolio_model->get(
 			array(
 				"id" => $id
 			)
@@ -119,7 +119,7 @@ class Product extends CI_Controller {
 		$validate = $this->form_validation->run();
 		if($validate)
 		{
-			$update = $this->product_model->update(
+			$update = $this->portfolio_model->update(
 				array(
 					"id" => $id
 				),
@@ -152,7 +152,7 @@ class Product extends CI_Controller {
 		else
 		{
 			$viewData = new stdClass();
-			$item = $this->product_model->get(
+			$item = $this->portfolio_model->get(
 				array(
 					"id" => $id,
 				)
@@ -167,7 +167,7 @@ class Product extends CI_Controller {
 	}
 	public function delete($id)
 	{
-		$delete = $this->product_model->delete(
+		$delete = $this->portfolio_model->delete(
 			array(
 				"id" => $id
 			)
@@ -193,12 +193,12 @@ class Product extends CI_Controller {
 	}
 	public function imageDelete($id, $parent_id)
 	{
-		$fileName = $this->product_image_model->get(
+		$fileName = $this->portfolio_image_model->get(
 			array(
 				"id" => $id
 			)
 		);
-		$delete = $this->product_image_model->delete(
+		$delete = $this->portfolio_image_model->delete(
 			array(
 				"id" => $id
 			)
@@ -218,7 +218,7 @@ class Product extends CI_Controller {
 		if($id)
 		{
 			$isActive = ($this->input->post("data") === "true") ? 1 : 0;
-			$this->product_model->update(
+			$this->portfolio_model->update(
 				array(
 					"id" => $id
 				),
@@ -233,7 +233,7 @@ class Product extends CI_Controller {
 		if($id && $parent_id)
 		{
 			$isCover = ($this->input->post("data") === "true") ? 1 : 0;
-			$this->product_image_model->update(
+			$this->portfolio_image_model->update(
 				array(
 					"id" => $id,
 					"product_id" => $parent_id
@@ -242,7 +242,7 @@ class Product extends CI_Controller {
 					"isCover" => $isCover
 				)
 			);
-			$this->product_image_model->update(
+			$this->portfolio_image_model->update(
 				array(
 					"id !=" => $id,
 					"product_id" => $parent_id
@@ -258,7 +258,7 @@ class Product extends CI_Controller {
 			$viewData->viewFolder = $this->viewFolder;
 			$viewData->subViewFolder = "image";
 	
-			$viewData->item_images = $this->product_image_model->get_all(
+			$viewData->item_images = $this->portfolio_image_model->get_all(
 				array(
 					"product_id"    => $parent_id
 				), "rank ASC"
@@ -277,7 +277,7 @@ class Product extends CI_Controller {
 		$items = $order["ord"];
 		foreach($items as $rank => $id)
 		{
-			$this->product_model->update(
+			$this->portfolio_model->update(
 				array(
 					"id" => $id,
 					"rank !=" => $rank
@@ -295,7 +295,7 @@ class Product extends CI_Controller {
 		$items = $order["ord"];
 		foreach($items as $rank => $id)
 		{
-			$this->product_image_model->update(
+			$this->portfolio_image_model->update(
 				array(
 					"id" => $id,
 					"rank !=" => $rank
@@ -308,7 +308,7 @@ class Product extends CI_Controller {
 	}
 	public function image_form($id)
 	{
-		$item = $this->product_model->get(
+		$item = $this->portfolio_model->get(
 			array(
 				"id" => $id
 			)
@@ -318,7 +318,7 @@ class Product extends CI_Controller {
 		$viewData->viewFolder = $this->viewFolder;
 		$viewData->subViewFolder = "image";
 		$viewData->item = $item;
-		$item_images = $this->product_image_model->get_all(
+		$item_images = $this->portfolio_image_model->get_all(
 			array(
 				"product_id" => $id
 			), "rank ASC"
@@ -338,7 +338,7 @@ class Product extends CI_Controller {
 		if($upload)
 		{
 			$uploaded_file = $this->upload->data("file_name");
-			$this->product_image_model->add(
+			$this->portfolio_image_model->add(
 				array(
 					"img_url" 	=> $uploaded_file,
 					"rank" 		=> 0,
@@ -363,7 +363,7 @@ class Product extends CI_Controller {
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "image";
 
-        $viewData->item_images = $this->product_image_model->get_all(
+        $viewData->item_images = $this->portfolio_image_model->get_all(
             array(
                 "product_id"    => $id
             )
@@ -379,7 +379,7 @@ class Product extends CI_Controller {
 		if($id)
 		{
 			$isActive = ($this->input->post("data") === "true") ? 1 : 0;
-			$this->product_image_model->update(
+			$this->portfolio_image_model->update(
 				array(
 					"id" => $id
 				),

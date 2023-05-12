@@ -21,7 +21,9 @@
                                     <th>#id</th>
                                     <th>url</th>
                                     <th>Başlık</th>
-                                    <th>Açıklama</th>
+                                    <th>Kategori</th>
+                                    <th>Müşteri</th>
+                                    <th>Bitiş Tarihi</th>
                                     <th>Durumu</th>
                                     <th>İşlem</th>
                                 </tr>
@@ -33,7 +35,9 @@
                                     <td><?php echo $item->id ?></td>
                                     <td><?php echo $item->url ?></td>
                                     <td><?php echo $item->title ?></td>
-                                    <td><?php echo $item->description ?></td>
+                                    <td><?php echo $item->category_id ?></td>
+                                    <td><?php echo $item->client?></td>
+                                    <td><?php echo get_readable_date($item->finishedAt); ?></td>
                                     <td>
                                         <input data-url="<?php echo base_url("{$viewTitle}/isActiveSetter/$item->id"); ?>" class="isActive" type="checkbox" data-switchery data-color="#10c469" <?php echo ($item->isActive) ? "checked": "" ?> />
                                     </td>
