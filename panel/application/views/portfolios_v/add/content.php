@@ -32,7 +32,7 @@
 							<div class="row">
 								<div class="col-md-4">
 									<label for="datetimepicker1">Eğitim Tarihi</label>
-									<input type="hidden" name="event_date"  id="datetimepicker1" data-plugin="datetimepicker" data-options="{ inline: true, viewMode: 'days', format : 'YYYY-MM-DD HH:mm:ss'}"></input>
+									<input type="hidden" name="finishedAt"  id="datetimepicker1" data-plugin="datetimepicker" data-options="{ inline: true, viewMode: 'days', format : 'YYYY-MM-DD HH:mm:ss'}"></input>
 								</div><!-- END column -->
 								<div class="col-md-8">
 									<div class="form-group <?php echo isset($form_error)? "has-error":""  ?>">

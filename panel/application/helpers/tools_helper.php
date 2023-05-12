@@ -8,8 +8,11 @@
     }
     function get_readable_date($date)
     {
-        $turkish_date = date('d F Y', strtotime($date));
-        return $turkish_date;
+        if(!empty($date))
+        {
+            $turkish_date = date('d F Y', strtotime($date));
+            return $turkish_date;
+        }
     }
     function get_active_user()
     {

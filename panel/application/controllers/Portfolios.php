@@ -57,11 +57,14 @@ class Portfolios extends CI_Controller {
 		{
 			$insert = $this->portfolio_model->add(
 				array(
+					"url"			=> CharConvert($this->input->post("title")),
 					"title"			=> $this->input->post("title"),
 					"description"	=> $this->input->post("description"),
-					"url"			=> CharConvert($this->input->post("title")),
-					"isActive"		=> 0,
 					"rank"			=> 0,
+					"client"		=> $this->input->post("client"),
+					"category_id"	=> $this->input->post("category_id"),
+					"finishedAt"	=> $this->input->post("finishedAt"),
+					"isActive"		=> 0,
 					"createdAt"		=> date("Y-m-d H:i:s")
 				)
 			);
@@ -82,7 +85,7 @@ class Portfolios extends CI_Controller {
 				);
 			}
 			$this->session->set_flashdata("alert", $alert);
-			redirect(base_url("product"));
+			redirect(base_url("{$this->viewTitle}"));
 		}
 		else
 		{
@@ -152,7 +155,7 @@ class Portfolios extends CI_Controller {
 				);
 			}
 			$this->session->set_flashdata("alert", $alert);
-			redirect(base_url("product"));
+			redirect(base_url("{$this->viewTitle}"));
 		}
 		else
 		{
@@ -194,7 +197,7 @@ class Portfolios extends CI_Controller {
 			);
 		}
 		$this->session->set_flashdata("alert", $alert);
-		redirect(base_url("product"));
+		redirect(base_url("{$this->viewTitle}"));
 	}
 	public function imageDelete($id, $parent_id)
 	{
@@ -211,11 +214,11 @@ class Portfolios extends CI_Controller {
 		if($delete)
 		{
 			unlink("uploads/{$this->viewFolder}/$fileName->img_url");
-			redirect(base_url("product/image_form/$parent_id"));
+			redirect(base_url("{$this->viewTitle}/image_form/$parent_id"));
 		}
 		else
 		{
-			redirect(base_url("product"));
+			redirect(base_url("{$this->viewTitle}"));
 		}
 	}
 	public function isActiveSetter($id)

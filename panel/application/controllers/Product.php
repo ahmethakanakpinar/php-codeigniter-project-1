@@ -79,7 +79,7 @@ class Product extends CI_Controller {
 				);
 			}
 			$this->session->set_flashdata("alert", $alert);
-			redirect(base_url("product"));
+			redirect(base_url("{$this->viewTitle}"));
 		}
 		else
 		{
@@ -147,7 +147,7 @@ class Product extends CI_Controller {
 				);
 			}
 			$this->session->set_flashdata("alert", $alert);
-			redirect(base_url("product"));
+			redirect(base_url("{$this->viewTitle}"));
 		}
 		else
 		{
@@ -189,7 +189,7 @@ class Product extends CI_Controller {
 			);
 		}
 		$this->session->set_flashdata("alert", $alert);
-		redirect(base_url("product"));
+		redirect(base_url("{$this->viewTitle}"));
 	}
 	public function imageDelete($id, $parent_id)
 	{
@@ -206,11 +206,11 @@ class Product extends CI_Controller {
 		if($delete)
 		{
 			unlink("uploads/{$this->viewFolder}/$fileName->img_url");
-			redirect(base_url("product/image_form/$parent_id"));
+			redirect(base_url("{$this->viewTitle}/image_form/$parent_id"));
 		}
 		else
 		{
-			redirect(base_url("product"));
+			redirect(base_url("{$this->viewTitle}"));
 		}
 	}
 	public function isActiveSetter($id)
