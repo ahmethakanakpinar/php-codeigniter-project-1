@@ -13,6 +13,7 @@
         public function product_list()
         {
             $this->load->model("product_model");
+            $this->load->helper("text");
             $products = $this->product_model->get_all(
                 array(
                     "isActive"  => 1

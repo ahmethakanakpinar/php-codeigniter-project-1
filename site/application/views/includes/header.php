@@ -68,13 +68,11 @@
 
 						<!-- logo -->
 						<div id="logo" class="logo">
-							<a href="index.html"><img id="logo_img" src="<?php echo base_url("assets/images");?>/logo_purple.png" alt="The Project"></a>
+							<a href="index.html"><img id="logo_img" src="<?php echo base_url("assets/images");?>/Logo_NIKE.svg.png" alt="The Project" style="margin:auto;height:55px;"></a>
 						</div>
 
 						<!-- name-and-slogan -->
-						<div class="site-slogan">
-							Multipurpose HTML5 Template
-						</div>
+						
 
 					</div>
 					<!-- header-first end -->
