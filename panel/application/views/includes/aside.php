@@ -179,5 +179,4 @@
             </ul><!-- .app-menu -->
         </div><!-- .menubar-scroll-inner -->
     </div><!-- .menubar-scroll -->
-    <link rel="stylesheet" href="<?php echo base_url("assets"); ?>/assets/css/aside_style.css">
 </aside>
