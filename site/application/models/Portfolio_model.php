@@ -8,9 +8,15 @@ class Portfolio_model extends CI_Model
     }
 
     //tüm kayıtları bura da getirecek olan method
-    public function get_all($where = array(), $order = "id ASC")
+    public function get_all($where = array(), $order = "id ASC", $limit = array())
     {
-        return $this->db->where($where)->order_by($order)->get($this->tableName)->result();
+
+        $this->db->where($where)->order_by($order);
+
+        if(!empty($limit))
+            $this->db->limit($limit["count"], $limit["start"]);
+
+        return $this->db->get($this->tableName)->result();
     }
     public function get($where = array())
     {

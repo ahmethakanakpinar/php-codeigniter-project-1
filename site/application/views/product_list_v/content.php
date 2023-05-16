@@ -8,12 +8,7 @@
                 <div class="col-sm-4">
                     <div class="image-box style-2 mb-20 bordered light-gray-bg">
                         <div class="overlay-container overlay-visible">
-                            <?php 
-                                $image = get_product_cover_image($product->id);
-                                $image_alt = !empty($image) ? $image : "default";
-                                $image = !empty($image) ? base_url("panel/uploads/product_v/{$image}") : base_url("assets/images")."/portfolio-1.jpg";
-                            ?>
-                            <img src="<?php echo $image; ?>" alt="<?php echo $image_alt; ?>">
+                            <img src="<?php echo default_image($product, "product_v","product"); ?>" alt="<?php echo default_image($product, "product_v","product","img_alt"); ?>">
                             <div class="overlay-bottom text-left">
                                 <p class="lead margin-clear"><?php echo $product->title ?></p>
                             </div>

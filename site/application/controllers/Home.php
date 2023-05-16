@@ -30,31 +30,77 @@
             $this->load->model("product_image_model");
             $this->load->helper("text");
             $viewData = new stdClass();
-            $product = $this->product_model->get(
+            $viewData->product = $this->product_model->get(
                 array(
                     "isActive"  => 1,
                     "url"       => $url
                 )
             );
-            $viewData->product = $product;
-
-            $product_images = $this->product_image_model->get_all(
+            $viewData->product_images = $this->product_image_model->get_all(
                 array(
-                    "isActive"  => 1,
-                    "product_id"   => $viewData->product->id
+                    "isActive"      => 1,
+                    "product_id"    => $viewData->product->id,
                 ), "rank ASC"
             );
-            $viewData->product_images = $product_images;
 
-            $other_products = $this->product_model->get_all(
+            $viewData->other_products = $this->product_model->get_all(
                 array(
                     "isActive"  => 1,
                     "id !="     => $viewData->product->id
                 ), "rand()", array("start" => 0, "count" => 3)
             );
-            $viewData->other_products = $other_products;
             $viewData->viewFolder = "product_v";
             $this->load->view($viewData->viewFolder,$viewData);
+        }
+        public function portfolios_list()
+        {
+            $this->load->model("portfolio_model");
+            $this->load->helper("text");
+            $portfolios = $this->portfolio_model->get_all(
+                array(
+                    "isActive"  => 1
+                ), "rank ASC"
+            );
+            $viewData = new stdClass();
+            $viewData->portfolios = $portfolios;
+            $viewData->viewFolder = "portfolios_list_v";
+            $this->load->view($viewData->viewFolder,$viewData);
+        }
+        public function portfolios_detail($url="")
+        {
+            $this->load->model("portfolio_model");
+            $this->load->model("portfolio_image_model");
+            $this->load->helper("text");
+            $viewData = new stdClass();
+            $portfolios = $this->portfolio_model->get(
+                array(
+                    "isActive"  => 1,
+                    "url"       => $url
+                )
+            );
+            $viewData->portfolios = $portfolios;
+
+            $portfolio_images = $this->portfolio_image_model->get_all(
+                array(
+                    "isActive"  => 1,
+                    "portfolio_id"   => $viewData->portfolios->id
+                ), "rank ASC"
+            );
+            $viewData->portfolio_images = $portfolio_images;
+
+            $other_portfolios = $this->portfolio_model->get_all(
+                array(
+                    "isActive"  => 1,
+                    "id !="     => $viewData->portfolios->id
+                ), "rand()", array("start" => 0, "count" => 3)
+            );
+            $viewData->other_portfolios = $other_portfolios;
+            $viewData->viewFolder = "portfolios_v";
+            $this->load->view($viewData->viewFolder,$viewData);
+        }
+        public function test()
+        {
+            default_image(5, "sa", "sa");
         }
     }
 

@@ -8,15 +8,14 @@ class Product_model extends CI_Model
     }
 
     //tüm kayıtları bura da getirecek olan method
-    public function get_all($where = array(), $order = "id ASC", $limit = array("count" => 0, "start" => 0))
+    public function get_all($where = array(), $order = "id ASC", $limit = array())
     {
+
         $this->db->where($where)->order_by($order);
-        if(!isset($limit))
-        {
-            $this->db->limit($limit["count"], $limit["start"]);    
-        }
+        if(!empty($limit))
+            $this->db->limit($limit["count"], $limit["start"]);
+
         return $this->db->get($this->tableName)->result();
-        
     }
     public function get($where = array())
     {

@@ -54,3 +54,5 @@ $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
 $route['urun-listesi'] = "home/product_list";
 $route['urun-detay/(:any)'] = "home/product_detail/$1";
+$route['portfolyo-listesi'] = "home/portfolios_list";
+$route['portfolyo-detay/(:any)'] = "home/portfolios_detail/$1";
