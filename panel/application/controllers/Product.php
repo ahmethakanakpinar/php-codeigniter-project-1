@@ -174,18 +174,43 @@ class Product extends CI_Controller {
 		);
 		if($delete)
 		{
-			$alert = array(
-				"title" => "İşlem Başarılı",
-				"text" => "Kayıt başarılı bir şekilde silindi",
-				"type" => "success"
+		
+			$fileNames = $this->product_image_model->get_all(
+				array(
+					"product_id" => $id
+				)
 			);
+			$delete_image = $this->product_image_model->delete(
+				array(
+					"product_id" => $id 
+				)
+			);
+			if($delete_image)
+			{
+				foreach ($fileNames as $fileName) {
+						unlink("uploads/{$this->viewFolder}/$fileName->img_url");
+				}
+				$alert = array(
+					"title" => "İşlem Başarılı",
+					"text" => "Kayıt başarılı bir şekilde silindi",
+					"type" => "success"
+				);
+			}
+			else
+			{
+				$alert = array(
+					"title" => "İşlem Başarısız",
+					"text" => "Ürünlerin Resim Silme işlemi sırasında bir problem oluştu!",
+					"type" => "error"
+				);
+			}
 		}
 		else
 		{
 			$alert = array(
 				"title" => "İşlem Başarısız",
 				"text" => "Kayıt silme işlemi sırasında bir problem oluştu!",
-				"type" => "success"
+				"type" => "error"
 			);
 		}
 		$this->session->set_flashdata("alert", $alert);
@@ -213,6 +238,7 @@ class Product extends CI_Controller {
 			redirect(base_url("{$this->viewTitle}"));
 		}
 	}
+	
 	public function isActiveSetter($id)
 	{
 		if($id)

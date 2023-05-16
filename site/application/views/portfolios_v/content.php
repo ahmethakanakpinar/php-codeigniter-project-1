@@ -99,7 +99,7 @@
 			<!-- ================ -->
             <section class="section pv-40 clearfix">
 				<div class="container">
-					<h3>Diğer <strong>Ürünler</strong></h3>
+					<h3>Diğer <strong>Portfolyolar</strong></h3>
 					<div class="row grid-space-10">
                         <?php foreach($other_portfolios as $portfolio): ?>
                             <div class="col-sm-4">
