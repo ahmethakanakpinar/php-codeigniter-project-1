@@ -113,7 +113,7 @@
 										<!-- main-menu -->
 										<ul class="nav navbar-nav ">
 											<li class="active">
-												<a href="<?php echo base_url() ?>" class="dropdown-toggle" data-toggle="dropdown">Anasayfa</a>
+												<a href="<?php echo base_url() ?>" >Anasayfa</a>
 											</li>
 											<li class="dropdown ">
 												<a class="dropdown-toggle" data-toggle="dropdown" href="#">Hakkımızda</a>
@@ -133,16 +133,16 @@
 												</ul>
 											</li>
 											<li>
-												<a href="<?php echo base_url() ?>" class="dropdown-toggle" data-toggle="dropdown">Ürünler</a>
+												<a href="<?php echo base_url("urun-listesi") ?>"  >Ürünler</a>
 											</li>
 											<li>
-												<a href="<?php echo base_url() ?>" class="dropdown-toggle" data-toggle="dropdown">Eğitimler</a>
+												<a href="<?php echo base_url() ?>" >Eğitimler</a>
 											</li>
 											<li>
-												<a href="<?php echo base_url() ?>" class="dropdown-toggle" data-toggle="dropdown">Markalar</a>
+												<a href="<?php echo base_url() ?>" >Markalar</a>
 											</li>
 											<li>
-												<a href="<?php echo base_url() ?>" class="dropdown-toggle" data-toggle="dropdown">İletişim</a>
+												<a href="<?php echo base_url() ?>" >İletişim</a>
 											</li>
 										</ul>
 										<!-- main-menu end -->

@@ -24,17 +24,35 @@
             $viewData->viewFolder = "product_list_v";
             $this->load->view($viewData->viewFolder,$viewData);
         }
-        public function product_detail()
+        public function product_detail($url="")
         {
             $this->load->model("product_model");
+            $this->load->model("product_image_model");
             $this->load->helper("text");
-            $products = $this->product_model->get_all(
+            $viewData = new stdClass();
+            $product = $this->product_model->get(
                 array(
-                    "isActive"  => 1
+                    "isActive"  => 1,
+                    "url"       => $url
+                )
+            );
+            $viewData->product = $product;
+
+            $product_images = $this->product_image_model->get_all(
+                array(
+                    "isActive"  => 1,
+                    "product_id"   => $viewData->product->id
                 ), "rank ASC"
             );
-            $viewData = new stdClass();
-            $viewData->products = $products;
+            $viewData->product_images = $product_images;
+
+            $other_products = $this->product_model->get_all(
+                array(
+                    "isActive"  => 1,
+                    "id !="     => $viewData->product->id
+                ), "rand()", array("start" => 0, "count" => 3)
+            );
+            $viewData->other_products = $other_products;
             $viewData->viewFolder = "product_v";
             $this->load->view($viewData->viewFolder,$viewData);
         }
