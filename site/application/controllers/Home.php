@@ -141,6 +141,19 @@
             $viewData->viewFolder = "references_list_v";
             $this->load->view($viewData->viewFolder, $viewData);
         }
+        public function brands_list()
+        {
+            $viewData = new stdClass();
+            $this->load->model("brand_model");
+            $viewData->brands = $this->brand_model->get_all(
+                array(
+                    "isActive"  => 1,
+                ), "rank ASC"
+            );
+            $viewData->image_folder_name = "brands_v"; 
+            $viewData->viewFolder = "brands_list_v";
+            $this->load->view($viewData->viewFolder, $viewData);
+        }
         public function test()
         {
             default_image(5, "sa", "sa");

@@ -139,7 +139,7 @@
 												<a href="<?php echo base_url("egitim-listesi") ?>" >Eğitimler</a>
 											</li>
 											<li>
-												<a href="<?php echo base_url() ?>" >Markalar</a>
+												<a href="<?php echo base_url("markalar") ?>" >Markalar</a>
 											</li>
 											<li>
 												<a href="<?php echo base_url() ?>" >İletişim</a>
