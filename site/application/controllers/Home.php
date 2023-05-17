@@ -103,7 +103,7 @@
             $viewData->courses = $this->course_model->get_all(
                 array(
                     "isActive"  => 1,
-                ), "rank ASC"
+                ), "rank ASC, event_date ASC"
             );
             $viewData->image_folder_name = "courses_v"; 
             $viewData->viewFolder = "courses_list_v";
@@ -127,6 +127,19 @@
             $viewData->image_folder_name = "courses_v";
             $viewData->viewFolder = "courses_v";
             $this->load->view($viewData->viewFolder,$viewData);
+        }
+        public function references_list()
+        {
+            $viewData = new stdClass();
+            $this->load->model("reference_model");
+            $viewData->references = $this->reference_model->get_all(
+                array(
+                    "isActive"  => 1,
+                ), "rank ASC"
+            );
+            $viewData->image_folder_name = "references_v"; 
+            $viewData->viewFolder = "references_list_v";
+            $this->load->view($viewData->viewFolder, $viewData);
         }
         public function test()
         {

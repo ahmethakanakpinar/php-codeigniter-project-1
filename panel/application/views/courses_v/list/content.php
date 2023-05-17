@@ -2,7 +2,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<h4 class="m-b-lg">
-                    Referanslar
+                    Eğitimler
                     <a class="btn btn-primary btn-outline pull-right btn-xs" href="<?php echo base_url("$viewTitle/new_form"); ?>"><i class="fa fa-plus" aria-hidden="true"></i> Ekle</a>
                 </h4>
 			</div><!-- END column -->
