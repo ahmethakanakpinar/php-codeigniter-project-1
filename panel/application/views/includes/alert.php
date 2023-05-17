@@ -18,3 +18,4 @@
         </script>
     <?php endif; ?>
 <?php endif; ?>
+<?php $this->session->unset_userdata("alert"); ?>
