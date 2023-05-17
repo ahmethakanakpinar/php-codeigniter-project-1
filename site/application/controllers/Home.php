@@ -5,6 +5,7 @@
         {
             parent::__construct();
             $this->viewFolder = "homepage";
+            $this->load->helper("text");
         }
         public function index()
         {
@@ -13,7 +14,6 @@
         public function product_list()
         {
             $this->load->model("product_model");
-            $this->load->helper("text");
             $products = $this->product_model->get_all(
                 array(
                     "isActive"  => 1
@@ -28,7 +28,6 @@
         {
             $this->load->model("product_model");
             $this->load->model("product_image_model");
-            $this->load->helper("text");
             $viewData = new stdClass();
             $viewData->product = $this->product_model->get(
                 array(
@@ -55,7 +54,7 @@
         public function portfolios_list()
         {
             $this->load->model("portfolio_model");
-            $this->load->helper("text");
+       
             $portfolios = $this->portfolio_model->get_all(
                 array(
                     "isActive"  => 1
@@ -70,7 +69,6 @@
         {
             $this->load->model("portfolio_model");
             $this->load->model("portfolio_image_model");
-            $this->load->helper("text");
             $viewData = new stdClass();
             $portfolios = $this->portfolio_model->get(
                 array(
@@ -96,6 +94,38 @@
             );
             $viewData->other_portfolios = $other_portfolios;
             $viewData->viewFolder = "portfolios_v";
+            $this->load->view($viewData->viewFolder,$viewData);
+        }
+        public function courses_list()
+        {
+            $viewData = new stdClass();
+            $this->load->model("course_model");
+            $viewData->courses = $this->course_model->get_all(
+                array(
+                    "isActive"  => 1,
+                ), "rank ASC"
+            );
+            $viewData->image_folder_name = "courses_v"; 
+            $viewData->viewFolder = "courses_list_v";
+            $this->load->view($viewData->viewFolder, $viewData);
+        }
+        public function courses_detail($url = "")
+        {
+            $viewData = new stdClass();
+            $this->load->model("course_model");
+            $viewData->course = $this->course_model->get(
+                array(
+                    "url" => $url
+                )
+            );
+            $viewData->other_courses = $this->course_model->get_all(
+                array(
+                    "isActive"  => 1,
+                    "id !="     => $viewData->course->id,
+                ),"rand()", array("start" => 0, "count" => 3)
+            );
+            $viewData->image_folder_name = "courses_v";
+            $viewData->viewFolder = "courses_v";
             $this->load->view($viewData->viewFolder,$viewData);
         }
         public function test()

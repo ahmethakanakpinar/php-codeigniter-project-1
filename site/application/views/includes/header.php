@@ -68,7 +68,7 @@
 
 						<!-- logo -->
 						<div id="logo" class="logo">
-							<a href="index.html"><img id="logo_img" src="<?php echo base_url("assets/images");?>/Logo_NIKE.svg.png" alt="The Project" style="margin:auto;height:55px;"></a>
+							<a href="<?php echo base_url() ?>"><img id="logo_img" src="<?php echo base_url("assets/images");?>/Logo_NIKE.svg.png" alt="The Project" style="margin:auto;height:55px;"></a>
 						</div>
 
 						<!-- name-and-slogan -->
@@ -136,7 +136,7 @@
 												<a href="<?php echo base_url("urun-listesi") ?>"  >Ürünler</a>
 											</li>
 											<li>
-												<a href="<?php echo base_url() ?>" >Eğitimler</a>
+												<a href="<?php echo base_url("egitim-listesi") ?>" >Eğitimler</a>
 											</li>
 											<li>
 												<a href="<?php echo base_url() ?>" >Markalar</a>

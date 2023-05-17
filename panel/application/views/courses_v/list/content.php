@@ -34,13 +34,9 @@
                                     <td><?php echo $item->title ?></td>
                                     <?php 
                                         if($item->event_date < date("Y-m-d H:i:s"))
-                                        {
                                             $danger = "bg-danger";
-                                        }
                                         else
-                                        {
                                             $danger = "";
-                                        }
                                     ?>
                                     <td class="text-center <?php echo $danger; ?>"><?php echo get_readable_date($item->event_date); ?></td>
                                     <td class="text-center">
