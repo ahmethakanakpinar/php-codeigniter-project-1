@@ -154,6 +154,19 @@
             $viewData->viewFolder = "brands_list_v";
             $this->load->view($viewData->viewFolder, $viewData);
         }
+        public function services_list() 
+        {
+            $viewData = new stdClass();
+            $this->load->model("service_model");
+            $viewData->services = $this->service_model->get_all(
+                array(
+                    "isActive"  => 1,
+                ), "rank ASC"
+            );
+            $viewData->image_folder_name = "services_v"; 
+            $viewData->viewFolder = "services_list_v";
+            $this->load->view($viewData->viewFolder, $viewData);
+        }
         public function test()
         {
             default_image(5, "sa", "sa");
