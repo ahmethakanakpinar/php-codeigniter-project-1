@@ -61,3 +61,4 @@ $route['egitim-detay/(:any)'] = "home/courses_detail/$1";
 $route['referanslar'] = "home/references_list";
 $route['markalar'] = "home/brands_list";
 $route['hizmetler'] = "home/services_list";
+$route['hakkimizda'] = "home/about_us_list";

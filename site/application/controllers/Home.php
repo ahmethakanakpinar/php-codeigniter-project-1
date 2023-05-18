@@ -167,6 +167,15 @@
             $viewData->viewFolder = "services_list_v";
             $this->load->view($viewData->viewFolder, $viewData);
         }
+        public function about_us_list()
+        {
+            $viewData = new stdClass();
+            $this->load->model("setting_model");
+            $viewData->settings = $this->setting_model->get(array());
+            $viewData->image_folder_name = "settings_v"; 
+            $viewData->viewFolder = "about_us_list_v";
+            $this->load->view($viewData->viewFolder, $viewData);
+        }
         public function test()
         {
             default_image(5, "sa", "sa");
