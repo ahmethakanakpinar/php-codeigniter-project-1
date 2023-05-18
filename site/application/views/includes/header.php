@@ -118,7 +118,7 @@
 											<li class="dropdown ">
 												<a class="dropdown-toggle" data-toggle="dropdown" href="#">Hakkımızda</a>
 												<ul class="dropdown-menu">
-													<li><a href="features-dark-page.html">Hakkımızda</a></li>
+													<li><a href="<?php echo base_url("hakkimizda") ?>">Hakkımızda</a></li>
 													<li><a href="<?php echo base_url("portfolyo-listesi") ?>">Portfolyo</a></li>
 													<li><a href="features-backgrounds.html">Haberler</a></li>
 													<li><a href="<?php echo base_url("referanslar") ?>">Referanslar</a></li>
