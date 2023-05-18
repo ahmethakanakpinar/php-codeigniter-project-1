@@ -153,6 +153,12 @@
                         <span class="menu-text">Kullanıcılar</span>
                     </a>
                 </li>
+                <li>
+                    <a href="<?php echo base_url("our_team"); ?>">
+                        <i class="menu-icon fa fa-user-secret"></i>
+                        <span class="menu-text">Bizim Ekip</span>
+                    </a>
+                </li>
 
                 <li>
                     <a href="javascript:void(0)">

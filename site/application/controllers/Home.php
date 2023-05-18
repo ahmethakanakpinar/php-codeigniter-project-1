@@ -171,7 +171,9 @@
         {
             $viewData = new stdClass();
             $this->load->model("setting_model");
+            $this->load->model("our_team_model");
             $viewData->settings = $this->setting_model->get(array());
+            $viewData->our_team = $this->our_team_model->get_all(array("isActive"=> 1));
             $viewData->image_folder_name = "settings_v"; 
             $viewData->viewFolder = "about_us_list_v";
             $this->load->view($viewData->viewFolder, $viewData);

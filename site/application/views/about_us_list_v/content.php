@@ -37,87 +37,29 @@
         <div class="container">
             <h4 class="mb-20">Bizim <strong>Takım</strong></h4>
             <div class="row grid-space-10">
-                <div class="col-sm-6 col-md-3">
-                    <div class="image-box team-member style-2 shadow bordered mb-20 text-center">
-                        <div class="overlay-container overlay-visible">
-                            <img src="<?php echo base_url("assets/images"); ?>/team-member-1.jpg" alt="">
-                            <div class="overlay-bottom">
-                                <p class="small margin-clear">Lorem ipsum dolor sit amet, consectetur adipisicing elit!</p>
+                <?php foreach($our_team as $personel): ?>
+                    <div class="col-sm-6 col-md-3">
+                        <div class="image-box team-member style-2 shadow bordered mb-20 text-center">
+                            <div class="overlay-container overlay-visible">
+                                <?php $fullname = CharConvert($personel->full_name); ?>
+                                <img src="<?php echo !empty($personel->img_url) ? base_url("panel/uploads/our_team_v/$fullname/$personel->img_url") : base_url("assets/images/team-member-1.jpg") ?>" alt="<?php echo $personel->img_url ?>">
+                                <div class="overlay-bottom">
+                                </div>
+                            </div>
+                            <div class="body">
+                                <h3 class="margin-clear"><?php echo $personel->full_name ?></h3>
+                                <small><?php echo $personel->position ?></small>
+                                <div class="separator mt-10"></div>
+                                <ul class="social-links circle colored margin-clear">
+                                    <li class="facebook"><a target="_blank" href="http://www.facebook.com/<?php echo $personel->facebook; ?>"><i class="fa fa-facebook"></i></a></li>
+                                    <li class="instagram"><a target="_blank" href="http://www.instagram.com/<?php echo $personel->instagram; ?>"><i class="fa fa-instagram"></i></a></li>
+                                    <li class="twitter"><a target="_blank" href="https://www.twitter.com/<?php echo $personel->twitter; ?>"><i class="fa fa-twitter"></i></a></li>
+                                </ul>
                             </div>
                         </div>
-                        <div class="body">
-                            <h3 class="margin-clear">Jane Doe</h3>
-                            <small>CEO</small>
-                            <div class="separator mt-10"></div>
-                            <ul class="social-links circle colored margin-clear">
-                                <li class="skype"><a target="_blank" href="http://www.skype.com"><i class="fa fa-skype"></i></a></li>
-                                <li class="linkedin"><a target="_blank" href="http://www.linkedin.com"><i class="fa fa-linkedin"></i></a></li>
-                                <li class="xing"><a target="_blank" href="https://www.xing.com/"><i class="fa fa-xing"></i></a></li>
-                            </ul>
-                        </div>
                     </div>
+                <?php endforeach; ?>
                 </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="image-box team-member style-2 shadow bordered mb-20 text-center">
-                        <div class="overlay-container overlay-visible">
-                            <img src="<?php echo base_url("assets/images"); ?>/team-member-2.jpg" alt="">
-                            <div class="overlay-bottom">
-                                <p class="small margin-clear">Ipsum dolor sit amet, consectetur adipisicing elit!</p>
-                            </div>
-                        </div>
-                        <div class="body">
-                            <h3 class="margin-clear">John Doe</h3>
-                            <small>CTO</small>
-                            <div class="separator mt-10"></div>
-                            <ul class="social-links circle colored margin-clear">
-                                <li class="skype"><a target="_blank" href="http://www.skype.com"><i class="fa fa-skype"></i></a></li>
-                                <li class="linkedin"><a target="_blank" href="http://www.linkedin.com"><i class="fa fa-linkedin"></i></a></li>
-                                <li class="xing"><a target="_blank" href="https://www.xing.com/"><i class="fa fa-xing"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="image-box team-member style-2 shadow bordered mb-20 text-center">
-                        <div class="overlay-container overlay-visible">
-                            <img src="<?php echo base_url("assets/images"); ?>/team-member-3.jpg" alt="">
-                            <div class="overlay-bottom">
-                                <p class="small margin-clear">Dolor sit amet, praesentium consectetur adipisicing elit!</p>
-                            </div>
-                        </div>
-                        <div class="body">
-                            <h3 class="margin-clear">Anne Doe</h3>
-                            <small>Project Manager</small>
-                            <div class="separator mt-10"></div>
-                            <ul class="social-links circle colored margin-clear">
-                                <li class="skype"><a target="_blank" href="http://www.skype.com"><i class="fa fa-skype"></i></a></li>
-                                <li class="linkedin"><a target="_blank" href="http://www.linkedin.com"><i class="fa fa-linkedin"></i></a></li>
-                                <li class="xing"><a target="_blank" href="https://www.xing.com/"><i class="fa fa-xing"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-3">
-                    <div class="image-box team-member style-2 shadow bordered mb-20 text-center">
-                        <div class="overlay-container overlay-visible">
-                            <img src="<?php echo base_url("assets/images"); ?>/team-member-4.jpg" alt="">
-                            <div class="overlay-bottom">
-                                <p class="small margin-clear">Voluptates praesentium nulla cupiditate explicabo!</p>
-                            </div>
-                        </div>
-                        <div class="body">
-                            <h3 class="margin-clear">Maria Doe</h3>
-                            <small>Designer</small>
-                            <div class="separator mt-10"></div>
-                            <ul class="social-links circle colored margin-clear">
-                                <li class="skype"><a target="_blank" href="http://www.skype.com"><i class="fa fa-skype"></i></a></li>
-                                <li class="linkedin"><a target="_blank" href="http://www.linkedin.com"><i class="fa fa-linkedin"></i></a></li>
-                                <li class="xing"><a target="_blank" href="https://www.xing.com/"><i class="fa fa-xing"></i></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     <!-- section end -->
@@ -126,24 +68,24 @@
     <!-- ================ -->
     <div class="section">
         <div class="container">
-            <h3>Why <strong>Choose Us</strong></h3>
+            <h3>Niye <strong>Bizi Seçmelisiniz</strong></h3>
             <div class="separator-2"></div>
             <div class="row">
                 <!-- accordion start -->
                 <!-- ================ -->
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="panel-group collapse-style-1" id="accordion">
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                        <i class="fa fa-rocket pr-10"></i>We Have Strong Background
+                                        <i class="fa fa-rocket pr-10"></i>Misyon
                                     </a>
                                 </h4>
                             </div>
                             <div id="collapseOne" class="panel-collapse collapse in">
                                 <div class="panel-body">
-                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put.
+                                    <?php echo strip_tags($settings->mission); ?>
                                 </div>
                             </div>
                         </div>
@@ -151,74 +93,20 @@
                             <div class="panel-heading">
                                 <h4 class="panel-title">
                                     <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" class="collapsed">
-                                        <i class="fa fa-leaf pr-10"></i>We Will Always Here To Support You
+                                        <i class="fa fa-leaf pr-10"></i>Vizyon
                                     </a>
                                 </h4>
                             </div>
                             <div id="collapseTwo" class="panel-collapse collapse">
                                 <div class="panel-body">
-                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put.
+                                    <?php echo strip_tags($settings->vission); ?>
                                 </div>
                             </div>
                         </div>
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree" class="collapsed">
-                                        <i class="fa fa-heart pr-10"></i>We Love What We Do
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="collapseThree" class="panel-collapse collapse">
-                                <div class="panel-body">
-                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put.
-                                </div>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
                 <!-- accordion end -->
-                <!-- progress bars start -->
-                <!-- ================ -->
-                <div class="col-md-6">
-                    <div class="progress mt-20 style-1">
-                        <span class="text"></span>
-                        <div class="progress-bar progress-bar-default" data-animate-width="90%">
-                            <span class="label object-non-visible" data-animation-effect="fadeInLeftSmall" data-effect-delay="1000">CSS</span>
-                        </div>
-                    </div>
-                    <div class="progress style-1">
-                        <span class="text"></span>
-                        <div class="progress-bar progress-bar-default" data-animate-width="95%">
-                            <span class="label object-non-visible" data-animation-effect="fadeInLeftSmall" data-effect-delay="1000">HTML5</span>
-                        </div>
-                    </div>
-                    <div class="progress style-1">
-                        <span class="text"></span>
-                        <div class="progress-bar progress-bar-default" data-animate-width="80%">
-                            <span class="label object-non-visible" data-animation-effect="fadeInLeftSmall" data-effect-delay="1000">JQUERY</span>
-                        </div>
-                    </div>
-                    <div class="progress style-1">
-                        <span class="text"></span>
-                        <div class="progress-bar progress-bar-default" data-animate-width="85%">
-                            <span class="label object-non-visible" data-animation-effect="fadeInLeftSmall" data-effect-delay="1000">PHP</span>
-                        </div>
-                    </div>
-                    <div class="progress style-1">
-                        <span class="text"></span>
-                        <div class="progress-bar progress-bar-default" data-animate-width="75%">
-                            <span class="label object-non-visible" data-animation-effect="fadeInLeftSmall" data-effect-delay="1000">PHOTOSHOP</span>
-                        </div>
-                    </div>
-                    <div class="progress style-1">
-                        <span class="text"></span>
-                        <div class="progress-bar progress-bar-default" data-animate-width="90%">
-                            <span class="label object-non-visible" data-animation-effect="fadeInLeftSmall" data-effect-delay="1000">DRUPAL</span>
-                        </div>
-                    </div>
-                </div>
-                <!-- progress bars end -->
             </div>
             <!-- clients start -->
             <!-- ================ -->
