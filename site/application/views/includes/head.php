@@ -1,6 +1,7 @@
+<?php $settings = get_settings(); ?>
 		<meta charset="utf-8">
-		<title>The Project | Home Beauty</title>
-		<meta name="description" content="The Project a Bootstrap-based, Responsive HTML5 Template">
+		<title><?php echo $settings->company_name ?></title>
+		<meta name="description" content="<?php echo $settings->company_name ?>">
 		<meta name="author" content="htmlcoder.me">
 
 		<!-- Mobile Meta -->

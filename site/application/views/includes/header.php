@@ -1,3 +1,4 @@
+<?php $settings = get_settings(); ?>
 <div class="header-container">
 	<header class="header fixed dark clearfix">
 		<div class="container">

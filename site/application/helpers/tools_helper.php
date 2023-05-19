@@ -66,5 +66,17 @@
             return "<b class='text-danger'>Belirtilmedi</b>";        
 
     }
+    function get_settings()
+    {
+        $t = &get_instance();
+        $settings = $t->session->userdata("settings");
+        if(empty($settings))
+        {
+            $t->load->model("setting_model");
+            $settings = $t->setting_model->get(array());
+            $t->session->set_userdata("settings", $settings);
+        }
+        return $settings;
+    }
 
 ?>

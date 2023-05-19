@@ -88,3 +88,4 @@
             return "<b class='text-danger'>Belirtilmedi</b>";        
 
     }
+    
