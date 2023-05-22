@@ -182,6 +182,12 @@
         {
             default_image(5, "sa", "sa");
         }
+        public function contact_us()
+        {
+            $viewData = new stdClass();
+            $viewData->viewFolder = "contact_v";
+            $this->load->view($viewData->viewFolder, $viewData);
+        }
     }
 
 

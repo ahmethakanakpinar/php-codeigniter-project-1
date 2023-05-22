@@ -144,7 +144,7 @@
 												<a href="<?php echo base_url("markalar") ?>" >Markalar</a>
 											</li>
 											<li>
-												<a href="<?php echo base_url() ?>" >İletişim</a>
+												<a href="<?php echo base_url("iletisim") ?>" >İletişim</a>
 											</li>
 										</ul>
 										<!-- main-menu end -->
