@@ -161,7 +161,7 @@
                             </ul>
                             <div class="separator-2"></div>
                             <ul class="list-icons">
-                                <li><i class="fa fa-map-marker pr-10 text-default"></i> <?php echo $settings->adress; ?></li>
+                                <li><i class="fa fa-map-marker pr-10 text-default"></i> <?php echo strip_tags($settings->adress); ?></li>
                                 <li><i class="fa fa-phone pr-10 text-default"></i> <?php echo $settings->phone_1; ?></li>
                                 <li><a href="mailto:<?php echo $settings->email; ?>"><i class="fa fa-envelope-o pr-10"></i><?php echo $settings->email; ?></a></li>
                             </ul>

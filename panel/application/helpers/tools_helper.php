@@ -45,7 +45,7 @@
             "newline"   => "\r\n"
         );
         $t->load->library("email", $config);
-        $t->email->from($email_settings->from, $email_settings->user_name);
+        $t->email->from($email_settings->email_from, $email_settings->user_name);
         $t->email->to($toEmail);
         $t->email->subject($subject);
         $t->email->message($message);

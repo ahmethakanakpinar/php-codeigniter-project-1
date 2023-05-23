@@ -186,8 +186,61 @@
         {
             $viewData = new stdClass();
             $viewData->viewFolder = "contact_v";
-            $this->load->view($viewData->viewFolder, $viewData);
+             $this->load->view($viewData->viewFolder, $viewData);
         }
+        public function send_contact_message()
+        {
+           
+            $this->load->library("form_validation");
+            $this->form_validation->set_rules("name", "Ad Soyad", "required|trim");
+            $this->form_validation->set_rules("email", "E-posta", "required|trim|valid_email");
+            $this->form_validation->set_rules("subject", "Konu", "required|trim");
+            $this->form_validation->set_rules("message", "Mesaj", "required|trim|min_length[10]|max_length[500]");
+            $this->form_validation->set_message(
+                array(
+                    "required"  => "{field} Alanı Boş Geçilemez!",
+                    "valid_email"   => "{field} Alanı Kurallara uygun bir şekilde yazılmalıdır!",
+                    "min_length"    => "{field} Kısmı {param} karakterden az olamaz",
+                    "max_length"    => "{field} Kısmı {param} karakterden fazla olamaz"
+                )
+            );
+            $validation = $this->form_validation->run();
+            if($validation)
+            {
+                $captcha = reCaptche("iletisim", '6Lc_2jAmAAAAANSynu4kSNwjKvZMbAwl43Vu24NC');
+                if($captcha)
+                {
+                    $name = $this->input->post("name"); 
+                    $email = $this->input->post("email"); 
+                    $subject = $this->input->post("subject"); 
+                    $message = $this->input->post("message"); 
+                    $email_message = "{$name} isimli ziyaretçi. Mesaj Bıraktı <br> <b>Mesaj : </b> {$message} <br> <b>E-posta : </b> {$email}";
+                    if(send_email("","Site İletişim Mesajı | $subject ",$email_message))
+                    {
+                        // $alert = array(
+                        //     "title" => "İşlem Başarılı",
+                        //     "text" => "Mesajınız Başarılı bir şekilde iletilmiştir!",
+                        //     "type" => "success"
+                        // );
+                        // $this->session->set_flashdata("alert", $alert);
+                        redirect(base_url("iletisim"));
+                    }
+                    else
+                    {
+                        echo "başarısız";
+                    }
+                }
+              
+            }
+            else
+            {
+                $viewData = new stdClass();
+                $viewData->viewFolder = "contact_v";
+                $viewData->form_error = true;
+                $this->load->view($viewData->viewFolder, $viewData);
+            }
+        }
+
     }
 
 
