@@ -256,15 +256,15 @@
         {
             $viewData = new stdClass();
             $this->load->model("news_model");
-            $viewData->course = $this->news_model->get(
+            $viewData->news = $this->news_model->get(
                 array(
                     "url" => $url
                 )
             );
-            $viewData->other_courses = $this->news_model->get_all(
+            $viewData->other_news = $this->news_model->get_all(
                 array(
                     "isActive"  => 1,
-                    "id !="     => $viewData->course->id,
+                    "id !="     => $viewData->news->id,
                 ),"rand()", array("start" => 0, "count" => 3)
             );
             $viewData->image_folder_name = "news_v";
