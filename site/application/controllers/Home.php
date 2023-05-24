@@ -240,6 +240,16 @@
                 $this->load->view($viewData->viewFolder, $viewData);
             }
         }
+        public function news_list()
+        {
+            $this->load->model("news_model");
+            $this->news_model->get_all(
+                array(),"rank ASC"
+            );
+            $viewData = new stdClass();
+            $viewData->viewFolder = "news_list_v";
+            $this->load->view($viewData->viewFolder, $viewData);
+        }
 
     }
 
