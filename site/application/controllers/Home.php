@@ -103,7 +103,7 @@
             $viewData->courses = $this->course_model->get_all(
                 array(
                     "isActive"  => 1,
-                ), "rank ASC, event_date ASC"
+                ), "rank ASC, event_date DESC"
             );
             $viewData->image_folder_name = "courses_v"; 
             $viewData->viewFolder = "courses_list_v";
@@ -243,10 +243,12 @@
         public function news_list()
         {
             $this->load->model("news_model");
-            $this->news_model->get_all(
-                array(),"rank ASC"
-            );
             $viewData = new stdClass();
+            $news_list = $this->news_model->get_all(
+                array("isActive" => 1),"createdAt DESC"
+            );
+            $viewData->news_list = $news_list;
+            $viewData->image_folder_name = "news_v";
             $viewData->viewFolder = "news_list_v";
             $this->load->view($viewData->viewFolder, $viewData);
         }
