@@ -39,7 +39,7 @@
                                                 <?php if($news->news_type =="image"): ?>
                                                     <div class="overlay-container">
                                                         <img src="<?php echo !empty($news->img_url) ? base_url("panel/uploads/{$image_folder_name}/$news->img_url") : base_url("assets/images/blog-2.jpg") ?>" alt="<?php echo $news->img_url ?>">
-                                                        <a class="overlay-link" href="blog-post.html"><i class="fa fa-link"></i></a>
+                                                        <a class="overlay-link" href="<?php echo base_url("haber-detay/$news->url")?>"><i class="fa fa-link"></i></a>
                                                     </div>
                                                 <?php else: ?>
                                                     <div class="embed-responsive embed-responsive-16by9">
@@ -47,7 +47,7 @@
                                                     </div>
                                                 <?php endif; ?>
                                                 <header>
-                                                    <h2><a href="blog-post.html"><?php echo $news->title ?></a></h2>
+                                                    <h2><a href="<?php echo base_url("haber-detay/$news->url")?>"><?php echo $news->title ?></a></h2>
                                                     <div class="post-info">
                                                         <span class="post-date">
                                                             <i class="icon-calendar"></i>
@@ -62,7 +62,7 @@
                                                 </div>
                                                 <footer class="clearfix">
                                                     <div class="tags pull-left"><i class="icon-tags"></i> <a href="#">tag 1</a>, <a href="#">tag 2</a>, <a href="#">long tag 3</a></div>
-                                                    <div class="link pull-right"><i class="icon-link"></i><a href="#">Daha Fazlası</a></div>
+                                                    <div class="link pull-right"><i class="icon-link"></i><a href="<?php echo base_url("haber-detay/$news->url")?>">Daha Fazlası</a></div>
                                                 </footer>
                                             </article>
                                             <!-- blogpost end -->									

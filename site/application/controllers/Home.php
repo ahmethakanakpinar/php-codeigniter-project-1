@@ -252,6 +252,25 @@
             $viewData->viewFolder = "news_list_v";
             $this->load->view($viewData->viewFolder, $viewData);
         }
+        public function news_detail($url="")
+        {
+            $viewData = new stdClass();
+            $this->load->model("news_model");
+            $viewData->course = $this->news_model->get(
+                array(
+                    "url" => $url
+                )
+            );
+            $viewData->other_courses = $this->news_model->get_all(
+                array(
+                    "isActive"  => 1,
+                    "id !="     => $viewData->course->id,
+                ),"rand()", array("start" => 0, "count" => 3)
+            );
+            $viewData->image_folder_name = "news_v";
+            $viewData->viewFolder = "news_v";
+            $this->load->view($viewData->viewFolder,$viewData);
+        }
 
     }
 

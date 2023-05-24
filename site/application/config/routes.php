@@ -65,3 +65,4 @@ $route['hakkimizda'] = "home/about_us_list";
 $route['iletisim'] = "home/contact_us";
 $route['mesaj-gonder'] = "home/send_contact_message";
 $route['haberler'] = "home/news_list";
+$route['haber-detay/(:any)'] = "home/news_detail/$1";
