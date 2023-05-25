@@ -24,7 +24,8 @@
 <link href="<?php echo base_url("assets");?>/css/animations.css" rel="stylesheet">
 <link href="<?php echo base_url("assets");?>/plugins/owlcarousel2/assets/owl.carousel.min.css" rel="stylesheet">
 <link href="<?php echo base_url("assets");?>/plugins/owlcarousel2/assets/owl.theme.default.min.css" rel="stylesheet">
-<link href="<?php echo base_url("assets");?>/plugins/hover/hover-min.css" rel="stylesheet">		
+<link href="<?php echo base_url("assets");?>/plugins/hover/hover-min.css" rel="stylesheet">	
+<link href="<?php echo base_url("assets");?>/plugins/morphext/morphext.css" rel="stylesheet">	
 
 <!-- The Project's core CSS file -->
 <!-- Use css/rtl_style.css for RTL version -->

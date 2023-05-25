@@ -20,6 +20,8 @@
 		<script src="<?php echo base_url("assets");?>/plugins/jquery.parallax-1.1.3.js"></script>
 		<!-- Contact form -->
 		<script src="<?php echo base_url("assets");?>/plugins/jquery.validate.js"></script>
+		<!-- Morphext -->
+		<script type="text/javascript" src="<?php echo base_url("assets");?>/plugins/morphext/morphext.min.js"></script>
 		<!-- Google Maps javascript -->
 		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&amp;key=AIzaSyDSio4u2cqShx52YjhdzbxjfPk1LLlzROI"></script>
 		<script type="text/javascript" id="mapScriptTag" data-lat="<?php echo $settings->location_lat;?>" data-long="<?php echo $settings->location_long;?>" src="<?php echo base_url("assets");?>/js/google.map.config.js"></script>
