@@ -88,4 +88,37 @@
             return "<b class='text-danger'>Belirtilmedi</b>";        
 
     }
+    function image_upload($img_url,$turn)
+    {
+        $t = &get_instance();
+        $base64strcount = count($_POST["base64str"]);
+        $img_name = CharConvert(pathinfo($_FILES[$img_url]["name"], PATHINFO_FILENAME)). "." .pathinfo($_FILES[$img_url]["name"], PATHINFO_EXTENSION);
+        $img_path = "uploads/$t->viewFolder/$img_name";
+        $file_path = "uploads/$t->viewFolder/";
+        $img = $_POST["base64str"][0];
+        $img = str_replace('data:image/png;base64,', '', $img);
+        $img = str_replace('data:image/jpg;base64,', '', $img);
+        $img = str_replace('data:image/jpeg;base64,', '', $img);
+        $img = str_replace('data:image/gif;base64,', '', $img);
+        $img = str_replace(' ', '+', $img);
+        $img_data = base64_decode($img);
+
+        $im = imagecreatefromstring($img_data);
+        if ($im !== false) {
+            //header('Content-Type: image/png');
+            imagepng($im, $img_path);
+            imagedestroy($im);
+        }
+        else 
+        {
+            $alert = array(
+                "title" => "İşlem Başarısız",
+                "text" => "Görsel Yükleme de problem yaşandı!",
+                "type" => "error"
+            );
+            $t->session->set_flashdata("alert", $alert);
+            redirect(base_url("{$t->viewTitle}/$turn"));
+            die();
+        }
+    }
     
