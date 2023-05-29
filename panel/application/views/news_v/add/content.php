@@ -32,8 +32,17 @@
 							<?php if(isset($form_error)): ?>
 								<div class="form-group image_upload_container" style="display: <?php echo $news_type == "image" ? "block" : "none" ?>">
 									<label for="exampleInputFile">Görsel Seçiniz</label>
-									<input type="file" id="exampleInputFile" class="form-control" name="img_url">
-									<button id="cropImageBtn">Resmi düzelt</button>
+									<div class="row">
+										<div class="col-md-1">
+											<label class="label" data-toggle="tooltip" title="Resim yükleyin">
+												<img class="rounded avatar" src="<?php echo base_url("assets") ?>/assets/images/image-upload.png" alt="Resim Seçiniz" style="cursor:pointer">
+												<input type="file" id="input" class="sr-only" name="img_url" accept="image/*" >
+											</label>
+										</div>
+										<div class="col-md-11">
+											<div id="image_crop_data"></div>
+										</div>
+									</div>
 								</div><!-- .form-group -->
 								<div class="form-group video_url_container <?php echo isset($form_error)? "has-error":""  ?>" style="display: <?php echo $news_type == "movie" ? "block" : "none" ?>">
 									<label for="title">Video Url</label>
@@ -56,7 +65,7 @@
 											<div id="image_crop_data"></div>
 										</div>
 									</div>
-									
+									<!-- .image-finished -->
 								</div><!-- .form-group -->
 								<div class="form-group video_url_container <?php echo isset($form_error)? "has-error":""  ?>">
 									<label for="title">Video Url</label>
