@@ -107,6 +107,7 @@
 									</div>
 								</div>
 							</div>
+							<!-- MODEL POPUP -->
 							<button type="submit" class="btn btn-primary btn-md btn-outline">Güncelle</button>
 							<a href="<?php echo base_url("$viewTitle") ?>" class="btn btn-danger btn-md btn-outline">İptal</a>
 						</form>
