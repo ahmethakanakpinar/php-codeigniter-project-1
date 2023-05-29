@@ -93,8 +93,17 @@
         $t = &get_instance();
         $base64strcount = count($_POST["base64str"]);
         $img_name = CharConvert(pathinfo($_FILES[$img_url]["name"], PATHINFO_FILENAME)). "." .pathinfo($_FILES[$img_url]["name"], PATHINFO_EXTENSION);
-        $img_path = "uploads/$t->viewFolder/$img_name";
-        $file_path = "uploads/$t->viewFolder/";
+        if(isset($t->username))
+        {
+            $img_path = "uploads/$t->viewFolder/$t->username/$img_name";
+            echo $img_path;
+            $file_path = "uploads/$t->viewFolder/$t->username/";
+        }
+        else
+        {
+            $img_path = base_url("uploads/$t->viewFolder/$img_name");
+            $file_path = base_url("uploads/$t->viewFolder/");
+        }
         $img = $_POST["base64str"][0];
         $img = str_replace('data:image/png;base64,', '', $img);
         $img = str_replace('data:image/jpg;base64,', '', $img);

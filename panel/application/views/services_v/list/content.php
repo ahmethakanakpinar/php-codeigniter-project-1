@@ -34,7 +34,7 @@
                                     <td><?php echo $item->url ?></td>
                                     <td><?php echo $item->title ?></td>
                                     <td class="text-center">
-                                            <img width="75" class="img-fluid img-rounded" src="<?php echo "uploads/{$viewFolder}/{$item->img_url}" ?>" alt="<?php $item->img_url ?>">
+                                            <img width="75" class="img-fluid img-rounded" src="<?php echo base_url("uploads/{$viewFolder}/{$item->img_url}") ?>" alt="<?php $item->img_url ?>">
                                     </td>
                                     <td>
                                         <input data-url="<?php echo base_url("$viewTitle/isActiveSetter/$item->id"); ?>" class="isActive" type="checkbox" data-switchery data-color="#10c469" <?php echo ($item->isActive) ? "checked": "" ?> />

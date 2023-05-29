@@ -38,7 +38,7 @@
                                             $img_name = ($item->img_url != "") ? "uploads/{$viewFolder}/{$item->user_name}/{$item->img_url}" : "uploads/{$viewFolder}/default_users/default-user-image.png";
                                             $img_url = ($item->img_url != "") ? "$item->img_url" : "default-user-image.png"; 
                                         ?>
-                                            <img width="100" class="img-fluid img-rounded" src="<?php echo $img_name ?>" alt="<?php echo $img_url ?>">
+                                            <img width="100" class="img-fluid img-rounded" src="<?php echo base_url($img_name) ?>" alt="<?php echo $img_url ?>">
                                     </td>
                                     <td class="text-center w-100">
                                         <input data-url="<?php echo base_url("$viewTitle/isActiveSetter/$item->id"); ?>" class="isActive" type="checkbox" data-switchery data-color="#10c469" <?php echo ($item->isActive) ? "checked": "" ?> />

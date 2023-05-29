@@ -12,6 +12,12 @@ class Users extends CI_Controller{
 		{
 			redirect(base_url("login"));
 		}
+        $image_upload = array(
+            "image_width" => 300,
+            "image_height" => 300,
+            "image_aspect_ratio" => 1/1
+        );
+        $this->session->set_flashdata("image_upload", $image_upload);
     }
     public function index()
     {
@@ -55,42 +61,24 @@ class Users extends CI_Controller{
         if($validate)
         {
             $username = CharConvert($this->input->post("user_name"));
+            $this->username = $username;
             $path = "uploads/{$this->viewFolder}";
             mkdir("{$path}/{$username}", 0755);
             if($_FILES["img_url"]["name"] != "")
             {
                 $file_name = CharConvert(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)). "." .pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
-                $config["file_name"] = $file_name;
-                $config["upload_path"] = "{$path}/{$username}/";
-                $config["allowed_types"] = "jpg|jpeg|png";
-                $this->load->library("upload",$config);
-                $upload = $this->upload->do_upload("img_url");
-                if($upload)
-                {
-                    $insert = $this->user_model->add(
-                        array(
-                            "user_name" => $username,
-                            "full_name" => $this->input->post("full_name"),
-                            "email" => $this->input->post("email"),
-                            "password" => md5($this->input->post("password")),
-                            "img_url" => $file_name,
-                            "isActive" => 0,
-                            "createdAt" => date("Y-m-d H:i:s")
-                        )
-                    );
-                }
-                else
-                {
-                    $alert = array(
-                        "title" => "İşlem Başarısız",
-                        "text" => "Görsel Yükleme de problem yaşandı!",
-                        "type" => "error"
-                    );
-                    $this->session->set_flashdata("alert", $alert);
-                    redirect(base_url("{$this->viewTitle}/new_form"));
-                    die();
-                }
-              
+                image_upload("img_url","new_form");
+                $insert = $this->user_model->add(
+                    array(
+                        "user_name" => $username,
+                        "full_name" => $this->input->post("full_name"),
+                        "email" => $this->input->post("email"),
+                        "password" => md5($this->input->post("password")),
+                        "img_url" => $file_name,
+                        "isActive" => 0,
+                        "createdAt" => date("Y-m-d H:i:s")
+                    )
+                );
             }
             else
             {
@@ -177,40 +165,22 @@ class Users extends CI_Controller{
         if($validate)
         {
             $username = CharConvert($this->input->post("user_name"));
+            $this->username = $username;
             $path = "uploads/{$this->viewFolder}";
             rename("{$path}/{$old_user->user_name}","{$path}/{$username}");
             if($_FILES["img_url"]["name"] != "")
             {
                 $file_name = CharConvert(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)). "." .pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
-                $config["file_name"] = $file_name;
-                $config["upload_path"] = "{$path}/{$username}/";
-                $config["allowed_types"] = "jpg|jpeg|png";
-                $this->load->library("upload",$config);
-                $upload = $this->upload->do_upload("img_url");
-                if($upload)
-                {
-                    $insert = $this->user_model->update(
-                        array("id" => $id),
-                        array(
-                            "user_name" => $username,
-                            "full_name" => $this->input->post("full_name"),
-                            "email" => $this->input->post("email"),
-                            "img_url" => $file_name,
-                        )
-                    );
-                }
-                else
-                {
-                    $alert = array(
-                        "title" => "İşlem Başarısız",
-                        "text" => "Görsel güncelleme sırasında problem yaşandı!",
-                        "type" => "error"
-                    );
-                    $this->session->set_flashdata("alert", $alert);
-                    redirect(base_url("{$this->viewTitle}/update_form/$id"));
-                    die();
-                }
-              
+                image_upload("img_url","update_form");
+                $insert = $this->user_model->update(
+                    array("id" => $id),
+                    array(
+                        "user_name" => $username,
+                        "full_name" => $this->input->post("full_name"),
+                        "email" => $this->input->post("email"),
+                        "img_url" => $file_name,
+                    )
+                );
             }
             else
             {

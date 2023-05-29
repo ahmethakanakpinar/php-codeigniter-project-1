@@ -20,21 +20,21 @@
 								<label for="exampleInputPassword1">Açıklama</label>
 								<textarea name="description" class="m-0" data-plugin="summernote" data-options="{height: 250}"></textarea>
 							</div>
-								<div class="form-group image_upload_container">
-									<label for="exampleInputFile">Görsel Seçiniz</label>
-									<div class="row">
-										<div class="col-md-1">
-											<label class="label" data-toggle="tooltip" title="Resim yükleyin">
-												<img class="rounded avatar" src="<?php echo base_url("assets") ?>/assets/images/image-upload.png" alt="Resim Seçiniz" style="cursor:pointer">
-												<input type="file" id="input" class="sr-only" name="img_url" accept="image/*" >
-											</label>
-										</div>
-										<div class="col-md-11">
-											<div id="image_crop_data"></div>
-										</div>
+							<div class="form-group image_upload_container">
+								<label for="exampleInputFile">Görsel Seçiniz</label>
+								<div class="row">
+									<div class="col-md-1">
+										<label class="label" data-toggle="tooltip" title="Resim yükleyin">
+											<img class="rounded avatar" src="<?php echo base_url("assets") ?>/assets/images/image-upload.png" alt="Resim Seçiniz" style="cursor:pointer">
+											<input type="file" id="input" class="sr-only" name="img_url" accept="image/*" >
+										</label>
 									</div>
-								</div><!-- .form-group -->		
-									<!-- MODEL POPUP -->
+									<div class="col-md-11">
+										<div id="image_crop_data"></div>
+									</div>
+								</div>
+							</div><!-- .form-group -->		
+							<!-- MODEL POPUP -->
 							<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
 								<div class="modal-dialog" role="document">
 									<div class="modal-content">

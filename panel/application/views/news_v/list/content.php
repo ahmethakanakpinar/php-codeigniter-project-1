@@ -39,7 +39,7 @@
                                     <td><?php echo $item->news_type ?></td>
                                     <td class="text-center">
                                         <?php if($item->news_type == "image"): ?>
-                                            <img width="75" class="img-fluid img-rounded" src="<?php echo "uploads/{$viewFolder}/{$item->img_url}" ?>" alt="<?php $item->img_url ?>">
+                                            <img width="75" class="img-fluid img-rounded" src="<?php echo base_url("uploads/{$viewFolder}/{$item->img_url}") ?>" alt="<?php $item->img_url ?>">
                                         <?php elseif($item->news_type == "movie"): ?>
                                             <iframe 
                                                 width="75"
