@@ -10,6 +10,13 @@
         public function index()
         {
             $viewData = new stdClass();
+            $this->load->model("slide_model");
+            $slides = $this->slide_model->get_all(
+                array(
+                    "isActive"  => 1,
+                ),"rank ASC"
+            );
+            $viewData->slides = $slides;
             $viewData->viewFolder = "home_v";
             $this->load->view($viewData->viewFolder,$viewData);
         }
