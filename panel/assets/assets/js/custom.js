@@ -20,6 +20,10 @@ $(document).ready(function(){
             }
         });
     })
+    $(".buttonswitch").change(function(){
+        $(".button_enable").slideToggle();
+    })
+
     $(".content-container, .image_list_container").on('change', '.isActive', function()
     {
         var $data = $(this).prop("checked");
@@ -55,6 +59,8 @@ $(document).ready(function(){
             });
         }
     })
+    
+    
     $(".content-container, .image_list_container").on("sortupdate", ".sortable", function(event, ui){
         var $data = $(this).sortable("serialize");
         var $data_url = $(this).data("url");

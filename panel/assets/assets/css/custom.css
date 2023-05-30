@@ -22,3 +22,13 @@ td
 {
     width: 300px;
 }
+.button_enable
+{
+    display: none;
+    border: 1px solid;
+    border-color: #ccc;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+
+}

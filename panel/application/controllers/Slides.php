@@ -43,16 +43,11 @@ class Slides extends CI_Controller{
     public function save()
     {
         $this->load->library("form_validation");
-        if($_FILES["img_url"]["name"] == "")
+       
+        if(($this->input->post("switch") == "on"))
         {
-            $alert = array(
-                "title" => "İşlem Başarısız",
-                "text" => "Lütfen bir görsel Seçiniz!",
-                "type" => "error"
-            );
-            $this->session->set_flashdata("alert", $alert);
-            redirect(base_url("{$this->viewTitle}/new_form"));
-            die();
+            $this->form_validation->set_rules("button_url","Buton Url","required|trim");
+            $this->form_validation->set_rules("button_caption","Buton İsmi","required|trim");
         }
         $this->form_validation->set_rules("title","Başlık","required|trim");
         $this->form_validation->set_message(
@@ -63,20 +58,39 @@ class Slides extends CI_Controller{
         $validate = $this->form_validation->run();
         if($validate)
         {
+            if($_FILES["img_url"]["name"] == "")
+            {
+                $alert = array(
+                    "title" => "İşlem Başarısız",
+                    "text" => "Lütfen bir görsel Seçiniz!",
+                    "type" => "error"
+                );
+                $this->session->set_flashdata("alert", $alert);
+                redirect(base_url("{$this->viewTitle}/new_form"));
+                die();
+            }
             $file_name = CharConvert(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)). "." .pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
             image_upload("img_url","new_form");
-            $insert = $this->slide_model->add(
-                array(
-                    "url"           => CharConvert($this->input->post("title")),
-                    "title"         => $this->input->post("title"),
-                    "description"   => $this->input->post("description"),
-                    "img_url"       => $file_name,
-                    "rank"          =>0,
-                    "isActive"      =>0,
-                    "createdAt"     =>date("Y-m-d H:i:s")
-    
-                )
-            );
+            $input = array(
+                        "title"             => $this->input->post("title"),
+                        "description"       => $this->input->post("description"),
+                        "img_url"           => $file_name,
+                        "allowButton"       => ($this->input->post("switch") == "on") ? 1 : 0,
+                        "rank"              =>0,
+                        "isActive"          =>0,
+                        "createdAt"         =>date("Y-m-d H:i:s")
+                    );
+            
+            if(($this->input->post("switch") == "on"))
+            {
+                $input_switch = array(
+                    "button_url"        => $this->input->post("button_url"),
+                    "button_caption"    => $this->input->post("button_caption"),
+                );
+                $input = array_merge($input, $input_switch);
+            }
+           
+            $insert = $this->slide_model->add($input);
             if($insert)
             {
                 $alert = array(
