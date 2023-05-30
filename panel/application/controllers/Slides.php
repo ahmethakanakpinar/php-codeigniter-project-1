@@ -138,6 +138,11 @@ class Slides extends CI_Controller{
     public function update($id)
     {
         $this->load->library("form_validation");
+        if(($this->input->post("switch") == "on"))
+        {
+            $this->form_validation->set_rules("button_url","Buton Url","required|trim");
+            $this->form_validation->set_rules("button_caption","Buton İsmi","required|trim");
+        }
         $this->form_validation->set_rules("title","Başlık","required|trim");
         $this->form_validation->set_message(
             array(
@@ -151,25 +156,45 @@ class Slides extends CI_Controller{
             {
                 $file_name = CharConvert(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)). "." .pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
                 image_upload("img_url","update_form");
+                $input = array(
+                    "title"             => $this->input->post("title"),
+                    "description"       => $this->input->post("description"),
+                    "img_url"           => $file_name,
+                    "allowButton"       => ($this->input->post("switch") == "on") ? 1 : 0,
+                );
+                if(($this->input->post("switch") == "on"))
+                {
+                    $input_switch = array(
+                        "button_url"        => $this->input->post("button_url"),
+                        "button_caption"    => $this->input->post("button_caption"),
+                    );
+                    $input = array_merge($input, $input_switch);
+                }
+
                 $insert = $this->slide_model->update(
                     array("id" => $id),
-                    array(
-                        "url"           => CharConvert($this->input->post("title")),
-                        "title"         => $this->input->post("title"),
-                        "description"   => $this->input->post("description"),
-                        "img_url"       => $file_name
-                    )
+                    $input
                 );
             }
             else
             {
+                $input = array(
+                    "title"             => $this->input->post("title"),
+                    "description"       => $this->input->post("description"),
+                    "allowButton"       => ($this->input->post("switch") == "on") ? 1 : 0,
+                );
+                if(($this->input->post("switch") == "on"))
+                {
+                    $input_switch = array(
+                        "button_url"        => $this->input->post("button_url"),
+                        "button_caption"    => $this->input->post("button_caption"),
+                    );
+                    $input = array_merge($input, $input_switch);
+                }
+
                 $insert = $this->slide_model->update(
                     array("id" => $id),
-                    array(
-                        "url"           => CharConvert($this->input->post("title")),
-                        "title"         => $this->input->post("title"),
-                        "description"   => $this->input->post("description")
-                    )
+                    $input
                 );
             }
        

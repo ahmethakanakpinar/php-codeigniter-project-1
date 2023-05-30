@@ -18,7 +18,7 @@
 							</div>
 							<div class="form-group">
 								<label for="exampleInputPassword1">Slider Açıklaması</label>
-								<textarea name="description" class="m-0" data-plugin="summernote" data-options="{height: 250}"></textarea>
+								<textarea name="description" class="m-0" data-plugin="summernote" data-options="{height: 250}"><?php echo isset($form_error) ? set_value("description") : "" ?></textarea>
 							</div>
 							<div class="form-group image_upload_container">
 								<label for="exampleInputFile">Slider Seçiniz</label>

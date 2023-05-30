@@ -10,36 +10,53 @@
 				<div class="widget p-lg">
 					<div class="widget-body">
 						<form action="<?php echo base_url("{$viewTitle}/update/$item->id") ?>" method="post" enctype = "multipart/form-data">
-							<div class="form-group <?php echo isset($form_error) ? "has-error":""  ?>">
-								<label for="title">Haber Başlığı</label>
-								<input type="text" class="form-control" id="title" name="title" value = "<?php echo $item->title ?>">
+							<div class="form-group <?php echo isset($form_error) ? ((set_value("title") == "") ? "has-error":"") :""; ?>">
+								<label for="title">Slider Başlığı</label>
+								<input type="text" class="form-control" id="title" name="title" value="<?php echo isset($form_error) ? set_value("title") : $item->title ?>">
 								<?php if(isset($form_error)): ?>
-								<small>Hata</small>
+									<small class="text-danger"><?php echo form_error("title"); ?></small>
 								<?php endif; ?>
 							</div>
 							<div class="form-group">
-								<label for="exampleInputPassword1">Açıklama</label>
-								<textarea name="description" class="m-0" data-plugin="summernote" data-options="{height: 250}"><?php echo $item->description ?></textarea>
+								<label for="exampleInputPassword1">Slider Açıklaması</label>
+								<textarea name="description" class="m-0" data-plugin="summernote" data-options="{height: 250}"><?php echo isset($form_error) ? set_value("description") : $item->description ?></textarea>
 							</div>
-							<div class="row">
-								<div class="col-md-2 image_upload_container">
-									<img src="<?php echo base_url("uploads/{$viewFolder}/{$item->img_url}") ?>" alt="<?php $item->img_url ?>">
+							<div class="form-group image_upload_container">
+								<label for="exampleInputFile">Slider Seçiniz</label>
+								<div class="row">
+									<div class="col-md-2 image_upload_container">
+										<img src="<?php echo base_url("uploads/{$viewFolder}/{$item->img_url}") ?>" alt="<?php $item->img_url ?>">
+									</div>
+									<div class="col-md-1">
+										<label class="label" data-toggle="tooltip" title="Resim yükleyin">
+											<img class="rounded avatar" src="<?php echo base_url("assets") ?>/assets/images/image-upload.png" alt="Resim Seçiniz" style="cursor:pointer">
+											<input type="file" id="input" class="sr-only" name="img_url" accept="image/*" >
+										</label>
+									</div>
+									<div class="col-md-9">
+										<div id="image_crop_data"></div>
+									</div>
 								</div>
-								<div class="col-md-10">
-									<div class="form-group image_upload_container">
-										<label for="exampleInputFile">Görsel Seçiniz</label>
-										<div class="row">
-											<div class="col-md-1">
-												<label class="label" data-toggle="tooltip" title="Resim yükleyin">
-													<img class="rounded avatar" src="<?php echo base_url("assets") ?>/assets/images/image-upload.png" alt="Resim Seçiniz" style="cursor:pointer">
-													<input type="file" id="input" class="sr-only" name="img_url" accept="image/*" >
-												</label>
-											</div>
-											<div class="col-md-11">
-												<div id="image_crop_data"></div>
-											</div>
-										</div>
-									</div><!-- .form-group -->
+							</div><!-- .form-group -->
+							<div class="form-group">
+							
+								<label for="exampleInputPassword1">Button Aktif</label><br>
+								<input name="switch" class="form-control buttonswitch" type="checkbox" data-switchery data-color="#10c469" <?php  echo isset($form_error) ? ((set_value("switch") == "on") ? "checked":"") : (($item->allowButton == 1) ? "checked":"" ); ?>> 
+							</div>
+							<div class="button_enable" style="<?php echo isset($form_error) ? ((set_value("switch") == "on") ? "display:block":"") : (($item->allowButton == 1) ? "display:block":""); ?>">
+								<div class="form-group <?php echo isset($form_error) ? ((set_value("button_caption") == "") ? "has-error":"") :""; ?>">
+									<label for="button_caption">Buton Başlığı</label>
+									<input type="text" class="form-control" id="button_caption" name="button_caption" placeholder="Butona vermek istediğiniz isim" value="<?php echo isset($form_error) ? set_value("button_caption") : $item->button_caption ?>">
+									<?php if(isset($form_error)): ?>
+										<small class="text-danger"><?php echo form_error("button_caption"); ?></small>
+									<?php endif; ?>
+								</div>
+								<div class="form-group <?php echo isset($form_error) ? ((set_value("button_url") == "") ? "has-error":"") :""; ?>">
+									<label for="button_url">Slider Url</label>
+									<input type="text" class="form-control" id="button_url" name="button_url" placeholder="Butona tıklandığında yönlendirilecek URL"  value="<?php echo isset($form_error) ? set_value("button_url") : $item->button_url ?>">
+									<?php if(isset($form_error)): ?>
+										<small class="text-danger"><?php echo form_error("button_url"); ?></small>
+									<?php endif; ?>
 								</div>
 							</div>
 							<!-- MODEL POPUP -->
@@ -50,7 +67,7 @@
 											<h5 class="modal-title" id="modalLabel">Resimi Kırp</h5>
 											<p class="modal-title" id="modalLabel">Mouse tekerleği ile resmi büyültüp küçültebilirsiniz.</p>
 											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-												<span aria-hidden="true">&times;</span>
+											<span aria-hidden="true">&times;</span>
 											</button>
 										</div>
 										<div class="modal-body">
@@ -65,8 +82,8 @@
 									</div>
 								</div>
 							</div>
-							<!-- MODEL POPUP -->
-							<button type="submit" class="btn btn-primary btn-md btn-outline">Güncelle</button>
+							<!-- MODEL POPUP -->				
+							<button type="submit" class="btn btn-primary btn-md btn-outline">Kaydet</button>
 							<a href="<?php echo base_url("$viewTitle") ?>" class="btn btn-danger btn-md btn-outline">İptal</a>
 						</form>
 					</div><!-- .widget-body -->
