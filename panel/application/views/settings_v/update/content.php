@@ -122,8 +122,18 @@
 										</div>
 										<div class="col-md-10">
 											<div class="form-group">
-												<label for="logo">Logo Seçiniz</label>
-												<input type="file" id="logo" class="form-control" name="logo">
+												<label for="exampleInputFile">Logo Seçiniz</label>
+												<div class="row">
+													<div class="col-md-1">
+														<label class="label" data-toggle="tooltip" title="Resim yükleyin">
+															<img class="rounded avatar" src="<?php echo base_url("assets") ?>/assets/images/image-upload.png" alt="Resim Seçiniz" style="cursor:pointer">
+															<input type="file" id="input" class="sr-only" name="logo" accept="image/*" >
+														</label>
+													</div>
+													<div class="col-md-11">
+														<div id="image_crop_data"></div>
+													</div>
+												</div>
 											</div><!-- .form-group -->		
 										</div>
 									</div>	
@@ -131,6 +141,30 @@
 							</div><!-- .tab-content  -->
 						</div><!-- .nav-tabs-horizontal -->
 					</div><!-- .widget -->
+					<!-- MODEL POPUP -->
+					<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+						<div class="modal-dialog" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="modalLabel">Resimi Kırp</h5>
+									<p class="modal-title" id="modalLabel">Mouse tekerleği ile resmi büyültüp küçültebilirsiniz.</p>
+									<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+									</button>
+								</div>
+								<div class="modal-body">
+									<div class="img-container">
+									<img id="image" src="">
+									</div>
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal">İptal</button>
+									<button type="button" class="btn btn-primary" id="crop">Kırp</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- MODEL POPUP -->	
 				<button type="submit" class="btn btn-primary btn-md" style="margin-bottom : 10px">Kaydet</button>
 				</form>
 			</div><!-- END column -->

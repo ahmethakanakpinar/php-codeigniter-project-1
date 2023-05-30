@@ -114,8 +114,10 @@
         $im = imagecreatefromstring($img_data);
         if ($im !== false) {
             //header('Content-Type: image/png');
+            imagesavealpha($im, true);
             imagepng($im, $img_path);
             imagedestroy($im);
+            
         }
         else 
         {

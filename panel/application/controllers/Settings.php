@@ -12,6 +12,12 @@ class Settings extends CI_Controller{
 		{
 			redirect(base_url("login"));
 		}
+        $image_upload = array(
+            "image_width" => 200,
+            "image_height" => 200,
+            "image_aspect_ratio" => 1/1
+        );
+        $this->session->set_flashdata("image_upload", $image_upload);
     }
     public function index()
     {
@@ -60,61 +66,43 @@ class Settings extends CI_Controller{
         $validate = $this->form_validation->run();
         if($validate)
         {
-            $file_name = CharConvert($this->input->post("company_name")). "." .pathinfo($_FILES["logo"]["name"], PATHINFO_EXTENSION);
-            $config["file_name"] = $file_name;
-            $config["allowed_types"] = "jpg|jpeg|png";
-            $config["upload_path"] = "uploads/{$this->viewFolder}/";
-            $this->load->library("upload", $config);
-            $upload = $this->upload->do_upload("logo");
-            if($upload)
+            $file_name = CharConvert(pathinfo($_FILES["logo"]["name"], PATHINFO_FILENAME)). "." .pathinfo($_FILES["logo"]["name"], PATHINFO_EXTENSION);
+            image_upload("logo","new_form");
+            $insert = $this->setting_model->add(
+                array(
+                    "company_name"  => $this->input->post("company_name"),
+                    "adress"        => $this->input->post("adress"),
+                    "about_us"      => $this->input->post("about_us"),
+                    "mission"       => $this->input->post("mission"),
+                    "vission"       => $this->input->post("vission"),
+                    "phone_1"       => $this->input->post("phone_1"),
+                    "phone_2"       => $this->input->post("phone_2"),
+                    "email"         => $this->input->post("email"),
+                    "facebook"      => $this->input->post("facebook"),
+                    "twitter"       => $this->input->post("twitter"),
+                    "instagram"    => $this->input->post("instagram"),
+                    "linkedin"      => $this->input->post("linkedin"),
+                    "logo"          => $file_name,
+                    "createdAt"     => date("Y-m-d H:i:s")
+                )
+            );
+            if($insert)
             {
-                $uploaded_file = $this->upload->data("file_name");
-                $insert = $this->setting_model->add(
-                    array(
-                        "company_name"  => $this->input->post("company_name"),
-                        "adress"        => $this->input->post("adress"),
-                        "about_us"      => $this->input->post("about_us"),
-                        "mission"       => $this->input->post("mission"),
-                        "vission"       => $this->input->post("vission"),
-                        "phone_1"       => $this->input->post("phone_1"),
-                        "phone_2"       => $this->input->post("phone_2"),
-                        "email"         => $this->input->post("email"),
-                        "facebook"      => $this->input->post("facebook"),
-                        "twitter"       => $this->input->post("twitter"),
-                        "instagram"    => $this->input->post("instagram"),
-                        "linkedin"      => $this->input->post("linkedin"),
-                        "logo"          => $uploaded_file,
-                        "createdAt"     => date("Y-m-d H:i:s")
-                    )
+                $alert = array(
+                    "title" => "İşlem Başarılı",
+                    "text" => "Kayıt başarılı bir şekilde eklendi",
+                    "type"  => "success"
                 );
-                if($insert)
-                {
-                    $alert = array(
-                        "title" => "İşlem Başarılı",
-                        "text" => "Kayıt başarılı bir şekilde eklendi",
-                        "type"  => "success"
-                    );
-                }
-                else
-                {
-                    $alert = array(
-                        "title" => "İşlem Başarısız",
-                        "text" => "Kayıt Ekleme sırasında bir problem oluştu",
-                        "type"  => "error"
-                    );
-                }
             }
             else
             {
                 $alert = array(
                     "title" => "İşlem Başarısız",
-                    "text" => "Görsel Yükleme de problem yaşandı!",
-                    "type" => "error"
+                    "text" => "Kayıt Ekleme sırasında bir problem oluştu",
+                    "type"  => "error"
                 );
-                $this->session->set_flashdata("alert", $alert);
-                redirect(base_url("{$this->viewTitle}/new_form"));
-                die();
             }
+           
             $settings = $this->setting_model->get();
             $this->session->set_userdata("settings", $settings);
             $this->session->set_flashdata("alert", $alert);
@@ -130,9 +118,6 @@ class Settings extends CI_Controller{
             $viewData->form_error = true;
             $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
         }
-
-
-       
         
     }
     public function update_form($id)
@@ -165,46 +150,26 @@ class Settings extends CI_Controller{
         {
             if($_FILES["logo"]["name"] != "")
             {
-                $file_name = CharConvert($this->input->post("company_name")). "." .pathinfo($_FILES["logo"]["name"], PATHINFO_EXTENSION);
-                $config["file_name"] = $file_name;
-                $config["allowed_types"] = "jpg|jpeg|png";
-                $config["upload_path"] = "uploads/{$this->viewFolder}/";
-                $this->load->library("upload", $config);
-                $upload = $this->upload->do_upload("logo");
-                if($upload)
-                {
-                    $uploaded_file = $this->upload->data("file_name");
-                    $insert = $this->setting_model->update(array("id" => $id),
-                        array(
-                            "company_name"  => $this->input->post("company_name"),
-                            "adress"        => $this->input->post("adress"),
-                            "about_us"      => $this->input->post("about_us"),
-                            "mission"       => $this->input->post("mission"),
-                            "vission"       => $this->input->post("vission"),
-                            "phone_1"       => $this->input->post("phone_1"),
-                            "phone_2"       => $this->input->post("phone_2"),
-                            "email"         => $this->input->post("email"),
-                            "facebook"      => $this->input->post("facebook"),
-                            "twitter"       => $this->input->post("twitter"),
-                            "instagram"    => $this->input->post("instagram"),
-                            "linkedin"      => $this->input->post("linkedin"),
-                            "logo"          => $uploaded_file,
-                            "createdAt"     => date("Y-m-d H:i:s")
-                        )
-                    );
-                }
-                else
-                {
-                    $alert = array(
-                        "title" => "İşlem Başarısız",
-                        "text" => "Logo güncelleme sırasında problem yaşandı!",
-                        "type" => "error"
-                    );
-                    $this->session->set_flashdata("alert", $alert);
-                    redirect(base_url("{$this->viewTitle}/update_form"));
-                    die();
-                }
-              
+                $file_name = CharConvert(pathinfo($_FILES["logo"]["name"], PATHINFO_FILENAME)). "." .pathinfo($_FILES["logo"]["name"], PATHINFO_EXTENSION);
+                image_upload("logo","update_form");
+                $insert = $this->setting_model->update(array("id" => $id),
+                    array(
+                        "company_name"  => $this->input->post("company_name"),
+                        "adress"        => $this->input->post("adress"),
+                        "about_us"      => $this->input->post("about_us"),
+                        "mission"       => $this->input->post("mission"),
+                        "vission"       => $this->input->post("vission"),
+                        "phone_1"       => $this->input->post("phone_1"),
+                        "phone_2"       => $this->input->post("phone_2"),
+                        "email"         => $this->input->post("email"),
+                        "facebook"      => $this->input->post("facebook"),
+                        "twitter"       => $this->input->post("twitter"),
+                        "instagram"    => $this->input->post("instagram"),
+                        "linkedin"      => $this->input->post("linkedin"),
+                        "logo"          => $file_name,
+                        "createdAt"     => date("Y-m-d H:i:s")
+                    )
+                );
             }
             else
             {
