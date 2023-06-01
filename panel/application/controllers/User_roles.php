@@ -188,6 +188,38 @@ class User_roles extends CI_Controller{
         $viewData->subViewFolder = "permissions";
         $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
     }
+    public function update_permissions($id)
+    {
+        $permissions = json_encode($this->input->post("permissions"));
+
+        $insert = $this->user_role_model->update(
+            array(
+                "id" => $id
+            ),
+            array(
+                "permissions"     => $permissions,
+            )
+        );
+        if($insert)
+        {
+            $alert = array(
+                "title" => "İşlem Başarılı",
+                "text" => "Yetki başarılı bir şekilde güncellendi",
+                "type"  => "success"
+            );
+        }
+        else
+        {
+            $alert = array(
+                "title" => "İşlem Başarısız",
+                "text" => "Yetki güncelleme sırasında bir problem oluştu",
+                "type"  => "error"
+            );
+        }
+        $this->session->set_flashdata("alert", $alert);
+        redirect(base_url("{$this->viewTitle}/permissions_form/$id"));
+      
+    }
     public function isActiveSetter($id)
     {
         if($id)

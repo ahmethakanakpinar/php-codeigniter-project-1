@@ -1,3 +1,4 @@
+<?php $permissions = json_decode($item->permissions); ?>
 <section class="app-content">
 		<div class="row">
 			<div class="col-md-12">
@@ -22,10 +23,10 @@
 							<?php foreach(getControllerList() as $controllerName): ?>
 							<tr>
 								<td><?php echo $controllerName;?></td>
-								<td class="w-100 text-center"><input name="" type="checkbox" data-switchery data-color="#10c469"></td>
-								<td class="w-100 text-center"><input name="" type="checkbox" data-switchery data-color="#10c469"></td>
-								<td class="w-100 text-center"><input name="" type="checkbox" data-switchery data-color="#10c469"></td>
-								<td class="w-100 text-center"><input name="" type="checkbox" data-switchery data-color="#10c469"></td>
+								<td class="w-100 text-center"><input <?php echo (isset($permissions->$controllerName->read)) ? "checked" : ""; ?> name="permissions[<?php echo $controllerName; ?>][read]" type="checkbox" data-switchery data-color="#10c469"></td>
+								<td class="w-100 text-center"><input <?php echo (isset($permissions->$controllerName->write)) ? "checked" : ""; ?> name="permissions[<?php echo $controllerName; ?>][write]" type="checkbox" data-switchery data-color="#10c469"></td>
+								<td class="w-100 text-center"><input <?php echo (isset($permissions->$controllerName->update)) ? "checked" : ""; ?> name="permissions[<?php echo $controllerName; ?>][update]" type="checkbox" data-switchery data-color="#10c469"></td>
+								<td class="w-100 text-center"><input <?php echo (isset($permissions->$controllerName->delete)) ? "checked" : ""; ?> name="permissions[<?php echo $controllerName; ?>][delete]" type="checkbox" data-switchery data-color="#10c469"></td>
 							</tr>
 							<?php endforeach; ?>
 						</tbody>
