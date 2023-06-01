@@ -1,3 +1,10 @@
+<?php
+	// if(isset($form_error))
+	// {
+	// 	echo set_value("permission");
+	// 	die();
+	// }
+?>
 <section class="app-content">
 		<div class="row">
 			<div class="col-md-12">
@@ -21,6 +28,18 @@
 								<input type="text" class="form-control" id="full_name" name="full_name" placeholder="Ad Soyad" value="<?php echo isset($form_error) ? set_value("full_name") : "" ?>">
 								<?php if(isset($form_error)): ?>
 								<small class="text-danger"><?php echo form_error("full_name"); ?></small>
+								<?php endif; ?>
+							</div>
+							<div class="form-group">
+								<label for="permission">Yetki</label>
+								<select class="form-control" name="permission" id="permission">
+									
+									<?php foreach($permissions as $permission): ?>
+										<option <?php echo isset($form_error) ? ((set_value("permission") == $permission->id) ? "selected":"") : "" ?>  value="<?php echo $permission->id ?>"><?php echo $permission->title; ?></option>
+									<?php endforeach; ?>
+								</select>
+								<?php if(isset($form_error)): ?>
+								<small class="text-danger"><?php echo form_error("permission"); ?></small>
 								<?php endif; ?>
 							</div>
 							<div class="form-group">

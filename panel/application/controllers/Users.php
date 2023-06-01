@@ -8,6 +8,7 @@ class Users extends CI_Controller{
         $this->viewTitle = "users";
         $this->viewFolder = "users_v";
         $this->load->model("user_model");
+        $this->load->model("user_role_model");
         if(!get_active_user())
 		{
 			redirect(base_url("login"));
@@ -34,6 +35,9 @@ class Users extends CI_Controller{
     public function new_form()
     {
         $viewData = new stdClass();
+        $viewData->permissions = $this->user_role_model->get_all(
+            array("isActive"    => 1)
+        );
         $viewData->viewTitle = $this->viewTitle;
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "add";
@@ -44,6 +48,7 @@ class Users extends CI_Controller{
         $this->load->library("form_validation");
         $this->form_validation->set_rules("user_name","Kullanıcı Adı", "required|trim|is_unique[users.user_name]|max_length[20]");
         $this->form_validation->set_rules("full_name","Ad Soyad", "required|trim");
+        $this->form_validation->set_rules("permission","Yetki", "required|trim");
         $this->form_validation->set_rules("email","E-mail", "required|trim|is_unique[users.email]|valid_email");
         $this->form_validation->set_rules("password","Parola", "required|trim|min_length[5]|max_length[20]");
         $this->form_validation->set_rules("password-repeat","Şifre Tekrar", "required|trim|min_length[5]|max_length[20]|matches[password]");
@@ -73,6 +78,7 @@ class Users extends CI_Controller{
                         "user_name" => $username,
                         "full_name" => $this->input->post("full_name"),
                         "email" => $this->input->post("email"),
+                        "user_role"     => $this->input->post("permission"),
                         "password" => md5($this->input->post("password")),
                         "img_url" => $file_name,
                         "isActive" => 0,
@@ -84,12 +90,13 @@ class Users extends CI_Controller{
             {
                 $insert = $this->user_model->add(
                     array(
-                        "user_name" => $username,
-                        "full_name" => $this->input->post("full_name"),
-                        "email" => $this->input->post("email"),
-                        "password" => md5($this->input->post("password")),
-                        "isActive" => 0,
-                        "createdAt" => date("Y-m-d H:i:s")
+                        "user_name"     => $username,
+                        "full_name"     => $this->input->post("full_name"),
+                        "email"         => $this->input->post("email"),
+                        "user_role"     => $this->input->post("permission"),
+                        "password"      => md5($this->input->post("password")),
+                        "isActive"      => 0,
+                        "createdAt"     => date("Y-m-d H:i:s")
                     )
                 );
             }
@@ -118,6 +125,9 @@ class Users extends CI_Controller{
             $viewData = new stdClass();
             $viewData->viewTitle = $this->viewTitle;
             $viewData->viewFolder = $this->viewFolder;
+            $viewData->permissions = $this->user_role_model->get_all(
+                array("isActive"    => 1)
+            );
             $viewData->subViewFolder = "add";
             $viewData->form_error = true;
             $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
@@ -132,6 +142,9 @@ class Users extends CI_Controller{
             )
         );
         $viewData = new stdClass();
+        $viewData->permissions = $this->user_role_model->get_all(
+            array("isActive"    => 1)
+        );
         $viewData->viewTitle = $this->viewTitle;
         $viewData->viewFolder = $this->viewFolder;
         $viewData->subViewFolder = "update";
@@ -177,6 +190,7 @@ class Users extends CI_Controller{
                     array(
                         "user_name" => $username,
                         "full_name" => $this->input->post("full_name"),
+                        "user_role"     => $this->input->post("permission"),
                         "email" => $this->input->post("email"),
                         "img_url" => $file_name,
                     )
@@ -189,6 +203,7 @@ class Users extends CI_Controller{
                     array(
                         "user_name" => $username,
                         "full_name" => $this->input->post("full_name"),
+                        "user_role"     => $this->input->post("permission"),
                         "email" => $this->input->post("email"),
                     )
                 );
@@ -200,6 +215,12 @@ class Users extends CI_Controller{
                     "text" => "Kullanıcı başarılı bir şekilde güncellendi",
                     "type"  => "success"
                 );
+                $user = $this->user_model->get(array("id" => $id));
+                $olduser = get_active_user();
+                if($olduser->user_name == $user->user_name)
+                {
+                    $this->session->set_userdata("user", $user);
+                }
             }
             else
             {
@@ -209,8 +230,10 @@ class Users extends CI_Controller{
                     "type"  => "error"
                 );
             }
-            $user = $this->user_model->get(array("id" => $id));
-            $this->session->set_userdata("user", $user);
+          
+           
+                // echo $olduser->username;
+                // die();
             $this->session->set_flashdata("alert", $alert);
             redirect(base_url("{$this->viewTitle}"));
         }
@@ -220,6 +243,9 @@ class Users extends CI_Controller{
             $viewData = new stdClass();
             $item = $this->user_model->get(
                 array("id" => $id)
+            );
+            $viewData->permissions = $this->user_role_model->get_all(
+                array("isActive"    => 1)
             );
             $viewData->viewTitle = $this->viewTitle;
             $viewData->viewFolder = $this->viewFolder;

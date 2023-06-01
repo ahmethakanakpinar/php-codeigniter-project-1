@@ -19,7 +19,9 @@
         $t = &get_instance();
         $user = $t->session->userdata("user");
         if($user)
+        {
             return $user;
+        }
         else
             return false;
     }
@@ -73,11 +75,11 @@
         }
         return $settings;
     }
-    function get_category_title($category_id = 0)
+    function get_category_title($category_id = 0, $model="")
     {
         $t = &get_instance();
-        $t->load->model("portfolio_category_model");
-        $category = $t->portfolio_category_model->get(
+        $t->load->model("$model");
+        $category = $t->$model->get(
             array(
                 "id" => $category_id
             )
