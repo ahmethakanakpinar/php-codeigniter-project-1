@@ -1,7 +1,7 @@
 <?php
-class Brand_model extends CI_Model
+class User_role_model extends CI_Model
 {
-    public $tableName = "brands";
+    public $tableName = "user_roles";
     public function __construct()
     {
         parent::__construct();
@@ -11,7 +11,7 @@ class Brand_model extends CI_Model
     public function get_all($where = array(), $order = "id ASC")
     {
         return $this->db->where($where)->order_by($order)->get($this->tableName)->result();
-    }           //where kısmını fonsksiyondan alıyor ve boş kalırsa tümünü getirir
+    }
     public function get($where = array())
     {
         return $this->db->where($where)->get($this->tableName)->row();

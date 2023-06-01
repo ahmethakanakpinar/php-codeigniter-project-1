@@ -154,6 +154,12 @@
                     </a>
                 </li>
                 <li>
+                    <a href="<?php echo base_url("user_roles"); ?>">
+                        <i class="menu-icon fa fa-eye"></i>
+                        <span class="menu-text">Kullanıcı Yetkisi</span>
+                    </a>
+                </li>
+                <li>
                     <a href="<?php echo base_url("our_team"); ?>">
                         <i class="menu-icon fa fa-user-secret"></i>
                         <span class="menu-text">Bizim Ekip</span>

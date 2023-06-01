@@ -8,22 +8,23 @@
             <div class="bg-light my-4 py-2" style="margin-bottom: 25px;">
                 <ul class="list-inline text-center m-0">
                     <li class="list-inline-item px-2"><a class="text-decoration-none" onclick="tiklanma(this); return false;" href="#" >Hepsi</a></li>
-                    <?php $alfabe = range('a', 'z'); ?>
-                    <?php foreach ($alfabe as $harf):?>
+                    <?php $alfabe = range('a', 'z'); ?> <!-- burada range fonksiyonunu kullanıyorum a dan z ye kadar array için alıyor ve $alfabe ye atıyor -->
+                    <?php foreach ($alfabe as $harf):?> <!-- burada foreach ile tüm array ı döndürüyorum -->
                         <li class="list-inline-item px-2"><a class="text-decoration-none" onclick="tiklanma(this); return false;" href="#" ><?php echo strtoupper($harf); ?></a></li>
-                    <?php endforeach; ?>
+                    <?php endforeach; ?>                         <!-- burda strtoupper string fonskiyonu ile tüm harfleri küçültüp echo ile $harf değişkeninin tümünü döndürüyorum-->
                 </ul>
             </div>
-            <?php foreach($brands as $brand): ?>
-                <div class="col-sm-4 firma">
+            <?php foreach($brands as $brand): ?>    <!-- burada veritabanından aldığımız tüm verileri foreach ile döndürüyorum  -->
+                <div class="col-sm-4 firma">        <!-- html kodu kaç tane veri varsa o kadar dönücek -->
                     <div class="image-box shadow text-center mb-20">
-                        <div class="overlay-container">
-                        <img src="<?php echo !empty($brand->img_url) ? base_url("panel/uploads/{$image_folder_name}/$brand->img_url") : base_url("assets/images/portfolio-1.jpg") ?>" alt="<?php echo $brand->img_url ?>">
-                            <div class="overlay-top">
+                        <div class="overlay-container"> <!-- Aşağı kodda echo ile yazdırıyoruz !empty eğer $brand tablosunun $img_url kısmı boş değilse base_url ile img_url yazan fotoya yönlendirir -->
+                        <img src="<?php echo !empty($brand->img_url) ? base_url("panel/uploads/{$image_folder_name}/$brand->img_url") : base_url("assets/images/portfolio-1.jpg") ?>" 
+                            alt="<?php echo $brand->img_url ?>">    <!-- admin kısmında fotoğraf girilmedi ise default fotoyu ekler direk-->
+                            <div class="overlay-top">   
                             </div>
                             <div class="overlay-bottom">
-                                <div class="text">
-                                        <h3><a href="portfolio-item.html" class="firmaName"><?php echo $brand->title; ?></a></h3>
+                                <div class="text">          <!-- aşağıda ise direk veritabanından title ı çeker -->
+                                        <h3><a href="" class="firmaName"><?php echo $brand->title; ?></a></h3>
                                 </div>
                             </div>
                         </div>
