@@ -22,6 +22,7 @@
                                     <th>Ad Soyad</th>
                                     <th>E-posta</th>
                                     <th>Görsel</th>
+                                    <th>Rol</th>
                                     <th>Durumu</th>
                                     <th>İşlem</th>
                                 </tr>
@@ -40,6 +41,7 @@
                                         ?>
                                             <img width="100" class="img-fluid img-rounded" src="<?php echo base_url($img_name) ?>" alt="<?php echo $img_url ?>">
                                     </td>
+                                    <td><?php echo $item->user_role ?></td>
                                     <td class="text-center w-100">
                                         <input data-url="<?php echo base_url("$viewTitle/isActiveSetter/$item->id"); ?>" class="isActive" type="checkbox" data-switchery data-color="#10c469" <?php echo ($item->isActive) ? "checked": "" ?> />
                                     </td>

@@ -43,18 +43,7 @@ class User_roles extends CI_Controller{
     public function save()
     {
         $this->load->library("form_validation");
-        if($_FILES["img_url"]["name"] == "")
-        {
-            $alert = array(
-                "title" => "İşlem Başarısız",
-                "text" => "Lütfen bir görsel Seçiniz!",
-                "type" => "error"
-            );
-            $this->session->set_flashdata("alert", $alert);
-            redirect(base_url("{$this->viewTitle}/new_form"));
-            die();
-        }
-        $this->form_validation->set_rules("title","Başlık","required|trim");
+        $this->form_validation->set_rules("title","Rol Adı","required|trim");
         $this->form_validation->set_message(
             array(
                 "required" => "{field} alanı doldurulmalıdır!"
@@ -63,15 +52,10 @@ class User_roles extends CI_Controller{
         $validate = $this->form_validation->run();
         if($validate)
         {
-            $file_name = CharConvert(pathinfo($_FILES["img_url"]["name"], PATHINFO_FILENAME)). "." .pathinfo($_FILES["img_url"]["name"], PATHINFO_EXTENSION);
-            image_upload("img_url","new_form");
             $insert = $this->user_role_model->add(
                 array(
                     "title"     => $this->input->post("title"),
-                    "img_url"   => $file_name,
-                    "rank"      => 0,
-                    "isActive"  => 0,
-                    "createdAt" => date("Y-m-d H:i:s")
+                    "isActive"  => 0
                 )
             );
             if($insert)
@@ -103,10 +87,6 @@ class User_roles extends CI_Controller{
             $viewData->form_error = true;
             $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
         }
-
-
-       
-        
     }
     public function update_form($id)
     {
@@ -192,6 +172,21 @@ class User_roles extends CI_Controller{
             $viewData->form_error = true;
             $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
         }
+    }
+    public function permissions_form($id)
+    {
+        $viewData = new stdClass();
+     
+        $item = $this->user_role_model->get(
+            array(
+                "id" => $id
+            )
+        );
+        $viewData->item = $item;
+        $viewData->viewFolder = $this->viewFolder;
+        $viewData->viewTitle = $this->viewTitle;
+        $viewData->subViewFolder = "permissions";
+        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
     }
     public function isActiveSetter($id)
     {
