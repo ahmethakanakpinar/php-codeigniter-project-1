@@ -8,7 +8,7 @@
 			<div class="col-md-12">
 				<div class="widget p-lg">
 					<div class="widget-body">
-					<form action="<?php echo base_url("{$viewTitle}/password_update/$item->id") ?>" method="post">
+					<form action="<?php echo base_url("{$viewTitle}/update_permissions/$item->id") ?>" method="post">
 						
 					<table class="table table-bordered table-striped table-hover">
 						<thead>
@@ -19,13 +19,15 @@
 							<th>Silme</th>
 						</thead>
 						<tbody>
+							<?php foreach(getControllerList() as $controllerName): ?>
 							<tr>
-								<td>Users</td>
-								<td class="w-100 text-center"><input type="checkbox" data-switchery data-color="#10c469"></td>
-								<td class="w-100 text-center"><input type="checkbox" data-switchery data-color="#10c469"></td>
-								<td class="w-100 text-center"><input type="checkbox" data-switchery data-color="#10c469"></td>
-								<td class="w-100 text-center"><input type="checkbox" data-switchery data-color="#10c469"></td>
+								<td><?php echo $controllerName;?></td>
+								<td class="w-100 text-center"><input name="" type="checkbox" data-switchery data-color="#10c469"></td>
+								<td class="w-100 text-center"><input name="" type="checkbox" data-switchery data-color="#10c469"></td>
+								<td class="w-100 text-center"><input name="" type="checkbox" data-switchery data-color="#10c469"></td>
+								<td class="w-100 text-center"><input name="" type="checkbox" data-switchery data-color="#10c469"></td>
 							</tr>
+							<?php endforeach; ?>
 						</tbody>
 					</table>
 					<hr>
