@@ -141,14 +141,34 @@
         $files = get_dir_file_info(APPPATH."controllers",false);
         foreach(array_keys($files) as $file)
         {
-            if($file != "index.html")
+            if($file != "index.html" && $file != "Userop.php" && $file != "Dashboard.php")
             {
                 $controllers[] = strtolower(str_replace(".php","",$file));
             }
         }
         return $controllers;
     }
-    function get_user_Role()
+    function isAllowViewModule($module_name="")
+    {
+        $t = &get_instance();
+        $module_name = (empty($module_name)) ? $t->router->fetch_class() : $module_name;
+        $user = get_active_user();
+        $user_roles = get_user_roles();
+
+        if (isset($user_roles[$user->user_role])){
+            $permission = json_decode($user_roles[$user->user_role]);
+            if(isset($permission->$module_name) && isset($permission->$module_name->read)){
+                return true;
+            }
+        }
+        return false;
+    }
+    function get_user_roles()
+    {
+        $t = &get_instance();
+        return $t->session->userdata("user_roles");
+    }
+    function set_user_roles()
     {
         $t = &get_instance();
         $t->load->model("user_role_model");
@@ -160,6 +180,6 @@
         {
             $roles[$role->id] = $role->permissions;
         }
-        return $t->session->set_userdata("user_roles", $roles);
+        $t->session->set_userdata("user_roles", $roles);
     }
     

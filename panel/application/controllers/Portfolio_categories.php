@@ -1,6 +1,6 @@
 <?php
 
-class Portfolio_categories extends CI_Controller{
+class Portfolio_categories extends MY_Controller{
 
     public $viewFolder = "";
     public function __construct()

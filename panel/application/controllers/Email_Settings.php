@@ -1,5 +1,5 @@
 <?php
-class Email_Settings extends CI_Controller{
+class Email_Settings extends MY_Controller{
 
     public $viewFolder = "";
     public function __construct()
@@ -188,7 +188,6 @@ class Email_Settings extends CI_Controller{
         );
         if($delete)
         {
-            rmdir($path);
             $alert = array(
                 "title" => "İşlem Başarılı",
                 "text" => "Kayıt başarılı bir şekilde silindi",

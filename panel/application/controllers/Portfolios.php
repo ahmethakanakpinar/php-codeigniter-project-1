@@ -1,5 +1,5 @@
 <?php
-class Portfolios extends CI_Controller {
+class Portfolios extends MY_Controller {
 
 	public $viewFolder = "";
 	public function __construct()

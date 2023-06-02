@@ -1,6 +1,6 @@
 <?php
 
-class References extends CI_Controller{
+class References extends MY_Controller{
 
     public $viewFolder = "";
     public function __construct()

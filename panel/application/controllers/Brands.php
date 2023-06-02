@@ -1,6 +1,6 @@
 <?php
 
-class Brands extends CI_Controller{
+class Brands extends MY_Controller{
 
     public $viewFolder = "";
     public function __construct()

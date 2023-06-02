@@ -1,4 +1,4 @@
-<?php $permissions = json_decode($item->permissions); ?>
+<?php $permissions = (!empty($item->permissions)) ? json_decode($item->permissions) : "" ?>
 <section class="app-content">
 		<div class="row">
 			<div class="col-md-12">

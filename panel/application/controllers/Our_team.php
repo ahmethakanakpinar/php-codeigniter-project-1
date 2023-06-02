@@ -1,5 +1,5 @@
 <?php
-class Our_team extends CI_Controller{
+class Our_team extends MY_Controller{
 
     public $viewFolder = "";
     public function __construct()

@@ -54,6 +54,8 @@ class Userop extends CI_Controller
                     "text" => "{$user->full_name} hoşgeldiniz.",
                     "type" => "success"
                 );
+                //User Role set ediyoruz.
+                set_user_roles();
                 $this->session->set_userdata("user", $user);
                 $this->session->set_flashdata("alert", $alert);
                 redirect(base_url());
@@ -65,7 +67,6 @@ class Userop extends CI_Controller
                     "text"  => "Kullanıcı Adı veya parola hatalı!",
                     "type"  => "error"
                 );
-                $this->session->set_userdata("user", $user);
                 $this->session->set_flashdata("alert", $alert);
                 redirect(base_url("login"));
             }
