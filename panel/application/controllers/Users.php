@@ -34,6 +34,11 @@ class Users extends MY_Controller{
     }
     public function new_form()
     {
+        if(!isAllowViewModule("write"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
         $viewData = new stdClass();
         $viewData->permissions = $this->user_role_model->get_all(
             array("isActive"    => 1)
@@ -45,6 +50,11 @@ class Users extends MY_Controller{
     }
     public function save()
     {
+        if(!isAllowViewModule("write"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
         $this->load->library("form_validation");
         $this->form_validation->set_rules("user_name","Kullanıcı Adı", "required|trim|is_unique[users.user_name]|max_length[20]");
         $this->form_validation->set_rules("full_name","Ad Soyad", "required|trim");
@@ -136,6 +146,11 @@ class Users extends MY_Controller{
     }
     public function update_form($id)
     {
+        if(!isAllowViewModule("update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
         $item = $this->user_model->get(
             array(
                 "id"    => $id
@@ -153,6 +168,11 @@ class Users extends MY_Controller{
     }
     public function update($id)
     {
+        if(!isAllowViewModule("update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
         $old_user = $this->user_model->get(
             array("id" => $id)
         );
@@ -258,6 +278,11 @@ class Users extends MY_Controller{
     }
     public function password_form($id)
     {
+        if(!isAllowViewModule("update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
         $item = $this->user_model->get(
             array(
                 "id"    => $id
@@ -272,7 +297,11 @@ class Users extends MY_Controller{
     }
     public function password_update($id)
     {
-       
+        if(!isAllowViewModule("update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
         $this->load->library("form_validation");
         $this->form_validation->set_rules("password","Parola", "required|trim|min_length[5]|max_length[20]");
         $this->form_validation->set_rules("password-repeat","Şifre Tekrar", "required|trim|min_length[5]|max_length[20]|matches[password]");
@@ -330,6 +359,10 @@ class Users extends MY_Controller{
     }
     public function delete($id)
     {
+        if(!isAllowViewModule("delete"))
+        {
+            die();
+        }
         $user = $this->user_model->get(
 			array(
 				"id" => $id
@@ -362,6 +395,10 @@ class Users extends MY_Controller{
     }
     public function isActiveSetter($id)
     {
+        if(!isAllowViewModule("update"))
+        {
+            die();
+        }
         if($id)
 		{
 			$isActive = ($this->input->post("data") === "true") ? 1 : 0;

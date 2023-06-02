@@ -148,7 +148,7 @@
         }
         return $controllers;
     }
-    function isAllowViewModule($module_name="")
+    function isAllowViewModule($module_name="", $permission_name = "read")
     {
         $t = &get_instance();
         $module_name = (empty($module_name)) ? $t->router->fetch_class() : $module_name;
@@ -157,7 +157,7 @@
 
         if (isset($user_roles[$user->user_role])){
             $permission = json_decode($user_roles[$user->user_role]);
-            if(isset($permission->$module_name) && isset($permission->$module_name->read)){
+            if(isset($permission->$module_name) && isset($permission->$module_name->$permission_name)){
                 return true;
             }
         }
