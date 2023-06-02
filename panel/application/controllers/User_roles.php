@@ -13,12 +13,6 @@ class User_roles extends MY_Controller{
 		{
 			redirect(base_url("login"));
 		}
-        // $image_upload = array(
-        //     "image_width" => 1280,
-        //     "image_height" => 720,
-        //     "image_aspect_ratio" => 16/9
-        // );
-        // $this->session->set_flashdata("image_upload", $image_upload);
     }
     public function index()
     {

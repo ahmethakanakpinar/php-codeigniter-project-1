@@ -34,7 +34,7 @@ class Users extends MY_Controller{
     }
     public function new_form()
     {
-        if(!isAllowViewModule("write"))
+        if(!isAllowViewModule($this->viewTitle, "write"))
         {
             redirect(base_url($this->viewTitle));
             die();
@@ -50,7 +50,7 @@ class Users extends MY_Controller{
     }
     public function save()
     {
-        if(!isAllowViewModule("write"))
+        if(!isAllowViewModule($this->viewTitle, "write"))
         {
             redirect(base_url($this->viewTitle));
             die();
@@ -146,7 +146,7 @@ class Users extends MY_Controller{
     }
     public function update_form($id)
     {
-        if(!isAllowViewModule("update"))
+        if(!isAllowViewModule($this->viewTitle, "update"))
         {
             redirect(base_url($this->viewTitle));
             die();
@@ -168,7 +168,7 @@ class Users extends MY_Controller{
     }
     public function update($id)
     {
-        if(!isAllowViewModule("update"))
+        if(!isAllowViewModule($this->viewTitle, "update"))
         {
             redirect(base_url($this->viewTitle));
             die();
@@ -278,7 +278,7 @@ class Users extends MY_Controller{
     }
     public function password_form($id)
     {
-        if(!isAllowViewModule("update"))
+        if(!isAllowViewModule($this->viewTitle, "update"))
         {
             redirect(base_url($this->viewTitle));
             die();
@@ -297,7 +297,7 @@ class Users extends MY_Controller{
     }
     public function password_update($id)
     {
-        if(!isAllowViewModule("update"))
+        if(!isAllowViewModule($this->viewTitle, "update"))
         {
             redirect(base_url($this->viewTitle));
             die();
@@ -359,8 +359,9 @@ class Users extends MY_Controller{
     }
     public function delete($id)
     {
-        if(!isAllowViewModule("delete"))
+        if(!isAllowViewModule($this->viewTitle, "delete"))
         {
+            redirect(base_url($this->viewTitle));
             die();
         }
         $user = $this->user_model->get(
@@ -395,7 +396,7 @@ class Users extends MY_Controller{
     }
     public function isActiveSetter($id)
     {
-        if(!isAllowViewModule("update"))
+        if(!isAllowViewModule($this->viewTitle, "update"))
         {
             die();
         }
