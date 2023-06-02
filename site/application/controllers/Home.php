@@ -195,7 +195,7 @@
         {
             $viewData = new stdClass();
             $viewData->viewFolder = "contact_v";
-             $this->load->view($viewData->viewFolder, $viewData);
+            $this->load->view($viewData->viewFolder, $viewData);
         }
         public function send_contact_message()
         {
@@ -226,17 +226,16 @@
                     $email_message = "{$name} isimli ziyaretçi. Mesaj Bıraktı <br> <b>Mesaj : </b> {$message} <br> <b>E-posta : </b> {$email}";
                     if(send_email("","Site İletişim Mesajı | $subject ",$email_message))
                     {
-                        // $alert = array(
-                        //     "title" => "İşlem Başarılı",
-                        //     "text" => "Mesajınız Başarılı bir şekilde iletilmiştir!",
-                        //     "type" => "success"
-                        // );
-                        // $this->session->set_flashdata("alert", $alert);
-                        redirect(base_url("iletisim"));
+                        $alert = "success"; //mesaj gönderilmişse değişkene succes atıyorum
+                        $this->session->set_flashdata("alert", $alert); 
+                        redirect(base_url("iletisim")); //geri iletisim sayfasına döndürüyor
+                        //sonra bunu alert adındaki session a atıyorum
                     }
                     else
                     {
-                        echo "başarısız";
+                        $alert = "error"; //mesaj gönderilmemişse değişkene error atıyorum
+                        $this->session->set_flashdata("alert", $alert);
+                        redirect(base_url("iletisim"));
                     }
                 }
               

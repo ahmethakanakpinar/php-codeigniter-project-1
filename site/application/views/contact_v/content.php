@@ -40,7 +40,7 @@
 						<div class="main col-md-12 space-bottom">
 							<h2 class="title">Bize Yazın...</h2>
 							<div class="row">
-								<div class="col-md-6">
+							<div class="col-md-6">
 									<p>Bize mesaj göndermek için aşağıdaki formu doldurabilirsiniz...</p>
 									<div class="alert alert-success hidden" id="MessageSent">
 										Başarılı bir şekilde mesajınız bize ulaştı.
@@ -93,7 +93,6 @@
 								</div>
 								<div class="col-md-6">
 									<div id="map-canvas"></div>
-									
 								</div>
 							</div>
 						</div>

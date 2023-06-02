@@ -119,10 +119,9 @@
         
         if($captcha_response == "")
         {
-            echo "başarısızboşdirek";
-            echo $come_back;
-        //  redirect($come_back);
-            die();
+            $alert = "error";
+            $t->session->set_flashdata("alert", $alert);            
+            redirect($come_back);
         }
         $check = array(
         'secret' => $secret,

@@ -148,4 +148,18 @@
         }
         return $controllers;
     }
+    function get_user_Role()
+    {
+        $t = &get_instance();
+        $t->load->model("user_role_model");
+        $user_roles = $t->user_role_model->get_all(
+            array("isActive" => 1)
+        );
+        $roles = array();
+        foreach($user_roles as $role)
+        {
+            $roles[$role->id] = $role->permissions;
+        }
+        return $t->session->set_userdata("user_roles", $roles);
+    }
     

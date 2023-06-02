@@ -1,14 +1,15 @@
 (function($){
 	$(document).ready(function(){
-		var $lat = $("#mapScriptTag").data("lat");
-		var $long = $("#mapScriptTag").data("long");
+		var $lat = $("#mapScriptTag").data("lat"); //id deki data-lat a girilen sayıyı $lat değişkenine attım
+		var $long = $("#mapScriptTag").data("long"); //id deki data-long a girilen sayıyı $long değişkenine attım
 
-		// Google Maps
+		// Google Haritalar
 		//-----------------------------------------------
 		if ($("#map-canvas").length>0) {
 			var map, myLatlng, myZoom, marker;
 			// Set the coordinates of your location
-			myLatlng = new google.maps.LatLng($lat, $long);
+			myLatlng = new google.maps.LatLng($lat, $long); //burada da googlenin istediği değerleri gönderdim
+
 			myZoom = 12;
 			function initialize() {
 				var mapOptions = {
