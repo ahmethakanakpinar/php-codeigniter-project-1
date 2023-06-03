@@ -3,7 +3,9 @@
 			<div class="col-md-12">
 				<h4 class="m-b-lg">
                     Portfolyo Kategoriler
-                    <a class="btn btn-primary btn-outline pull-right btn-xs" href="<?php echo base_url("$viewTitle/new_form"); ?>"><i class="fa fa-plus" aria-hidden="true"></i> Ekle</a>
+                    <?php if(isAllowViewModule($this->viewTitle, "write")): ?>
+                        <a class="btn btn-primary btn-outline pull-right btn-xs" href="<?php echo base_url("$viewTitle/new_form"); ?>"><i class="fa fa-plus" aria-hidden="true"></i> Ekle</a>
+                    <?php endif; ?>
                 </h4>
 			</div><!-- END column -->
 			<div class="col-md-12">
@@ -18,8 +20,12 @@
                                 <tr>
                                     <th>#id</th>
                                     <th>Başlık</th>
-                                    <th>Durumu</th>
-                                    <th>İşlem</th>
+                                    <?php if(isAllowViewModule($this->viewTitle, "update")):  ?>
+                                        <th>Durumu</th>
+                                    <?php endif; ?>
+                                    <?php if(isAllowViewModule($this->viewTitle, "write") || isAllowViewModule($this->viewTitle, "update") || isAllowViewModule($this->viewTitle, "delete")):  ?>
+                                        <th>İşlem</th>
+                                    <?php endif; ?>
                                 </tr>
                             </thead>
                             <tbody  >
@@ -27,13 +33,17 @@
                                 <tr >
                                     <td class="w-100"><?php echo $item->id ?></td>
                                     <td><?php echo $item->title ?></td>
-                                    <td class="text-center w-100">
-                                        <input data-url="<?php echo base_url("$viewTitle/isActiveSetter/$item->id"); ?>" class="isActive" type="checkbox" data-switchery data-color="#10c469" <?php echo ($item->isActive) ? "checked": "" ?> />
-                                    </td>
-                                    <td class="text-center w-200">
-                                        <button class="btn btn-danger btn-outline btn-sm remove-btn" data-url="<?php echo base_url("$viewTitle/delete/$item->id")?>"><i class="fa fa-trash" aria-hidden="true"></i> Sil</button>
-                                        <a class="btn btn-info btn-outline btn-sm" href="<?php echo base_url("$viewTitle/update_form/$item->id")?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Düzenle</a>
-                                    </td>
+                                   <?php if(isAllowViewModule($this->viewTitle, "update")):  ?>
+                                        <td class="text-center w-100">
+                                            <input data-url="<?php echo base_url("$viewTitle/isActiveSetter/$item->id"); ?>" class="isActive" type="checkbox" data-switchery data-color="#10c469" <?php echo ($item->isActive) ? "checked": "" ?> />
+                                        </td>
+                                    <?php endif; ?>
+                                    <?php if(isAllowViewModule($this->viewTitle, "write") || isAllowViewModule($this->viewTitle, "update") || isAllowViewModule($this->viewTitle, "delete")):  ?>
+                                        <td class="text-center w-200">
+                                            <button class="btn btn-danger btn-outline btn-sm remove-btn" data-url="<?php echo base_url("$viewTitle/delete/$item->id")?>"><i class="fa fa-trash" aria-hidden="true"></i> Sil</button>
+                                            <a class="btn btn-info btn-outline btn-sm" href="<?php echo base_url("$viewTitle/update_form/$item->id")?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Düzenle</a>
+                                        </td>
+                                    <?php endif; ?>
                                 </tr>
                                 <?php endforeach; ?>
                             </tbody>

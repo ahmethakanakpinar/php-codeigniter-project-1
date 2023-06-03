@@ -3,7 +3,9 @@
 			<div class="col-md-12">
 				<h4 class="m-b-lg">
                     Site Ayarları
-                    <a class="btn btn-primary btn-outline pull-right btn-xs" href="<?php echo base_url("$viewTitle/new_form"); ?>"><i class="fa fa-plus" aria-hidden="true"></i> Ekle</a>
+					<?php if(isAllowViewModule($this->viewTitle, "write")): ?>
+                        <a class="btn btn-primary btn-outline pull-right btn-xs" href="<?php echo base_url("$viewTitle/new_form"); ?>"><i class="fa fa-plus" aria-hidden="true"></i> Ekle</a>
+                    <?php endif; ?>
                 </h4>
 			</div><!-- END column -->
 			<div class="col-md-12">
