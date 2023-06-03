@@ -32,6 +32,11 @@ class Product extends MY_Controller {
 	}
 	public function new_form()
 	{
+		if(!isAllowViewModule($this->viewTitle, "write"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
 		$viewData = new stdClass();
 		$viewData->viewTitle = $this->viewTitle;
 		$viewData->viewFolder = $this->viewFolder;
@@ -40,6 +45,11 @@ class Product extends MY_Controller {
 	}
 	public function save()
 	{
+		if(!isAllowViewModule($this->viewTitle, "write"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
 		$this->load->library("form_validation");
 		//kuralların yazıldığı alan
 		$this->form_validation->set_rules("title","Başlık","required|trim");
@@ -93,6 +103,11 @@ class Product extends MY_Controller {
 	}
 	public function update_form($id)
 	{
+		if(!isAllowViewModule($this->viewTitle, "update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
 		$item = $this->product_model->get(
 			array(
 				"id" => $id
@@ -107,6 +122,11 @@ class Product extends MY_Controller {
 	}
 	public function update($id)
 	{
+		if(!isAllowViewModule($this->viewTitle, "update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
 		$this->load->library("form_validation");
 		//kuralların yazıldığı alan
 		$this->form_validation->set_rules("title","Başlık","required|trim");
@@ -167,6 +187,11 @@ class Product extends MY_Controller {
 	}
 	public function delete($id)
 	{
+		if(!isAllowViewModule($this->viewTitle, "delete"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
 		$delete = $this->product_model->delete(
 			array(
 				"id" => $id
@@ -218,6 +243,11 @@ class Product extends MY_Controller {
 	}
 	public function imageDelete($id, $parent_id)
 	{
+		if(!isAllowViewModule($this->viewTitle, "delete"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
 		$fileName = $this->product_image_model->get(
 			array(
 				"id" => $id
@@ -241,6 +271,11 @@ class Product extends MY_Controller {
 	
 	public function isActiveSetter($id)
 	{
+		if(!isAllowViewModule($this->viewTitle, "update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
 		if($id)
 		{
 			$isActive = ($this->input->post("data") === "true") ? 1 : 0;
@@ -256,6 +291,11 @@ class Product extends MY_Controller {
 	}
 	public function isCoverSetter($id, $parent_id)
 	{
+		if(!isAllowViewModule($this->viewTitle, "update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
 		if($id && $parent_id)
 		{
 			$isCover = ($this->input->post("data") === "true") ? 1 : 0;
@@ -298,6 +338,11 @@ class Product extends MY_Controller {
 	}
 	public function rankSetter()
 	{
+		if(!isAllowViewModule($this->viewTitle, "update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
 		$data = $this->input->post("data");
 		parse_str($data,$order);
 		$items = $order["ord"];
@@ -316,6 +361,11 @@ class Product extends MY_Controller {
 	}
 	public function rankSetterImage()
 	{
+		if(!isAllowViewModule($this->viewTitle, "update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
 		$data = $this->input->post("data");
 		parse_str($data,$order);
 		$items = $order["ord"];
@@ -334,6 +384,11 @@ class Product extends MY_Controller {
 	}
 	public function image_form($id)
 	{
+		if(!isAllowViewModule($this->viewTitle, "write"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
 		$item = $this->product_model->get(
 			array(
 				"id" => $id
@@ -354,6 +409,11 @@ class Product extends MY_Controller {
 	}
 	public function image_upload($id)
 	{
+		if(!isAllowViewModule($this->viewTitle, "write"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
 		$file_name = CharConvert(pathinfo($_FILES["file"]["name"], PATHINFO_FILENAME)). "." . pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION);
 		$config["allowed_types"] = "jpg|jpeg|png";
 		$config["upload_path"] = "uploads/$this->viewFolder/";
@@ -380,7 +440,8 @@ class Product extends MY_Controller {
 			echo "İşlem Başarısız";
 		}
 	}
-	public function refresh_image_list($id){
+	public function refresh_image_list($id)
+	{
 
         $viewData = new stdClass();
 
@@ -402,6 +463,11 @@ class Product extends MY_Controller {
     }
 	public function isActiveSetterImage($id)
 	{
+		if(!isAllowViewModule($this->viewTitle, "update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
 		if($id)
 		{
 			$isActive = ($this->input->post("data") === "true") ? 1 : 0;

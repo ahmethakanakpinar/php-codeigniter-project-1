@@ -35,6 +35,11 @@ class Galleries extends MY_Controller {
 	}
 	public function new_form()
 	{
+		if(!isAllowViewModule($this->viewTitle, "write"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
 		$viewData = new stdClass();
 		$viewData->viewTitle = $this->viewTitle;
 		$viewData->viewFolder = $this->viewFolder;
@@ -43,7 +48,11 @@ class Galleries extends MY_Controller {
 	}
 	public function save()
 	{
-		
+		if(!isAllowViewModule($this->viewTitle, "write"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }	
 		$this->load->library("form_validation");
 		//kuralların yazıldığı alan
 		$this->form_validation->set_rules("title","Galeri Başlığı","required|trim");
@@ -127,6 +136,11 @@ class Galleries extends MY_Controller {
 	}
 	public function update_form($id)
 	{
+		if(!isAllowViewModule($this->viewTitle, "update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
 		$item = $this->gallery_model->get(
 			array(
 				"id" => $id
@@ -141,6 +155,11 @@ class Galleries extends MY_Controller {
 	}
 	public function update($id, $gallery_type, $old_folder_name = "")
 	{
+		if(!isAllowViewModule($this->viewTitle, "update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
 		$this->load->library("form_validation");
 		//kuralların yazıldığı alan
 		$this->form_validation->set_rules("title","Galeri Başlığı","required|trim");
@@ -226,6 +245,11 @@ class Galleries extends MY_Controller {
 	}
 	public function delete($id)
 	{
+		if(!isAllowViewModule($this->viewTitle, "delete"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
 		$gallery = $this->gallery_model->get(
 			array(
 				"id" => $id
@@ -279,6 +303,11 @@ class Galleries extends MY_Controller {
 	}
 	public function fileDelete($id, $parent_id, $gallery_type)
 	{
+		if(!isAllowViewModule($this->viewTitle, "delete"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
 		$model = ($gallery_type == "image") ? "image_model" : "file_model";
 		$fileName = $this->$model->get(
 			array(
@@ -302,6 +331,11 @@ class Galleries extends MY_Controller {
 	}
 	public function isActiveSetter($id)
 	{
+		if(!isAllowViewModule($this->viewTitle, "update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
 		if($id)
 		{
 			$isActive = ($this->input->post("data") === "true") ? 1 : 0;
@@ -317,6 +351,11 @@ class Galleries extends MY_Controller {
 	}
 	public function isCoverSetter($id, $parent_id)
 	{
+		if(!isAllowViewModule($this->viewTitle, "update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
 		if($id && $parent_id)
 		{
 			$isCover = ($this->input->post("data") === "true") ? 1 : 0;
@@ -358,6 +397,11 @@ class Galleries extends MY_Controller {
 	}
 	public function rankSetter()
 	{
+		if(!isAllowViewModule($this->viewTitle, "update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
 		$data = $this->input->post("data");
 		parse_str($data,$order);
 		$items = $order["ord"];
@@ -376,6 +420,11 @@ class Galleries extends MY_Controller {
 	}
 	public function rankSetterFile($gallery_type)
 	{
+		if(!isAllowViewModule($this->viewTitle, "update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
 		$data = $this->input->post("data");
 		parse_str($data,$order);
 		$items = $order["ord"];
@@ -395,6 +444,11 @@ class Galleries extends MY_Controller {
 	}
 	public function image_form($id)
 	{
+		if(!isAllowViewModule($this->viewTitle, "write"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
 		$item = $this->gallery_model->get(
 			array(
 				"id" => $id
@@ -435,6 +489,11 @@ class Galleries extends MY_Controller {
 	}
 	public function file_upload($gallery_id,$gallery_type,$gallery_fileName)
 	{
+		if(!isAllowViewModule($this->viewTitle, "write"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
 		$file_name = CharConvert(pathinfo($_FILES["file"]["name"], PATHINFO_FILENAME)). "." . pathinfo($_FILES["file"]["name"], PATHINFO_EXTENSION);
 		$config["allowed_types"] = "jpg|jpeg|png|pdf|doc|docx|txt";
 		$gallery_path = ($gallery_type == "image") ? "images" : "files";
@@ -464,7 +523,7 @@ class Galleries extends MY_Controller {
 	}
 	public function refresh_file_list($gallery_id,$gallery_type)
 	{
-
+		
         $viewData = new stdClass();
         /** View'e gönderilecek Değişkenlerin Set Edilmesi.. */
 		$viewData->viewTitle = $this->viewTitle;
@@ -484,6 +543,11 @@ class Galleries extends MY_Controller {
     }
 	public function isActiveSetterFile($id, $gallery_type)
 	{
+		if(!isAllowViewModule($this->viewTitle, "update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
 		if($id)
 		{
 			$isActive = ($this->input->post("data") === "true") ? 1 : 0;
@@ -500,6 +564,11 @@ class Galleries extends MY_Controller {
 	}
 	public function gallery_video_list($id)
 	{
+		if(!isAllowViewModule($this->viewTitle, "write"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
 		$viewData = new stdClass();
 		$gallery = $this->gallery_model->get(
 			array(
@@ -523,7 +592,11 @@ class Galleries extends MY_Controller {
 	}
 	public function new_video_form($id)
 	{
-		
+		if(!isAllowViewModule($this->viewTitle, "write"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
 		$viewData = new stdClass();
 		$viewData->viewTitle = $this->viewTitle;
 		$viewData->viewFolder = $this->viewFolder;
@@ -533,7 +606,11 @@ class Galleries extends MY_Controller {
 	}
 	public function gallery_video_save($id)
 	{
-		
+		if(!isAllowViewModule($this->viewTitle, "write"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
 		$this->load->library("form_validation");
 		//kuralların yazıldığı alan
 		$this->form_validation->set_rules("url","Video URL","required|trim");
@@ -588,6 +665,11 @@ class Galleries extends MY_Controller {
 	}
 	public function gallery_update_form($id)
 	{
+		if(!isAllowViewModule($this->viewTitle, "update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
 		$item = $this->video_model->get(
 			array(
 				"id" => $id
@@ -602,7 +684,11 @@ class Galleries extends MY_Controller {
 	}
 	public function gallery_video_update($id, $gallery_id)
 	{
-		
+		if(!isAllowViewModule($this->viewTitle, "update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
 		$this->load->library("form_validation");
 		//kuralların yazıldığı alan
 		$this->form_validation->set_rules("url","Video URL","required|trim");
@@ -662,6 +748,11 @@ class Galleries extends MY_Controller {
 	}
 	public function gallery_video_delete($id, $gallery_id)
 	{
+		if(!isAllowViewModule($this->viewTitle, "delete"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
 		$delete = $this->video_model->delete(
 			array(
 				"id" => $id
@@ -688,6 +779,11 @@ class Galleries extends MY_Controller {
 	}
 	public function galleryVideoRankSetter()
 	{
+		if(!isAllowViewModule($this->viewTitle, "update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
 		$data = $this->input->post("data");
 		parse_str($data,$order);
 		$items = $order["ord"];
@@ -706,6 +802,11 @@ class Galleries extends MY_Controller {
 	}
 	public function galleryVideoIsActiveSetter($id)
 	{
+		if(!isAllowViewModule($this->viewTitle, "update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
 		if($id)
 		{
 			$isActive = ($this->input->post("data") === "true") ? 1 : 0;

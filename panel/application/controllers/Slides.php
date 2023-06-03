@@ -34,6 +34,11 @@ class Slides extends MY_Controller{
     }
     public function new_form()
     {
+        if(!isAllowViewModule($this->viewTitle, "write"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
         $viewData = new stdClass();
         $viewData->viewTitle = $this->viewTitle;
         $viewData->viewFolder = $this->viewFolder;
@@ -42,6 +47,11 @@ class Slides extends MY_Controller{
     }
     public function save()
     {
+        if(!isAllowViewModule($this->viewTitle, "write"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
         $this->load->library("form_validation");
        
         if(($this->input->post("switch") == "on"))
@@ -123,6 +133,11 @@ class Slides extends MY_Controller{
     }
     public function update_form($id)
     {
+        if(!isAllowViewModule($this->viewTitle, "update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
        $item = $this->slide_model->get(
           array(
             "id" => $id
@@ -137,6 +152,11 @@ class Slides extends MY_Controller{
     }
     public function update($id)
     {
+        if(!isAllowViewModule($this->viewTitle, "update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
         $this->load->library("form_validation");
         if(($this->input->post("switch") == "on"))
         {
@@ -235,6 +255,11 @@ class Slides extends MY_Controller{
     }
     public function isActiveSetter($id)
     {
+        if(!isAllowViewModule($this->viewTitle, "update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
         if($id)
         {
             $isActive = ($this->input->post("data") === "true") ? 1 : 0;
@@ -250,6 +275,11 @@ class Slides extends MY_Controller{
     }
     public function rankSetter()
     {
+        if(!isAllowViewModule($this->viewTitle, "update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
         $data = $this->input->post("data");
 		parse_str($data,$order);
 		$items = $order["ord"];
@@ -268,6 +298,11 @@ class Slides extends MY_Controller{
     }
     public function delete($id)
     {
+        if(!isAllowViewModule($this->viewTitle, "delete"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
         $item = $this->slide_model->get(
             array(
                 "id" => $id

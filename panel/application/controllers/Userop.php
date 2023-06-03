@@ -101,50 +101,50 @@ class Userop extends CI_Controller
     }
     public function reset_password()
     {
-        if(get_active_user())
+        if(get_active_user()) 
 		{
 			redirect(base_url());
 		}
-        $this->load->library("form_validation");
-        $this->form_validation->set_rules("email","E-posta","required|trim|valid_email");
-        $this->form_validation->set_message(
-            array(
-                "required"      => "{field} alanı boş bırakılmamalıdır!",
-                "valid_email"    => "{field} kurallarına göre yazılmalıdır!",
+        $this->load->library("form_validation"); //Emaili hatalı girmemesi için form validation kullandım
+        $this->form_validation->set_rules("email","E-posta","required|trim|valid_email"); //name i email olan bakıyor, field E-posta 
+        $this->form_validation->set_message(                 //Kurallar required boş geçilemez, trim sağdan soldan boşlukları siliyor. 
+            array(                                           //valid_email doğru email girilmesi için kullanılır.
+                "required"      => "{field} alanı boş bırakılmamalıdır!",   //boş geçilirse bu metni verecek
+                "valid_email"    => "{field} kurallarına göre yazılmalıdır!",   //valid_email yanlış yazılırsa bu mesajı verecek
             )
         );
-        $validate = $this->form_validation->run();
-        if($validate)
+        $validate = $this->form_validation->run();  //form_validation u çalıştıracak true veya false döndürecek
+        if($validate)   //true döndürürse if e girer
         {
-            $user = $this->user_model->get(
+            $user = $this->user_model->get( //$user_model modelinden get fonksiyonunu çağırır 
                 array(
-                    "email" => $this->input->post("email"),
-                    "isActive"  => 1
+                    "email" => $this->input->post("email"),     //eğer post a girilen email veritabanında ki email ile uyuşuyorsa
+                    "isActive"  => 1                            //ve isActive 1 ise
                 )
             );
-            if($user)
+            if($user)   //eğer veritabanında kullanıcı çekerse if e girer 
             {
-                $this->load->helper("string");
-                $temp_password = random_string();
+                $this->load->helper("string");  //string helper i çağırdım
+                $temp_password = random_string();   //random_string fonksiyonunu çağırdım değişkene attım
                 $send = send_email($user->email, "Şifremi Unuttum", "CMS'e geçici olarak <b>{$temp_password}</b> şifresiyle giriş yapabilirsiniz");
-              
-                if($send)
+                    //send_email fonksiyonu ile şifrenin gönderilecek email i, başlığı ve gönderilecek mesajı parametre olarak atadım.
+                if($send)   //başarı bir şekilde gönderildiyse if e girer
                 {
-                    $this->user_model->update(
-                        array(
-                            "id" => $user->id
+                    $this->user_model->update(  //şifreyi geçici şifre ile güncellemek için update fonskiyonunu çağırdım
+                        array(      
+                            "id" => $user->id   //hangi kullanıcının şifresini güncelleyeceksek onun  id sini veri tabanından çektik
                         ),
                         array(
-                            "password" => md5($temp_password)
+                            "password" => md5($temp_password)   //md5 ile güvenli bir şekilde geçici şifre ile parola mızı değiştirdik
                         )
                     );
-                    $alert = array(
-                        "title" => "",
+                    $alert = array( 
+                        "title" => "",  //alert değişkenine array girdik
                         "text"  => "<b>{$this->input->post("email")}</b> adresi ile oluşturulmuş bir üyelik sistemimizde bulunması durumunda e-posta adresinin size ait olduğunu doğrulamak için bir link tarafınıza e-posta ile gönderilecektir.",
-                        "type"  => "success"
+                        "type"  => "success"    //hata mesajı ve başarılı olduğunu gönderdik
                     );
-                    $this->session->set_flashdata("alert", $alert);
-                    redirect(base_url("forget-password"));
+                    $this->session->set_flashdata("alert", $alert); //ve bu array ı session a gönderdik
+                    redirect(base_url("forget-password"));  //sonra tekrar şifreyi unuttum sayfasına gidiyor uyarı ile
                 }
             }
             $alert = array(

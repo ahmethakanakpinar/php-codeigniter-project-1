@@ -197,55 +197,54 @@
             $viewData->viewFolder = "contact_v";
             $this->load->view($viewData->viewFolder, $viewData);
         }
-        public function send_contact_message()
+        public function send_contact_message()  //Fonskiyonumuzun adı
         {
-           
-            $this->load->library("form_validation");
-            $this->form_validation->set_rules("name", "Ad Soyad", "required|trim");
-            $this->form_validation->set_rules("email", "E-posta", "required|trim|valid_email");
-            $this->form_validation->set_rules("subject", "Konu", "required|trim");
-            $this->form_validation->set_rules("message", "Mesaj", "required|trim|min_length[10]|max_length[500]");
-            $this->form_validation->set_message(
-                array(
-                    "required"  => "{field} Alanı Boş Geçilemez!",
-                    "valid_email"   => "{field} Alanı Kurallara uygun bir şekilde yazılmalıdır!",
-                    "min_length"    => "{field} Kısmı {param} karakterden az olamaz",
-                    "max_length"    => "{field} Kısmı {param} karakterden fazla olamaz"
+            $this->load->library("form_validation");    //form_validation kütüphanesini çağırdım 
+            $this->form_validation->set_rules("name", "Ad Soyad", "required|trim"); //ilk parametre post edilen name e verdiğimiz özellik
+            $this->form_validation->set_rules("email", "E-posta", "required|trim|valid_email"); //ikinci parametre hata olursa field ne oldugu
+            $this->form_validation->set_rules("subject", "Konu", "required|trim");  //Üçüncü parametre ise validation kuralları required boş bırakılamaz
+            $this->form_validation->set_rules("message", "Mesaj", "required|trim|min_length[10]|max_length[500]");  //trim sağdan soldan boşlukları siler
+            $this->form_validation->set_message(    //mix_length[10] 10 karakterden az olamaz max ise fazla olamaz
+                array(      //set message ise hata mesajı ne olsun
+                    "required"  => "{field} Alanı Boş Geçilemez!",  //{field} set_rules'daki 2.parametre boş bırakılırsa ne yazılsın
+                    "valid_email"   => "{field} Alanı Kurallara uygun bir şekilde yazılmalıdır!",   //email yanlış eksik girilirse ne yazılsın
+                    "min_length"    => "{field} Kısmı {param} karakterden az olamaz",   //{param} [10] parantezin içine girilen sayıyı ifade eder
+                    "max_length"    => "{field} Kısmı {param} karakterden fazla olamaz" //min max az veya fazla olursa hatasını yazdırır.
                 )
             );
-            $validation = $this->form_validation->run();
-            if($validation)
+            $validation = $this->form_validation->run();    //burada form_validation çalıştırıyoruz sonra çalışırsa TRUE olarak değişkene 
+            if($validation)   //if ile kontrol ediyoruz TRUE ise if'e giriyor.           //Çalışmazsa FALSE olarak atıyoruz
             {
-                $captcha = reCaptche("iletisim", '6Lc_2jAmAAAAANSynu4kSNwjKvZMbAwl43Vu24NC');
-                if($captcha)
-                {
-                    $name = $this->input->post("name"); 
-                    $email = $this->input->post("email"); 
+                $captcha = reCaptche("iletisim", '6Lc_2jAmAAAAANSynu4kSNwjKvZMbAwl43Vu24NC');   //reCaptche diye fonksiyon oluşturdum ilk
+                if($captcha) //true ise girer                                           //parametre başarılı veya hatalı olduktan sonra nereye dönsün 
+                {                                                                       //İkinci parametre ise Google Recaptche den aldığım api kodu
+                    $name = $this->input->post("name");     
+                    $email = $this->input->post("email"); //email adlı name e gider içine yazılanı $email değişkenine atar
                     $subject = $this->input->post("subject"); 
                     $message = $this->input->post("message"); 
                     $email_message = "{$name} isimli ziyaretçi. Mesaj Bıraktı <br> <b>Mesaj : </b> {$message} <br> <b>E-posta : </b> {$email}";
-                    if(send_email("","Site İletişim Mesajı | $subject ",$email_message))
-                    {
-                        $alert = "success"; //mesaj gönderilmişse değişkene succes atıyorum
-                        $this->session->set_flashdata("alert", $alert); 
+                    if(send_email("","Site İletişim Mesajı | $subject ",$email_message))     //yollayacağımız mesajı $email_meesage adlı değişkene attım.
+                    {   //send_email adlı fonksiyon oluşturdum onu çalıştırdım
+                        $alert = "success"; //mesaj gönderilmişse değişkene succes atıyorum 
+                        $this->session->set_flashdata("alert", $alert);     //yeşil alert ekrana çıkıyor
                         redirect(base_url("iletisim")); //geri iletisim sayfasına döndürüyor
                         //sonra bunu alert adındaki session a atıyorum
                     }
                     else
                     {
                         $alert = "error"; //mesaj gönderilmemişse değişkene error atıyorum
-                        $this->session->set_flashdata("alert", $alert);
+                        $this->session->set_flashdata("alert", $alert); //kırmızı hata alert ekrana çıkıyor
                         redirect(base_url("iletisim"));
                     }
                 }
               
             }
-            else
+            else //validation dan geçemezse eğer else kısmına girer
             {
-                $viewData = new stdClass();
-                $viewData->viewFolder = "contact_v";
-                $viewData->form_error = true;
-                $this->load->view($viewData->viewFolder, $viewData);
+                $viewData = new stdClass(); //$viewData adında class oluşturdum
+                $viewData->viewFolder = "contact_v";    //yönlendireceği dosya
+                $viewData->form_error = true;   //form_error true yaptım boş bırakılan veya belirtilenden eksik girilen post lara hata vericek
+                $this->load->view($viewData->viewFolder, $viewData);    //form_error ile birdaha sayfaya gönderir
             }
         }
         public function news_list()

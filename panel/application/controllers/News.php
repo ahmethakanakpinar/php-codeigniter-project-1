@@ -34,6 +34,11 @@ class News extends MY_Controller{
     }
     public function new_form()
     {
+        if(!isAllowViewModule($this->viewTitle, "write"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
         $viewData = new stdClass();
         $viewData->viewFolder = $this->viewFolder;
         $viewData->viewTitle = $this->viewTitle;
@@ -43,6 +48,11 @@ class News extends MY_Controller{
     }
     public function save()
     {
+        if(!isAllowViewModule($this->viewTitle, "write"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
         $this->load->library("form_validation");
         
         //kurallar
@@ -144,6 +154,11 @@ class News extends MY_Controller{
     }
     public function update_form($id)
     {
+        if(!isAllowViewModule($this->viewTitle, "update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
         $item = $this->news_model->get(
             array(
                 "id" => $id
@@ -158,6 +173,11 @@ class News extends MY_Controller{
     }
     public function isActiveSetter($id)
     {
+        if(!isAllowViewModule($this->viewTitle, "update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
         if($id)
         {
             $isActive = ($this->input->post("data") === "true") ? 1 : 0;
@@ -173,6 +193,11 @@ class News extends MY_Controller{
     }
     public function rankSetter()
     {
+        if(!isAllowViewModule($this->viewTitle, "update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
         $data = $this->input->post("data");
 		parse_str($data,$order);
 		$items = $order["ord"];
@@ -191,6 +216,11 @@ class News extends MY_Controller{
     }
     public function delete($id)
     {
+        if(!isAllowViewModule($this->viewTitle, "delete"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
         $item = $this->news_model->get(
             array(
                 "id" => $id
@@ -227,6 +257,11 @@ class News extends MY_Controller{
     }
     public function update($id)
     {
+        if(!isAllowViewModule($this->viewTitle, "update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
         $this->load->library("form_validation");
         
         //kurallar

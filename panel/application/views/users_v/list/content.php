@@ -2,16 +2,18 @@
 		<div class="row">
 			<div class="col-md-12">
 				<h4 class="m-b-lg">
-                    Markalar
-                    <a class="btn btn-primary btn-outline pull-right btn-xs" href="<?php echo base_url("$viewTitle/new_form"); ?>"><i class="fa fa-plus" aria-hidden="true"></i> Ekle</a>
+                    Kullanıcılar
+                    <?php if(isAllowViewModule($this->viewTitle, "write")): ?>
+                        <a class="btn btn-primary btn-outline pull-right btn-xs" href="<?php echo base_url("$viewTitle/new_form"); ?>"><i class="fa fa-plus" aria-hidden="true"></i> Ekle</a>
+                    <?php endif; ?>
                 </h4>
 			</div><!-- END column -->
 			<div class="col-md-12">
 				<div class="widget p-lg">
-                 
+
                     <?php if(empty($items)): ?> 
                         <div class="alert alert-info text-center">
-                        <p>Burada herhangi bir veri bulunamamaktadır. Eklemek için <a href="<?php echo base_url("$viewTitle/new_form") ?>">Tıklayınız</a></p>
+                        <p>Burada herhangi bir veri bulunamamaktadır. <?php if(isAllowViewModule($this->viewTitle, "write")): ?>Eklemek için <a href="<?php echo base_url("$viewTitle/new_form") ?>">Tıklayınız</a><?php endif; ?></p>
                         </div>
                     <?php else: ?>
                         <table class="table table-hover table-striped table-bordered content-container">
@@ -23,8 +25,12 @@
                                     <th>E-posta</th>
                                     <th>Görsel</th>
                                     <th>Rol</th>
-                                    <th>Durumu</th>
-                                    <th>İşlem</th>
+                                    <?php if(isAllowViewModule($this->viewTitle, "update")):  ?>
+                                        <th>Durumu</th>
+                                    <?php endif; ?>
+                                    <?php if(isAllowViewModule($this->viewTitle, "write") && isAllowViewModule($this->viewTitle, "update") && isAllowViewModule($this->viewTitle, "delete")):  ?>
+                                        <th>İşlem</th>
+                                    <?php endif; ?>
                                 </tr>
                             </thead>
                             <tbody>
@@ -43,12 +49,20 @@
                                     </td>
                                     <td><?php echo get_category_title($item->user_role, "user_role_model") ?></td>
                                     <td class="text-center w-100">
-                                        <input data-url="<?php echo base_url("$viewTitle/isActiveSetter/$item->id"); ?>" class="isActive" type="checkbox" data-switchery data-color="#10c469" <?php echo ($item->isActive) ? "checked": "" ?> />
+                                        <?php if(isAllowViewModule($this->viewTitle, "update")):  ?>
+                                            <input data-url="<?php echo base_url("$viewTitle/isActiveSetter/$item->id"); ?>" class="isActive" type="checkbox" data-switchery data-color="#10c469" <?php echo ($item->isActive) ? "checked": "" ?> />
+                                        <?php endif; ?>
                                     </td>
                                     <td class="text-center w-300">
-                                        <button class="btn btn-danger btn-outline btn-sm remove-btn" data-url="<?php echo base_url("$viewTitle/delete/$item->id")?>"><i class="fa fa-trash" aria-hidden="true"></i> Sil</button>
-                                        <a class="btn btn-info btn-outline btn-sm" href="<?php echo base_url("$viewTitle/update_form/$item->id")?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Düzenle</a>
-                                        <a class="btn btn-purple btn-outline btn-sm" href="<?php echo base_url("$viewTitle/password_form/$item->id")?>"><i class="fa fa-key" aria-hidden="true"></i> Şifre Değiştir</a>
+                                        <?php if(isAllowViewModule($this->viewTitle, "delete")):  ?>
+                                            <button class="btn btn-danger btn-outline btn-sm remove-btn" data-url="<?php echo base_url("$viewTitle/delete/$item->id")?>"><i class="fa fa-trash" aria-hidden="true"></i> Sil</button>
+                                        <?php endif; ?>
+                                        <?php if(isAllowViewModule($this->viewTitle, "update")):  ?>
+                                            <a class="btn btn-info btn-outline btn-sm" href="<?php echo base_url("$viewTitle/update_form/$item->id")?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Düzenle</a>
+                                        <?php endif; ?>
+                                        <?php if(isAllowViewModule($this->viewTitle, "update")):  ?>
+                                            <a class="btn btn-purple btn-outline btn-sm" href="<?php echo base_url("$viewTitle/password_form/$item->id")?>"><i class="fa fa-key" aria-hidden="true"></i> Şifre Değiştir</a>
+                                        <?php endif; ?>
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>

@@ -27,10 +27,10 @@ class MY_Model extends CI_Model {
     }
     public function update($where = array(),$data = array())
     {
-        if(!isAllowViewModule($this->router->fetch_class(), "update"))
-        {
-            return false;
-        }
+        // if(!isAllowViewModule($this->router->fetch_class(), "update"))
+        // {
+            // return false;
+        // }
         return $this->db->where($where)->update($this->tableName, $data);
     }
     public function delete($where = array())

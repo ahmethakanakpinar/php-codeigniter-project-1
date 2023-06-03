@@ -10,7 +10,6 @@
 		</div><!-- logo -->
 		<div class="simple-page-form animated flipInY" id="reset-password-form">
 	<h4 class="form-title m-b-xl text-center">Şifrenizi mi Unuttunuz ?</h4>
-	
 	<form action="<?php echo base_url("reset-password"); ?>" method="post">
 		<div class="form-group">
 			<input type="email" class="form-control" placeholder="E-mail" name="email">

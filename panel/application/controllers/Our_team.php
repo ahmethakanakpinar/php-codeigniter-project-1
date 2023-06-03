@@ -33,6 +33,11 @@ class Our_team extends MY_Controller{
     }
     public function new_form()
     {
+        if(!isAllowViewModule($this->viewTitle, "write"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
         $viewData = new stdClass();
         $viewData->viewTitle = $this->viewTitle;
         $viewData->viewFolder = $this->viewFolder;
@@ -41,6 +46,11 @@ class Our_team extends MY_Controller{
     }
     public function save()
     {
+        if(!isAllowViewModule($this->viewTitle, "write"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
         $this->load->library("form_validation");
         $this->form_validation->set_rules("full_name","Ad Soyad", "required|trim");
         $this->form_validation->set_rules("position","Pozisyon", "required|trim");
@@ -125,6 +135,11 @@ class Our_team extends MY_Controller{
     }
     public function update_form($id)
     {
+        if(!isAllowViewModule($this->viewTitle, "update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
         $item = $this->our_team_model->get(
             array(
                 "id"    => $id
@@ -139,6 +154,11 @@ class Our_team extends MY_Controller{
     }
     public function update($id)
     {
+        if(!isAllowViewModule($this->viewTitle, "update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
         $old_user = $this->our_team_model->get(
             array("id" => $id)
         );
@@ -233,6 +253,11 @@ class Our_team extends MY_Controller{
     }
     public function delete($id)
     {
+        if(!isAllowViewModule($this->viewTitle, "delete"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
         $user = $this->our_team_model->get(
 			array(
 				"id" => $id
@@ -266,6 +291,11 @@ class Our_team extends MY_Controller{
     }
     public function isActiveSetter($id)
     {
+        if(!isAllowViewModule($this->viewTitle, "update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
         if($id)
 		{
 			$isActive = ($this->input->post("data") === "true") ? 1 : 0;

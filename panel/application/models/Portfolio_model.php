@@ -1,5 +1,5 @@
 <?php
-class Portfolio_model extends CI_Model
+class Portfolio_model extends MY_Model
 {
     public $tableName = "portfolios";
   

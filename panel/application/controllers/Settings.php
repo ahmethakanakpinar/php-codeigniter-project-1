@@ -35,6 +35,11 @@ class Settings extends MY_Controller{
     }
     public function new_form()
     {
+        if(!isAllowViewModule($this->viewTitle, "write"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
         $viewData = new stdClass();
         $viewData->viewTitle = $this->viewTitle;
         $viewData->viewFolder = $this->viewFolder;
@@ -43,6 +48,11 @@ class Settings extends MY_Controller{
     }
     public function save()
     {
+        if(!isAllowViewModule($this->viewTitle, "write"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
         $this->load->library("form_validation");
         if($_FILES["logo"]["name"] == "")
         {
@@ -122,6 +132,11 @@ class Settings extends MY_Controller{
     }
     public function update_form($id)
     {
+        if(!isAllowViewModule($this->viewTitle, "update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
         $item = $this->setting_model->get(
             array(
                 "id"    => $id
@@ -136,6 +151,11 @@ class Settings extends MY_Controller{
     }
     public function update($id)
     {
+        if(!isAllowViewModule($this->viewTitle, "update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
         $this->load->library("form_validation");
         $this->form_validation->set_rules("company_name","Şirket Adı","required|trim");
         $this->form_validation->set_rules("phone_1","Şirket Numarası","required|trim");
@@ -223,80 +243,13 @@ class Settings extends MY_Controller{
             $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
         }
     }
-    public function password_form($id)
-    {
-        $item = $this->setting_model->get(
-            array(
-                "id"    => $id
-            )
-        );
-        $viewData = new stdClass();
-        $viewData->viewTitle = $this->viewTitle;
-        $viewData->viewFolder = $this->viewFolder;
-        $viewData->subViewFolder = "password";
-        $viewData->item = $item;
-        $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
-    }
-    public function password_update($id)
-    {
-       
-        $this->load->library("form_validation");
-        $this->form_validation->set_rules("password","Parola", "required|trim|min_length[5]|max_length[20]");
-        $this->form_validation->set_rules("password-repeat","Şifre Tekrar", "required|trim|min_length[5]|max_length[20]|matches[password]");
-        $this->form_validation->set_message(
-            array(
-                "required"      => "{field} Alanı Boş bırakılmamalıdır!",
-                "max_length"    => "{field} {param} Karakterden fazla olmamalıdır!",
-                "min_length"    => "{field} {param} Karakterden az olmamalıdır!",
-                "matches"       => "Şifreler Birbirleri ile uyuşmuyor!",
-            )
-        );
-        $validate = $this->form_validation->run();
-        if($validate)
-        {
-            $insert = $this->setting_model->update(
-                array("id" => $id),
-                array(
-                    "password" => md5($this->input->post("password")),
-                )
-            );
-            if($insert)
-            {
-                $alert = array(
-                    "title" => "İşlem Başarılı",
-                    "text" => "Kullanıcının şifresi başarılı bir şekilde güncellendi",
-                    "type"  => "success"
-                );
-            }
-            else
-            {
-                $alert = array(
-                    "title" => "İşlem Başarısız",
-                    "text" => "Kullanıcının şifresini Güncellerken bir problem oluştu",
-                    "type"  => "error"
-                );
-            }
-            $this->session->set_flashdata("alert", $alert);
-            redirect(base_url("{$this->viewTitle}"));
-        }
-        else
-        {
-            
-            $viewData = new stdClass();
-            $item = $this->setting_model->get(
-                array("id" => $id)
-            );
-            $viewData->viewTitle = $this->viewTitle;
-            $viewData->viewFolder = $this->viewFolder;
-            $viewData->subViewFolder = "password";
-            $viewData->form_error = true;
-            $viewData->item = $item;
-            $this->load->view("{$viewData->viewFolder}/{$viewData->subViewFolder}/index", $viewData);
-        }
-
-    }
     public function delete($id)
     {
+        if(!isAllowViewModule($this->viewTitle, "delete"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
         $user = $this->setting_model->get(
 			array(
 				"id" => $id
@@ -329,6 +282,11 @@ class Settings extends MY_Controller{
     }
     public function isActiveSetter($id)
     {
+        if(!isAllowViewModule($this->viewTitle, "update"))
+        {
+            redirect(base_url($this->viewTitle));
+            die();
+        }
         if($id)
 		{
 			$isActive = ($this->input->post("data") === "true") ? 1 : 0;
